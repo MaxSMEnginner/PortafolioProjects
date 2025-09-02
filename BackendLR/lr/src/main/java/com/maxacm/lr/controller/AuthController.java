@@ -25,6 +25,7 @@ public class AuthController {
 
 
     @PostMapping("/login")
+<<<<<<< Updated upstream
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
         Authentication authentication = authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -32,12 +33,40 @@ public class AuthController {
                         request.getPassword()
                 )
         );
+=======
+    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request,
+                                              HttpServletRequest http) {
 
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String accessToken = jwtUtil.generateAccessToken(userDetails.getUsername());
-        String refreshToken = jwtUtil.generateRefreshToken(userDetails.getUsername());
+>>>>>>> Stashed changes
 
+        try{
+
+<<<<<<< Updated upstream
         return ResponseEntity.ok(new AuthResponse(accessToken, refreshToken));
+=======
+            log.info("🔑 Login attempt for user: {}", request.getUsername());
+
+            Authentication authentication = authManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getUsername(),
+                            request.getPassword()
+                    )
+            );
+
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String accessToken = jwtUtil.generateAccessToken(userDetails.getUsername());
+            String refreshToken = jwtUtil.generateRefreshToken(userDetails.getUsername());
+
+            refreshTokenService.create(userDetails.getUsername(), refreshToken,
+                    LocalDateTime.now().plusDays(7));
+
+            auditLogService.log(userDetails.getUsername(), "LOGIN", http.getRemoteAddr());
+
+            return ResponseEntity.ok(new AuthResponse(accessToken, refreshToken));
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+>>>>>>> Stashed changes
     }
 
     @PostMapping("/refresh")
