@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/home")
+@RequestMapping("/users")
 public class HomeController {
 
-    @GetMapping
+    @GetMapping("/home")
     public String home() {
         return "Bienvenido USER 🚀";
     }

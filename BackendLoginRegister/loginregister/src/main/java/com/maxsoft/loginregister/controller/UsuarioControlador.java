@@ -1,10 +1,13 @@
 package com.maxsoft.loginregister.controller;
 
 import com.maxsoft.loginregister.entity.Usuario;
+
+import com.maxsoft.loginregister.dto.DTOUsuarioRegistro;
 import com.maxsoft.loginregister.service.UsuarioServicio;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +23,7 @@ public class UsuarioControlador {
 
 
     @PostMapping("/register")
-    public ResponseEntity<Usuario> registrar(@RequestBody Usuario usuario){
+    public ResponseEntity<Usuario> registrar(@Validated @RequestBody DTOUsuarioRegistro usuario){
         Usuario guardar= servicio.registrar(usuario.getNombreusuario(), usuario.getContrasena());
 
         return ResponseEntity.ok(guardar);

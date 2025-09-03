@@ -12,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AuditLogService {
 
-    private final AuditLogRepository auditLogRepository;
+    private final AuditLogRepository  auditLogRepository;
 
     public void log(String username, String action, String ip) {
         AuditLog log = AuditLog.builder()

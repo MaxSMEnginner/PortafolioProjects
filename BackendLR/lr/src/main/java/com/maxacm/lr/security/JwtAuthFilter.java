@@ -29,11 +29,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
 
         // 👉 Saltar validación en login y refresh
-        String path = request.getServletPath();
-        if (path.startsWith("/auth/login") || path.startsWith("/auth/refresh")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
+            String path = request.getServletPath();
+            if (path.startsWith("/auth/login") || path.startsWith("/auth/refresh")) {
+                filterChain.doFilter(request, response);
+                return;
+            }
 
         final String authHeader = request.getHeader("Authorization");
         String username = null;

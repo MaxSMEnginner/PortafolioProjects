@@ -31,6 +31,8 @@ public class JwtUtil {
                 .getBody();
     }
 
+
+
     public String extractUsername(String token) {
         return extractAllClaims(token).getSubject();
     }
@@ -50,7 +52,7 @@ public class JwtUtil {
                 .setSubject(username)
                 .claim("type","REFRESH")
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 7)) // 7 días
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7)) // 7 días
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
