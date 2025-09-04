@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface NTokenRepository extends JpaRepository<TokenNueva, Long> {
     Optional<TokenNueva> findByToken(String token);
     void deleteByToken(String token);
+    void deleteByNombreusuario(String nombreusuario);
 }

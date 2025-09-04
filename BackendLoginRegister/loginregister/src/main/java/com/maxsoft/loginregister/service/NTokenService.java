@@ -30,6 +30,10 @@ public class NTokenService {
         repo.deleteByToken(token);
     }
 
+    public void eliminarporusuario(String nombreusuario){
+        repo.deleteByNombreusuario(nombreusuario);
+    }
+
     @Scheduled(cron = "0 0 * * * *")// cada hora(segundo minuto hora dia mes diadelasemana)
     public void limpiartoken(){
         repo.findAll().stream()

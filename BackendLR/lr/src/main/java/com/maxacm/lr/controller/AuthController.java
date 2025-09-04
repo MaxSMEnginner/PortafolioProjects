@@ -84,7 +84,7 @@ public class AuthController {
     @PostMapping("/logout")
     public ResponseEntity<String> logout(@RequestHeader("Authorization") String header,
                                          HttpServletRequest http) {
-        String token = header.substring(7);
+        String token = header.substring(7);//Barear sdfdsfsdfsdfsd
         String username = jwtUtil.extractUsername(token);
 
         tokenBlacklistService.blacklistToken(token);

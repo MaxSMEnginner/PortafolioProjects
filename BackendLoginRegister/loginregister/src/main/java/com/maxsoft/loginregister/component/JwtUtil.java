@@ -28,8 +28,8 @@ public class JwtUtil {
 
     public boolean EsNToken(String token){
         Claims reclamar= extraerTodasClaims(token);
-        String type= reclamar.get("tipo", String.class);
-        return "NT".equals(type);
+        String tipo= reclamar.get("tipo", String.class);
+        return "NT".equals(tipo);
 
     }
 

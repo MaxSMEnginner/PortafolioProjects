@@ -24,7 +24,6 @@ public class TokenNueva {
     @Column(length = 500)
     private String token;
     private String nombreusuario;
-    @CreationTimestamp
-    @Column(name="fecha_expiracion", updatable = false)
+
     private LocalDateTime fechaexpiracion;
 }

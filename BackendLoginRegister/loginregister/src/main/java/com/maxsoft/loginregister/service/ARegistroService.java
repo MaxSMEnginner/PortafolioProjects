@@ -22,6 +22,8 @@ public class ARegistroService {
                 .ip(ip)
                 .fecharegistro(LocalDateTime.now())
                 .build();
+
+        repo.save(registro);
     }
 
     public List<Registro> obtenerTodos(){

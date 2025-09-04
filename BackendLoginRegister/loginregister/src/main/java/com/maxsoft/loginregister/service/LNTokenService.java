@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +20,10 @@ public class LNTokenService {
 
     public boolean EstaenLNToken(String token){
         return repo.existsByToken(token);
+    }
+
+    public List<ListanegraToken> vertokens(){
+        return repo.findAll();
     }
 
 }

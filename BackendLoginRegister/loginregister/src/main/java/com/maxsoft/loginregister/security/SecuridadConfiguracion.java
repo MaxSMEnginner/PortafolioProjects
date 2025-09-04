@@ -39,7 +39,9 @@ public class SecuridadConfiguracion {
     public SecurityFilterChain cadenaFiltroSeguridad(HttpSecurity http) throws Exception{
         http.csrf(csrf-> csrf.disable())
                 .authorizeHttpRequests(auth-> auth
-                        .requestMatchers("/users/register").permitAll()
+                        .requestMatchers("/users/register","/auth/login","/auth/refresh").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/users/**").hasRole("USER")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(faJwt, UsernamePasswordAuthenticationFilter.class);
