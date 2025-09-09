@@ -24,6 +24,10 @@ public class UserController {
         return ResponseEntity.ok(saved);
     }
 
+    @GetMapping("/home")
+    public String home() {
+        return "Bienvenido USER 🚀";
+    }
 
 
 

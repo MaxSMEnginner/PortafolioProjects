@@ -2,17 +2,17 @@
 
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../../auth/auth.service';
 import { HttpClient } from '@angular/common/http'; // 👈 Importa HttpClient
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-dashboard',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './home.html',
-  styleUrls: ['./home.css']
+  templateUrl: './dashboard.html',
+  styleUrls: ['./dashboard.css']
 })
-export class HomeComponent implements OnInit { // 👈 Implementa OnInit
+export class DashboardComponent implements OnInit { // 👈 Implementa OnInit
   
   welcomeMessage = 'Cargando...'; // Mensaje por defecto
 
@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit { // 👈 Implementa OnInit
   // ngOnInit se ejecuta cuando el componente se inicializa
   ngOnInit(): void {
     // El interceptor se encargará de añadir el token
-    this.http.get('http://localhost:8080/users/home', { responseType: 'text' })
+    this.http.get('http://localhost:8080/admin/home', { responseType: 'text' })
       .subscribe({
         next: (message) => this.welcomeMessage = message,
         error: (err) => {

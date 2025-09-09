@@ -7,6 +7,12 @@ import org.springframework.stereotype.Component;
 import java.security.Key;
 import java.util.Date;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import java.util.stream.Collectors;
+import java.util.Collection;
+import java.util.List;
+
 @Component
 public class JwtUtil {
 
@@ -37,20 +43,33 @@ public class JwtUtil {
         return extractAllClaims(token).getSubject();
     }
 
-    public String generateAccessToken(String username) {
+    public String generateAccessToken(UserDetails userDetails) {
+
+        // Obtenemos los roles (authorities) del objeto UserDetails
+        Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
+        List<String> roleClaims = authorities.stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject(userDetails.getUsername())
                 .claim("type","ACCESS")
+                .claim("roles", roleClaims)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    public String generateRefreshToken(String username) {
+    public String generateRefreshToken(UserDetails userDetails) {
+        // Obtenemos los roles (authorities) del objeto UserDetails
+        Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
+        List<String> roleClaims = authorities.stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject(userDetails.getUsername())
                 .claim("type","REFRESH")
+                .claim("roles", roleClaims)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7)) // 7 días
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)

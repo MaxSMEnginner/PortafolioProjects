@@ -16,6 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import com.maxacm.lr.security.CustomUserDetailsService;
 
 import java.time.LocalDateTime;
 
@@ -25,6 +26,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class AuthController {
 
+    private final CustomUserDetailsService userDetailsService;
     private final AuthenticationManager authManager;
     private final JwtUtil jwtUtil;
     private final TokenBlacklistService tokenBlacklistService;
@@ -44,8 +46,8 @@ public class AuthController {
         );
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String accessToken = jwtUtil.generateAccessToken(userDetails.getUsername());
-        String refreshToken = jwtUtil.generateRefreshToken(userDetails.getUsername());
+        String accessToken = jwtUtil.generateAccessToken(userDetails);
+        String refreshToken = jwtUtil.generateRefreshToken(userDetails);
 
         refreshTokenService.create(userDetails.getUsername(), refreshToken,
                 LocalDateTime.now().plusDays(7));
@@ -67,13 +69,16 @@ public class AuthController {
 
             String username = jwtUtil.extractUsername(request.getRefreshToken());
 
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+
             refreshTokenService.invalidate(request.getRefreshToken());
 
-            String newAccessToken = jwtUtil.generateAccessToken(username);
-            String newRefreshToken = jwtUtil.generateRefreshToken(username);
-            refreshTokenService.create(username, newRefreshToken, LocalDateTime.now().plusDays(7));
+            String newAccessToken = jwtUtil.generateAccessToken(userDetails);
+            String newRefreshToken = jwtUtil.generateRefreshToken(userDetails);
 
-            auditLogService.log(username, "REFRESH", http.getRemoteAddr());
+            refreshTokenService.create(userDetails.getUsername(), newRefreshToken, LocalDateTime.now().plusDays(7));
+
+            auditLogService.log(userDetails.getUsername(), "REFRESH", http.getRemoteAddr());
 
             return ResponseEntity.ok(new AuthResponse(newAccessToken, newRefreshToken));
         } catch (Exception e) {
