@@ -97,7 +97,24 @@ export class AuthService {
       );
   }
 
-  
+    getUsername(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+    try {
+      const decodedToken: any = jwtDecode(token);
+
+
+      const username: string = decodedToken.sub || '';
+      
+      if (username.length > 0) {
+        return username.charAt(0).toUpperCase() + username.slice(1).toLowerCase();
+      }
+      return null;
+    } catch (error) {
+      console.error("Error decodificando el token", error);
+      return null;
+    }
+  }
 
 } 
 

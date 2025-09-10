@@ -1,10 +1,12 @@
 package com.maxacm.lr.controller;
 
 import com.maxacm.lr.entity.AuditLog;
+import com.maxacm.lr.entity.BlacklistedToken;
 import com.maxacm.lr.entity.User;
 import com.maxacm.lr.repository.UserRepository;
 import com.maxacm.lr.service.AuditLogService;
 import com.maxacm.lr.service.UserService;
+import com.maxacm.lr.service.TokenBlacklistService;
 import com.maxacm.lr.dto.UserUpdateDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +24,17 @@ public class AdminController {
     private final UserRepository userRepository;
     private final UserService userService;
     private final AuditLogService auditLogService;
+    private final TokenBlacklistService blacklistService;
 
     private PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+
+    @GetMapping("/black-list")
+    public List<BlacklistedToken> getblAll(){
+        return blacklistService.getAll();
+
     }
 
     // ✅ Ver todos los logs
@@ -57,6 +67,13 @@ public class AdminController {
         User saved = userService.registeradmin(user.getUsername(), user.getPassword());
         return ResponseEntity.ok(saved);
     }
+
+    @PostMapping("/register")
+    public ResponseEntity<User> createuser(@RequestBody User user) {
+        User saved = userService.register(user.getUsername(), user.getPassword());
+        return ResponseEntity.ok(saved);
+    }
+
 
     // ✅ Listar todos los usuarios
     @GetMapping("/users")

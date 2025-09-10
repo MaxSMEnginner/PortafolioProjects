@@ -1,5 +1,14 @@
-<h2>{{ welcomeMessage }}</h2>
+<div class="dashboard-container">
+  <h1>Panel de Administración</h1>
+  <nav>
+    <a routerLink="/admin/users">Gestión de Usuarios</a> |
+    <a routerLink="/admin/auth-logs">Auditorias de registros</a> |
+    <a routerLink="/admin/blacklist">JWT Blacklist</a>
+  </nav>
+  <h2>{{ welcomeMessage }}</h2>
+  <p>Admin: {{ username }}</p>
+  <button (click)="logout()">Cerrar sesión</button>
+</div>
 
 
 
-<button (click)="logout()">Cerrar sesión</button>

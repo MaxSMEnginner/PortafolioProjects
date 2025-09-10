@@ -25,7 +25,7 @@ export class LoginComponent {
 
         // 👇 LÓGICA DE REDIRECCIÓN BASADA EN ROL
         const role = this.auth.getUserRole();
-        console.log('jwt:',this.auth.getToken());
+        /* console.log('jwt:',this.auth.getToken()); */
         /* this.router.navigate(['/admin/dashboard']); */ // Redirige a home independientemente del rol
          if (role === 'ADMIN') {
           this.router.navigate(['/admin/dashboard']); // Ruta para admin

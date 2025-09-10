@@ -4,22 +4,26 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../auth/auth.service';
 import { HttpClient } from '@angular/common/http'; // 👈 Importa HttpClient
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css']
 })
 export class DashboardComponent implements OnInit { // 👈 Implementa OnInit
   
   welcomeMessage = 'Cargando...'; // Mensaje por defecto
+  username = ''; // Variable para almacenar el nombre de usuario
 
   constructor(private auth: AuthService, private http: HttpClient) {}
 
   // ngOnInit se ejecuta cuando el componente se inicializa
   ngOnInit(): void {
+    this.username = this.auth.getUsername() || '';  
+    
     // El interceptor se encargará de añadir el token
     this.http.get('http://localhost:8080/admin/home', { responseType: 'text' })
       .subscribe({
@@ -34,4 +38,6 @@ export class DashboardComponent implements OnInit { // 👈 Implementa OnInit
   logout() {
     this.auth.logout();
   }
+
+
 }

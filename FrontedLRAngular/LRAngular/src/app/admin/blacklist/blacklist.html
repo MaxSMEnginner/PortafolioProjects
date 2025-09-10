@@ -1,0 +1,33 @@
+<h1>Blacklist de JWT</h1>
+<p>Admin: {{ username }}</p>
+<nav>
+  <a routerLink="/admin/dashboard">Dashboard</a> |
+  <a routerLink="/admin/users">Gestión de Usuarios</a> |
+  <a routerLink="/admin/auth-logs">Logs de Autenticación</a> |
+  <a routerLink="/admin/blacklist">Blacklist de JWT</a>
+</nav>
+<p>JWT Blacklist</p>
+
+<div *ngIf="blacklistData && blacklistData.length > 0">
+  <h2>Lista Negra de JWT</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Token</th>
+        <th>Created At</th>
+        </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of blacklistData">
+        <td>{{ item.id }}</td>
+        <td>{{ item.token }}</td>
+        <td>{{ item.createdAt | date:'medium'  }}</td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="blacklistData && blacklistData.length === 0">
+  <p>La lista negra está vacía.</p>
+</div>
