@@ -1,1 +1,155 @@
-/* You can add global styles to this file, and also import other style files */
+/* Imports */
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+/* Variables globales */
+:root {
+  /* Colores base */
+  --dark-bg: #121212;
+  --card-bg: #1E1E1E;
+  --input-bg: #2D2D2D;
+  --text-primary: #FFFFFF;
+  --text-secondary: #B3B3B3;
+  --primary-color: #2196F3;
+  --primary-hover: #1976D2;
+  --error-color: #cf6679;
+  --border-color: #404040;
+  --table-stripe: #252525;
+  --table-hover: #2D2D2D;
+}
+
+/* Estilos base */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--dark-bg);
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+/* Cards */
+.card {
+  background-color: var(--card-bg);
+  border-color: var(--border-color);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Tablas */
+.table {
+  color: var(--text-primary);
+  background-color: var(--card-bg);
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: var(--table-stripe);
+}
+
+.table-hover tbody tr:hover {
+  background-color: var(--table-hover);
+}
+
+/* Formularios */
+.form-control {
+  background-color: var(--input-bg);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+.form-control:focus {
+  background-color: var(--input-bg);
+  border-color: var(--primary-color);
+  color: var(--text-primary);
+  box-shadow: 0 0 0 0.2rem rgba(33, 150, 243, 0.25);
+}
+
+.form-control::placeholder {
+  color: var(--text-secondary) !important;
+  opacity: 0.7;
+}
+
+/* Botones */
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+  border-color: var(--primary-hover);
+}
+
+/* Navegación */
+.nav-link {
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: var(--primary-color);
+}
+
+.nav-link.active {
+  background-color: var(--primary-color) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Paginación */
+.ngx-pagination {
+  margin: 0;
+  padding: 0;
+}
+
+.ngx-pagination a,
+.ngx-pagination button {
+  color: var(--text-primary) !important;
+  background: var(--input-bg) !important;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.ngx-pagination .current {
+  background: var(--primary-color) !important;
+  color: var(--text-primary) !important;
+}
+
+.ngx-pagination a:hover,
+.ngx-pagination button:hover {
+  background: var(--primary-hover) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--card-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+.d-flex.justify-content-between .pagination-info
+{
+    color: #FFFFFF;
+}
+
+.app-logo {
+  position: fixed;
+  top: 20px;
+  /* left: 20px; *//* pegado a la izquierda*/
+  right: 20px;/* pegado a la derecha*/
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}

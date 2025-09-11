@@ -1,3 +1,221 @@
-<p>ENDPOINTS USERS</p>
-<p>Admin: {{ username }}</p>
+<div class="container mt-4">
+  <!-- Header Section -->
+  <div class="row mb-4">
+    <div class="col">
+      <h1 class="display-5">Gestión de Usuarios</h1>
+      <p class="lead">Admin: {{ username }}</p>
+    </div>
+  </div>
 
+  <!-- Navigation -->
+  <nav class="nav nav-pills mb-4">
+    <a class="nav-link" routerLink="/admin/dashboard">Dashboard</a>
+    <a class="nav-link active" routerLink="/admin/users">Gestión de Usuarios</a>
+    <a class="nav-link" routerLink="/admin/auth-logs">Logs de Autenticación</a>
+    <a class="nav-link" routerLink="/admin/blacklist">Blacklist de JWT</a>
+  </nav>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ errorMessage }}
+    <button type="button" class="btn-close" (click)="errorMessage = ''"></button>
+  </div>
+
+  <!-- Create User Form -->
+  <div class="card mb-4">
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+      <h3 class="h5 mb-0">Crear Usuario</h3>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="createUser()" #createForm="ngForm">
+        <div class="row g-3">
+          <div class="col-md-4">
+            <input 
+              type="text" 
+              class="form-control" 
+              placeholder="Username"
+              [(ngModel)]="newUser.username"
+              name="username"
+              required
+              minlength="3"
+            >
+          </div>
+          <div class="col-md-4">
+            <input 
+              type="password" 
+              class="form-control" 
+              placeholder="Password"
+              [(ngModel)]="newUser.password"
+              name="password"
+              required
+              minlength="6"
+            >
+          </div>
+          <div class="col-md-4">
+            <div class="d-flex gap-2">
+              <button 
+                type="submit" 
+                class="btn btn-primary flex-grow-1"
+                [disabled]="loading || !createForm.form.valid"
+              >
+                <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                Crear Usuario
+              </button>
+              <button 
+                type="button" 
+                class="btn btn-success" 
+                (click)="createUser(true)"
+                [disabled]="loading || !createForm.form.valid"
+              >
+                <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                Crear Admin
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Search and Filter -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <input 
+            type="text" 
+            class="form-control" 
+            placeholder="Buscar usuarios..." 
+            [(ngModel)]="searchTerm"
+            (input)="searchUsers()"
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Users Table -->
+  <div class="card">
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+      <h3 class="h5 mb-0">Lista de Usuarios</h3>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Username</th>
+              <th>Role</th>
+              <th>Creado</th>
+              <th>Actualizado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of filteredUsers | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+              <td>{{ user.id }}</td>
+              <td>{{ user.username }}</td>
+              <td>
+                <span [class]="'badge ' + (user.role === 'ROLE_ADMIN' ? 'bg-danger' : 'bg-primary')">
+                  {{ user.role }}
+                </span>
+              </td>
+              <td>{{ user.createdAt | date:'medium' }}</td>
+              <td>{{ user.updatedAt | date:'medium' }}</td>
+              <td>
+                <button class="btn btn-sm btn-primary me-2" (click)="selectUser(user)">
+                  <i class="bi bi-pencil"></i> Editar
+                </button>
+                <button class="btn btn-sm btn-danger" (click)="deleteUser(user.id)">
+                  <i class="bi bi-trash"></i> Eliminar
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <div class="d-flex justify-content-between align-items-center mt-3">
+          <div class="pagination-info">
+            Mostrando {{ (p - 1) * itemsPerPage + 1 }} - 
+            {{ p * itemsPerPage > filteredUsers.length ? filteredUsers.length : p * itemsPerPage }}
+            de {{ filteredUsers.length }} registros
+          </div>
+          <pagination-controls 
+            (pageChange)="p = $event"
+            previousLabel="Anterior"
+            nextLabel="Siguiente">
+          </pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit User Modal -->
+  <div class="modal" [class.show]="showModal" tabindex="-1" [style.display]="showModal ? 'block' : 'none'">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Editar Usuario: {{ selectedUser?.username }}</h5>
+          <button type="button" class="btn-close" (click)="closeModal()"></button>
+        </div>
+        <div class="modal-body">
+          <form #updateForm="ngForm">
+            <div class="mb-3">
+              <label class="form-label">Username</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                [(ngModel)]="updateDTO.username"
+                name="username"
+                minlength="3"
+                placeholder="Nuevo username"
+              >
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input 
+                type="password" 
+                class="form-control" 
+                [(ngModel)]="updateDTO.password"
+                name="password"
+                minlength="6"
+                placeholder="Nueva contraseña"
+              >
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Role</label>
+              <select class="form-select" [(ngModel)]="updateDTO.role" name="role">
+                <option value="ROLE_USER">Usuario</option>
+                <option value="ROLE_ADMIN">Administrador</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">
+            Cancelar
+          </button>
+          <button 
+            type="button" 
+            class="btn btn-primary" 
+            (click)="updateUser()"
+            [disabled]="loading"
+          >
+            <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+            Guardar Cambios
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-backdrop fade show"></div>
+  </div>
+
+  <!-- Loading Overlay -->
+  <div *ngIf="loading" class="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center" style="background: rgba(0,0,0,0.5); z-index: 9999;">
+    <div class="spinner-border text-light" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+  </div>
+</div>

@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../auth.service';
 
-
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -15,28 +14,31 @@ import { AuthService } from '../auth.service';
 export class LoginComponent {
   username = '';
   password = '';
+  isLoading = false;
 
   constructor(private auth: AuthService, private router: Router) {}
 
   onSubmit() {
+    if (!this.username || !this.password) return;
+    
+    this.isLoading = true;
     this.auth.login(this.username, this.password).subscribe({
       next: (res) => {
         this.auth.saveTokens(res.accessToken, res.refreshToken);
-
-        // 👇 LÓGICA DE REDIRECCIÓN BASADA EN ROL
         const role = this.auth.getUserRole();
-        /* console.log('jwt:',this.auth.getToken()); */
-        /* this.router.navigate(['/admin/dashboard']); */ // Redirige a home independientemente del rol
-         if (role === 'ADMIN') {
-          this.router.navigate(['/admin/dashboard']); // Ruta para admin
+        
+        if (role === 'ADMIN') {
+          this.router.navigate(['/admin/dashboard']);
         } else if (role === 'USER') {
-          this.router.navigate(['/home']); // Ruta para user
+          this.router.navigate(['/home']);
         } else {
-          // Por si acaso el rol no es ninguno de los esperados
           this.router.navigate(['/login']);
-        } 
+        }
       },
-      error: () => alert('❌ Usuario o contraseña incorrectos')
+      error: () => {
+        alert('❌ Usuario o contraseña incorrectos');
+        this.isLoading = false;
+      }
     });
   }
 }

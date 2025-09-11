@@ -1,33 +1,79 @@
-<h1>Blacklist de JWT</h1>
-<p>Admin: {{ username }}</p>
-<nav>
-  <a routerLink="/admin/dashboard">Dashboard</a> |
-  <a routerLink="/admin/users">Gestión de Usuarios</a> |
-  <a routerLink="/admin/auth-logs">Logs de Autenticación</a> |
-  <a routerLink="/admin/blacklist">Blacklist de JWT</a>
-</nav>
-<p>JWT Blacklist</p>
+<div class="container mt-4">
+  <!-- Header Section -->
+  <div class="row mb-4">
+    <div class="col">
+      <h1 class="display-5">Blacklist de JWT</h1>
+      <p class="lead">Admin: {{ username }}</p>
+    </div>
+  </div>
 
-<div *ngIf="blacklistData && blacklistData.length > 0">
-  <h2>Lista Negra de JWT</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Token</th>
-        <th>Created At</th>
-        </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of blacklistData">
-        <td>{{ item.id }}</td>
-        <td>{{ item.token }}</td>
-        <td>{{ item.createdAt | date:'medium'  }}</td>
-        </tr>
-    </tbody>
-  </table>
-</div>
+  <!-- Navigation -->
+  <nav class="nav nav-pills mb-4">
+    <a class="nav-link" routerLink="/admin/dashboard">Dashboard</a>
+    <a class="nav-link" routerLink="/admin/users">Gestión de Usuarios</a>
+    <a class="nav-link" routerLink="/admin/auth-logs">Logs de Autenticación</a>
+    <a class="nav-link active" routerLink="/admin/blacklist">Blacklist de JWT</a>
+  </nav>
 
-<div *ngIf="blacklistData && blacklistData.length === 0">
-  <p>La lista negra está vacía.</p>
+  <!-- Table Card -->
+  <div class="card">
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+      <h2 class="h5 m-0">Lista Negra de JWT</h2>
+      <div class="col-md-4">
+        <input 
+          type="text" 
+          class="form-control" 
+          placeholder="Busca por token..." 
+          [(ngModel)]="searchTerm"
+        >
+      </div>
+    </div>
+    
+    <div class="card-body">
+      <div *ngIf="blacklistData && blacklistData.length > 0">
+        <div class="table-responsive">
+          <table class="table table-striped table-hover">
+            <thead class="table-dark">
+              <tr>
+                <th width="5%">ID</th>
+                <th width="75%">Token</th>
+                <th width="20%">Created At</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of filteredData | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+                <td>{{ item.id }}</td>
+                <td>
+                  <span class="text-truncate d-inline-block" style="max-width: 500px;">{{ item.token }}</span>
+                  <button class="btn btn-link btn-sm ms-2" (click)="showFullToken(item.token)">
+                    <i class="bi bi-eye"></i> Ver completo
+                  </button>
+                </td>
+                <td>{{ item.createdAt | date:'medium' }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Paginación -->
+          <div class="d-flex justify-content-between align-items-center mt-3">
+            <div class="pagination-info">
+              Mostrando {{ (p - 1) * itemsPerPage + 1 }} - 
+              {{ p * itemsPerPage > filteredData.length ? filteredData.length : p * itemsPerPage }}
+              de {{ filteredData.length }} registros
+            </div>
+            <pagination-controls 
+              (pageChange)="p = $event"
+              previousLabel="Anterior"
+              nextLabel="Siguiente">
+            </pagination-controls>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="filteredData.length === 0" 
+           class="alert alert-info mt-3" role="alert">
+        <p class="mb-0">No se encontraron registros.</p>
+      </div>
+    </div>
+  </div>
 </div>

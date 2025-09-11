@@ -1,7 +1,72 @@
-<h2>Registro</h2>
-<form (ngSubmit)="onSubmit()">
-  <input [(ngModel)]="username" name="username" placeholder="Usuario" required>
-  <input [(ngModel)]="password" name="password" type="password" placeholder="Contraseña" required>
-  <button type="submit">Registrar</button>
-</form>
-<p>¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a></p>
+<div class="container">
+  <div class="row justify-content-center min-vh-100 align-items-center">
+    <div class="col-md-6 col-lg-4">
+      <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white text-center py-3">
+          <h2 class="h4 mb-0">Register to MaxSoft</h2>
+        </div>
+        <div class="card-body p-4">
+          <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+            <div class="mb-3">
+              <label for="username" class="form-label">Usuario</label>
+              <div class="input-group">
+                <span class="input-group-text">
+                  <i class="bi bi-person-fill"></i>
+                </span>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  id="username"
+                  name="username"
+                  [(ngModel)]="username"
+                  required
+                  #usernameInput="ngModel"
+                  placeholder="Ingrese su usuario"
+                >
+              </div>
+              <div *ngIf="usernameInput.invalid && usernameInput.touched" class="text-danger small mt-1">
+                El usuario es requerido
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label for="password" class="form-label">Contraseña</label>
+              <div class="input-group">
+                <span class="input-group-text">
+                  <i class="bi bi-lock-fill"></i>
+                </span>
+                <input 
+                  type="password" 
+                  class="form-control" 
+                  id="password"
+                  name="password"
+                  [(ngModel)]="password"
+                  required
+                  #passwordInput="ngModel"
+                  placeholder="Ingrese su contraseña"
+                >
+              </div>
+              <div *ngIf="passwordInput.invalid && passwordInput.touched" class="text-danger small mt-1">
+                La contraseña es requerida
+              </div>
+            </div>
+
+            <button 
+              type="submit" 
+              class="btn btn-primary w-100"
+              [disabled]="loginForm.invalid"
+            >
+              <i class="bi bi-box-arrow-in-right me-2"></i>
+              Iniciar Sesión
+            </button>
+          </form>
+        </div>
+        <div class="card-footer text-center py-3 bg-light">
+          <p class="mb-0">¿Ya tienes cuenta? 
+            <a routerLink="/login" class="text-primary text-decoration-none">Ingresa aquí</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
