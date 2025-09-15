@@ -92,12 +92,13 @@ public class AdminController {
     // ✅ Actualizar usuario parcialmente
     @PatchMapping("/user/{id}")
     public ResponseEntity<User> update(@PathVariable Long id, @RequestBody UserUpdateDTO dto) {
-        return userRepository.findById(id).map(user -> {
-            dto.username().ifPresent(user::setUsername);
-            dto.password().ifPresent(p -> user.setPassword(passwordEncoder().encode(p)));
-            dto.role().ifPresent(user::setRole);
-            return ResponseEntity.ok(userRepository.save(user));
-        }).orElse(ResponseEntity.notFound().build());
+        try{
+            User updateuser= userService.updateUSERadmin(id, dto);
+            return ResponseEntity.ok(updateuser);
+        }catch(RuntimeException e){
+            return ResponseEntity.notFound().build();
+        }
+
     }
 
     // ✅ Eliminar usuario

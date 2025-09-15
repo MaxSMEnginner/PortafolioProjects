@@ -1,0 +1,60 @@
+.card {
+  border: none;
+}
+.card-header {
+  border-bottom: 2px solid var(--border-color);
+}
+
+.form-label {
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+  color: #FFFFFF;
+}
+
+.badge {
+  padding: 0.5em 1em;
+  font-weight: 500;
+}
+
+
+.form-control-plaintext{
+    color: #FFFFFF;
+}
+
+/* Estilos para el modal */
+.modal {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal.show {
+  display: block;
+  padding-right: 17px;
+  pointer-events: auto;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1040;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-dialog {
+  z-index: 1045;
+}
+
+.modal-content {
+  background-color: var(--card-bg);
+  color: var(--text-primary);
+}
+
+.modal-header {
+  border-bottom-color: var(--border-color);
+}
+
+.modal-footer {
+  border-top-color: var(--border-color);
+}

@@ -1,0 +1,120 @@
+<div class="container mt-4">
+  <div class="row mb-4">
+    <div class="col">
+      <h1 class="display-5 fw-bold">Mi Perfil</h1>
+      <p class="lead">Username: {{ username }}</p>
+    </div>
+  </div>
+
+  <nav class="nav nav-pills mb-4">
+    <a class="nav-link active" routerLink="/home">Dashboard</a>
+    <a class="nav-link" routerLink="/profile">Mi perfil</a>
+    <a class="nav-link" routerLink=".">Contacto</a>
+    <a class="nav-link" routerLink=".">Ayuda</a>
+  </nav>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="loading" class="text-center my-4">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="error" class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ error }}
+    <button type="button" class="btn-close" (click)="error = ''"></button>
+  </div>
+
+  <!-- Profile Information -->
+  <div class="card" *ngIf="userProfile && !loading">
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+      <h3 class="h5 mb-0">Información Personal</h3>
+      <button class="btn btn-sm btn-primary me-2" (click)="selectUser(userProfile)">
+        <i class="bi bi-pencil"></i> Editar
+      </button>
+      <span class="badge" [ngClass]="userProfile.role === 'ROLE_ADMIN' ? 'bg-danger' : 'bg-primary'">
+        {{ userProfile.role }}
+      </span>
+    </div>
+    
+    <div class="card-body">
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label class="form-label text-bolder">ID de Usuario</label>
+            <p class="form-control-plaintext">{{ userProfile.id }}</p>
+          </div>
+          <div class="mb-3">
+            <label class="form-label text-bolder">Nombre de Usuario</label>
+            <p class="form-control-plaintext">{{ userProfile.username }}</p>
+          </div>
+        </div>
+        
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label class="form-label text-bolder">Fecha de Registro</label>
+            <p class="form-control-plaintext">{{ userProfile.createdAt | date:'medium' }}</p>
+          </div>
+          <div class="mb-3">
+            <label class="form-label text-bolder">Última Actualización</label>
+            <p class="form-control-plaintext">{{ userProfile.updatedAt | date:'medium' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" [class.show]="showModal" tabindex="-1" [style.display]="showModal ? 'block' : 'none'">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar Usuario: {{ selectedUser?.username }}</h5>
+        <button type="button" class="btn-close" (click)="closeModal()"></button>
+      </div>
+      <div class="modal-body">
+        <form #updateForm="ngForm">
+          <div class="mb-3">
+            <label class="form-label">Username</label>
+            <input 
+              type="text" 
+              class="form-control" 
+              [(ngModel)]="updateDTO.username"
+              name="username"
+              minlength="3"
+              placeholder="Nuevo username"
+            >
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input 
+              type="password" 
+              class="form-control" 
+              [(ngModel)]="updateDTO.password"
+              name="password"
+              minlength="6"
+              placeholder="Nueva contraseña"
+            >
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">
+          Cancelar
+        </button>
+        <button 
+          type="button" 
+          class="btn btn-primary" 
+          (click)="updateUser()"
+          [disabled]="loading"
+        >
+          <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+          Guardar Cambios
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop fade show"></div>
+</div>

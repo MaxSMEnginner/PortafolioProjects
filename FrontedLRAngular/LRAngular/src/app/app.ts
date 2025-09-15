@@ -3,11 +3,12 @@ import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  standalone: true,          // 👈 necesario porque no tienes AppModule
+  standalone: true,       
   imports: [RouterOutlet],
   templateUrl: './app.html',
-  styleUrls: ['./app.css']   // 👈 plural y en array
+  styleUrls: ['./app.css']  
 })
 export class App {
+  /* static menganita: string='menganita'; */
   protected readonly title = signal('LRAngular');
 }

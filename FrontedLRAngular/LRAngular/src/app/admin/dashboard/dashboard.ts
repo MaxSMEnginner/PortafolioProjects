@@ -5,16 +5,19 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../auth/auth.service';
 import { HttpClient } from '@angular/common/http'; // 👈 Importa HttpClient
 import { RouterLink } from '@angular/router';
+/* import { App } from '../../app'; */
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink/* ,App */],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css']
 })
 export class DashboardComponent implements OnInit { // 👈 Implementa OnInit
   
+
+  /* menganita = App.menganita; */
   welcomeMessage = 'Cargando...'; // Mensaje por defecto
   username = ''; // Variable para almacenar el nombre de usuario
 

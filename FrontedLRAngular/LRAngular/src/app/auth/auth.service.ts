@@ -44,18 +44,18 @@ export class AuthService {
 
   // Método auxiliar para limpiar tokens y redirigir
   private clearSession(): void {
-    localStorage.removeItem('jwt');
+    localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     this.router.navigate(['/login']);
   }
 
   saveTokens(access: string, refresh: string) {
-    localStorage.setItem('jwt', access);
+    localStorage.setItem('accessToken', access);
     localStorage.setItem('refreshToken', refresh);
   }
 
   getToken(): string | null {
-    return localStorage.getItem('jwt');
+    return localStorage.getItem('accessToken');
   }
 
   getRefreshToken(): string | null{

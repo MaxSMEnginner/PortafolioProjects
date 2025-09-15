@@ -8,7 +8,7 @@ import { DashboardComponent as AdminDashboard } from './admin/dashboard/dashboar
 import { UsersComponent as AdminUsers } from './admin/users/users'; // Renombramos para claridad
 import { AuthLogsComponent as AdminAuthLogs } from './admin/auth-logs/auth-logs'; // Renombramos para claridad
 import { BlacklistComponent as AdminBL } from './admin/blacklist/blacklist'; // Renombramos para claridad
-
+import { ProfileComponent as Profile} from './home/profile/profile'; // Renombramos para claridad
 import { authGuard } from './auth/auth.guard';
 import { adminGuard } from './auth/admin.guard';
 
@@ -22,6 +22,12 @@ export const routes: Routes = [
     path: 'home', 
     component: HomeComponent, 
     canActivate: [authGuard] 
+  },
+
+  {
+    path: 'profile',
+    component: Profile,
+    canActivate: [authGuard]
   },
 
   // Sección para administradores

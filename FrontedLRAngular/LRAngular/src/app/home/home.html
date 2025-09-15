@@ -1,2 +1,29 @@
-<h2>{{ welcomeMessage }}</h2>
-<button (click)="logout()">Cerrar sesión</button>
+<div class="container mt-4">
+  <div class="row mb-4">
+    <div class="col">
+      <h1 class="display-5 fw-bold">Panel de Usuario</h1>
+      <p class="lead">Username: {{ username }}</p>
+    </div>
+  </div>
+
+
+
+  <nav class="nav nav-pills mb-4">
+    <a class="nav-link active" routerLink="/home">Dashboard</a>
+    <a class="nav-link" routerLink="/profile">Mi perfil</a>
+    <a class="nav-link" routerLink=".">Contacto</a>
+    <a class="nav-link" routerLink=".">Ayuda</a>
+
+  </nav>
+
+  <div class="card">
+    <div class="card-body">
+      <h2 class="h5 mb-3">Bienvenido al Panel de Usuario</h2>
+      <p>{{welcomeMessage}}</p>
+      <button class="btn btn-danger" (click)="logout()">Cerrar sesión</button>
+
+  </div>
+
+</div>
+
+
