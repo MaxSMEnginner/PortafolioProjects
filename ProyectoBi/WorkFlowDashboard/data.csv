@@ -1,0 +1,501 @@
+id,Fecha,Pais,Cliente,TipoNegocio,Gastos,Ingresos
+1,2024-06-25,Honduras,"Textiles del Plata",Automotriz,16233.51,22139.74
+2,2024-11-26,"Estados Unidos","Textiles del Plata",Turismo,35163.64,96635.44
+3,2025-08-17,México,"Distribuidora Maya",Farmacéutica,7664.14,8965.85
+4,2025-03-16,"El Salvador","Consultoría Global Andes",Aviación,17926.16,28560.42
+5,2024-04-02,"El Salvador","Automotriz del Cono Sur",Tecnología,29380.63,37980.76
+6,2025-01-28,México,"Distribuidora Maya",Aviación,30140.56,57577.15
+7,2025-03-22,Argentina,"Minería Patagónica",Energía,38959.21,53567.75
+8,2023-02-01,Venezuela,"Constructora Pacífico",Turismo,27157.51,54030.20
+9,2023-12-17,Honduras,"Minería Patagónica",Construcción,36475.68,71810.59
+10,2024-01-09,Uruguay,"Automotriz del Cono Sur",Automotriz,17627.08,35410.20
+11,2023-04-14,Venezuela,"Alimentos Orgánicos Sierra",Telecomunicaciones,7766.94,9599.80
+12,2023-06-11,"República Dominicana","Consultoría Global Andes",Consultoría,14784.25,35861.63
+13,2023-11-16,Perú,"Energía Verde del Norte",Inmobiliaria,11497.92,23125.06
+14,2025-12-25,Venezuela,"Constructora Pacífico",Comercio,15656.90,33107.18
+15,2023-04-01,"Costa Rica","Tecnologías Andinas S.A.",Farmacéutica,38932.25,54929.88
+16,2024-05-30,Paraguay,"AgroExport del Caribe",Minería,25505.35,59533.97
+17,2025-02-17,Argentina,"Software Águila",Alimentos,35406.99,79944.23
+18,2023-02-02,Venezuela,"Automotriz del Cono Sur",Agricultura,32454.00,62114.85
+19,2023-11-08,Ecuador,"Logística Panamericana",Textiles,40111.43,67286.53
+20,2023-11-30,Ecuador,"Retail Amazonas",Agricultura,34034.02,52262.69
+21,2025-10-06,Cuba,"Retail Amazonas",Aviación,37081.55,41522.44
+22,2023-11-30,Argentina,"Textiles del Plata",Construcción,26652.65,52757.08
+23,2025-02-12,"Costa Rica","Inmobiliaria Nueva Esperanza",Textiles,11101.93,22387.97
+24,2024-10-26,Argentina,"Innovación Amazónica Ltda.",Construcción,24673.93,27435.29
+25,2023-07-10,"El Salvador","Retail Amazonas",Farmacéutica,18187.26,49489.89
+26,2024-10-13,Venezuela,"Tecnologías Andinas S.A.",Alimentos,21775.61,64641.48
+27,2024-05-23,Brasil,"Software Águila",Inmobiliaria,16003.40,31436.57
+28,2025-06-13,Guatemala,"Farmacéutica Caribeña",Alimentos,19421.68,36427.83
+29,2023-01-03,Colombia,"Servicios Financieros Río Grande",Finanzas,1651.42,4010.09
+30,2023-12-27,"Costa Rica","Automotriz del Cono Sur",Inmobiliaria,13099.35,33136.52
+31,2025-01-17,Ecuador,"Distribuidora Maya",Farmacéutica,17489.84,41224.16
+32,2025-11-14,Chile,"Logística Panamericana",Turismo,18970.04,31976.82
+33,2024-05-27,Ecuador,"Inmobiliaria Nueva Esperanza",Consultoría,25320.62,52038.21
+34,2024-01-24,Perú,"Tecnologías Andinas S.A.",Tecnología,9912.20,16820.66
+35,2024-03-29,Panamá,"Distribuidora Maya",Farmacéutica,32950.07,97495.09
+36,2025-06-07,Venezuela,"Farmacéutica Caribeña",Farmacéutica,5790.42,13595.04
+37,2025-03-18,México,"Automotriz del Cono Sur",Construcción,6558.28,19024.39
+38,2025-05-02,Ecuador,"Servicios Financieros Río Grande",Aviación,48312.46,87543.83
+39,2023-10-28,México,"Logística Panamericana",Comercio,6626.22,10597.15
+40,2024-08-27,Cuba,"Minería Patagónica",Comercio,39120.69,72791.50
+41,2024-02-04,Panamá,"Comunicaciones Atlántico",Construcción,4626.75,12483.19
+42,2025-12-23,Uruguay,"Farmacéutica Caribeña",Consultoría,2597.42,6338.65
+43,2023-05-26,Panamá,"Logística Panamericana",Construcción,9740.90,11073.66
+44,2024-09-04,"República Dominicana","Innovación Amazónica Ltda.",Agricultura,41054.23,49409.99
+45,2024-11-11,Uruguay,"Inmobiliaria Nueva Esperanza",Automotriz,30376.73,58577.95
+46,2025-01-31,Bolivia,"Software Águila",Inmobiliaria,14744.44,38189.57
+47,2023-08-12,Argentina,"Consultoría Global Andes",Comercio,41437.13,78764.75
+48,2023-11-03,Colombia,"Tecnologías Andinas S.A.",Turismo,3690.16,5080.89
+49,2025-09-10,Guatemala,"Alimentos Orgánicos Sierra",Farmacéutica,20953.64,52158.60
+50,2025-02-09,México,"Alimentos Orgánicos Sierra",Automotriz,47732.13,97008.97
+51,2025-05-30,Bolivia,"Retail Amazonas",Comercio,17548.01,47420.56
+52,2024-07-15,Uruguay,"Software Águila",Telecomunicaciones,47582.88,65808.20
+53,2024-05-31,Bolivia,"Inmobiliaria Nueva Esperanza",Telecomunicaciones,32278.91,75116.53
+54,2025-08-15,Honduras,"AgroExport del Caribe",Alimentos,18319.31,45050.84
+55,2024-08-20,Venezuela,"Logística Panamericana",Alimentos,32686.73,50459.77
+56,2025-12-30,Bolivia,"Alimentos Orgánicos Sierra",Minería,23767.51,26516.14
+57,2025-07-19,Cuba,"Energía Verde del Norte",Tecnología,10141.98,22687.68
+58,2024-10-26,Venezuela,"Software Águila",Aviación,9224.20,17663.49
+59,2023-06-26,Canadá,"Minería Patagónica",Construcción,5082.41,7394.07
+60,2023-08-11,Ecuador,"Tecnologías Andinas S.A.",Textiles,42268.32,99435.16
+61,2023-05-13,Panamá,"Turismo Colonial S.A.",Minería,15604.58,27995.22
+62,2023-08-01,"Estados Unidos","Energía Verde del Norte",Construcción,12710.91,17216.69
+63,2025-07-20,México,"Automotriz del Cono Sur",Consultoría,4425.83,9990.45
+64,2024-01-26,México,"Retail Amazonas",Inmobiliaria,21708.54,26660.98
+65,2025-07-16,Argentina,"Inmobiliaria Nueva Esperanza",Logística,47679.22,59029.10
+66,2023-07-24,Bolivia,"Logística Panamericana",Comercio,9519.58,22929.67
+67,2025-10-13,"El Salvador","Software Águila",Aviación,39535.26,80012.70
+68,2024-10-15,"El Salvador","Constructora Pacífico",Aviación,28883.32,51700.71
+69,2024-01-23,"El Salvador","Alimentos Orgánicos Sierra",Farmacéutica,38707.48,61502.51
+70,2024-12-12,Brasil,"Energía Verde del Norte",Logística,10253.65,18708.27
+71,2025-01-14,México,"Innovación Amazónica Ltda.",Construcción,45940.15,64181.78
+72,2023-08-02,México,"Minería Patagónica",Energía,10624.39,18286.68
+73,2023-06-14,México,"Logística Panamericana",Finanzas,17005.67,21322.51
+74,2023-07-20,Perú,"Inmobiliaria Nueva Esperanza",Logística,13459.93,32096.50
+75,2023-09-14,Canadá,"Servicios Financieros Río Grande",Construcción,1119.57,2561.34
+76,2025-02-24,"Costa Rica","Comunicaciones Atlántico",Textiles,35442.32,90673.69
+77,2024-06-19,Paraguay,"Automotriz del Cono Sur",Energía,35089.53,49019.20
+78,2025-01-30,Argentina,"AgroExport del Caribe",Textiles,1037.58,2964.78
+79,2023-02-26,Uruguay,"Aviación Andina",Construcción,1492.16,3824.94
+80,2023-02-22,"Costa Rica","Textiles del Plata",Inmobiliaria,45780.40,102973.80
+81,2025-02-18,"Costa Rica","Textiles del Plata",Turismo,19771.15,47598.70
+82,2025-03-02,Guatemala,"Retail Amazonas",Tecnología,39415.68,97174.19
+83,2023-10-28,"Costa Rica","Retail Amazonas",Logística,40567.78,108608.24
+84,2024-11-12,Venezuela,"Automotriz del Cono Sur",Logística,10058.30,14800.64
+85,2025-01-23,"Estados Unidos","Tecnologías Andinas S.A.",Finanzas,21928.34,44513.25
+86,2025-11-15,Paraguay,"Turismo Colonial S.A.",Logística,41586.32,110890.61
+87,2025-10-31,Bolivia,"Retail Amazonas",Finanzas,6018.26,8508.63
+88,2024-03-25,Honduras,"Alimentos Orgánicos Sierra",Agricultura,20369.80,40696.38
+89,2024-04-30,Colombia,"Servicios Financieros Río Grande",Telecomunicaciones,45541.23,99656.00
+90,2024-06-13,Perú,"Constructora Pacífico",Finanzas,6928.44,8363.63
+91,2023-10-11,México,"Innovación Amazónica Ltda.",Agricultura,48347.62,142695.89
+92,2025-04-15,Argentina,"Retail Amazonas",Tecnología,48859.86,85187.86
+93,2023-07-29,Cuba,"Innovación Amazónica Ltda.",Finanzas,43403.79,128623.59
+94,2025-09-09,Colombia,"Turismo Colonial S.A.",Automotriz,43741.61,73028.97
+95,2025-08-31,Cuba,"Farmacéutica Caribeña",Aviación,28046.46,73030.28
+96,2024-06-17,Uruguay,"Farmacéutica Caribeña",Minería,19279.91,28131.94
+97,2024-03-11,Colombia,"Retail Amazonas",Inmobiliaria,32244.09,47054.12
+98,2023-10-31,Honduras,"Software Águila",Comercio,23391.03,52947.44
+99,2025-01-07,"Costa Rica","Turismo Colonial S.A.",Energía,24517.99,53751.40
+100,2024-11-17,Chile,"Alimentos Orgánicos Sierra",Tecnología,32862.65,88821.87
+101,2024-08-31,México,"Retail Amazonas",Tecnología,2068.50,3172.22
+102,2024-08-13,Perú,"Textiles del Plata",Logística,42682.53,83969.92
+103,2023-05-31,Colombia,"Constructora Pacífico",Energía,12386.49,17741.96
+104,2024-07-09,Brasil,"Innovación Amazónica Ltda.",Construcción,12977.47,21134.78
+105,2023-10-21,Guatemala,"Retail Amazonas",Consultoría,4594.09,11959.33
+106,2025-05-21,Canadá,"Distribuidora Maya",Alimentos,12625.01,15252.23
+107,2024-10-16,Venezuela,"Energía Verde del Norte",Logística,9064.16,23592.94
+108,2025-03-26,Brasil,"Farmacéutica Caribeña",Construcción,19158.17,40494.11
+109,2024-07-28,Brasil,"Tecnologías Andinas S.A.",Inmobiliaria,47245.78,115278.74
+110,2024-05-19,Argentina,"AgroExport del Caribe",Finanzas,28875.64,83816.22
+111,2024-09-21,"Costa Rica","AgroExport del Caribe",Energía,26033.29,37828.25
+112,2025-08-19,Venezuela,"Distribuidora Maya",Telecomunicaciones,24244.13,35157.36
+113,2024-09-01,"República Dominicana","AgroExport del Caribe",Finanzas,35102.01,75737.48
+114,2023-08-05,Honduras,"Consultoría Global Andes",Textiles,2357.00,4698.60
+115,2025-10-20,Cuba,"Tecnologías Andinas S.A.",Consultoría,31348.73,69584.74
+116,2024-05-27,Panamá,"Inmobiliaria Nueva Esperanza",Automotriz,16081.87,43904.82
+117,2025-04-28,Canadá,"Textiles del Plata",Textiles,36647.82,51350.63
+118,2024-08-27,Uruguay,"Energía Verde del Norte",Agricultura,3247.64,7131.57
+119,2024-07-25,Colombia,"Minería Patagónica",Farmacéutica,47414.70,94444.81
+120,2024-10-23,Ecuador,"Textiles del Plata",Automotriz,21425.12,28507.35
+121,2024-12-18,Panamá,"Turismo Colonial S.A.",Finanzas,15349.66,38660.38
+122,2023-01-30,"República Dominicana","Innovación Amazónica Ltda.",Consultoría,5417.82,8032.23
+123,2024-07-21,Venezuela,"Servicios Financieros Río Grande",Finanzas,1212.89,2816.03
+124,2025-05-07,Perú,"Turismo Colonial S.A.",Textiles,35144.68,48674.03
+125,2024-08-19,Canadá,"Servicios Financieros Río Grande",Turismo,13346.45,28522.22
+126,2025-04-02,Brasil,"Turismo Colonial S.A.",Automotriz,5157.03,12371.97
+127,2023-01-04,Paraguay,"Textiles del Plata",Turismo,4125.61,6661.07
+128,2025-07-17,Chile,"Aviación Andina",Consultoría,10501.57,24362.04
+129,2024-11-03,"República Dominicana","Logística Panamericana",Energía,3875.07,10282.72
+130,2023-03-20,Ecuador,"Automotriz del Cono Sur",Tecnología,23799.54,48904.19
+131,2023-06-27,Guatemala,"Tecnologías Andinas S.A.",Aviación,43838.57,97097.74
+132,2025-04-22,Canadá,"Retail Amazonas",Comercio,7103.06,11032.03
+133,2025-06-07,Paraguay,"Inmobiliaria Nueva Esperanza",Automotriz,36099.24,86882.76
+134,2023-05-21,Guatemala,"AgroExport del Caribe",Automotriz,17964.99,36544.03
+135,2025-02-01,Perú,"Automotriz del Cono Sur",Telecomunicaciones,16088.17,43063.23
+136,2025-08-10,México,"Consultoría Global Andes",Aviación,26044.68,64891.66
+137,2023-03-14,Ecuador,"AgroExport del Caribe",Tecnología,38845.91,72789.37
+138,2024-10-14,Colombia,"Software Águila",Comercio,36977.72,89407.84
+139,2025-04-14,México,"Textiles del Plata",Construcción,31567.00,85325.65
+140,2024-03-18,"El Salvador","Turismo Colonial S.A.",Alimentos,32128.65,63206.00
+141,2024-03-10,Canadá,"Turismo Colonial S.A.",Farmacéutica,15959.79,42511.75
+142,2024-09-15,"República Dominicana","Aviación Andina",Agricultura,31679.37,82737.45
+143,2024-05-25,Uruguay,"Inmobiliaria Nueva Esperanza",Inmobiliaria,39630.38,81245.49
+144,2024-04-01,Uruguay,"Automotriz del Cono Sur",Finanzas,14485.84,42151.88
+145,2024-08-06,Colombia,"Automotriz del Cono Sur",Alimentos,48970.32,111699.53
+146,2024-10-04,Uruguay,"Retail Amazonas",Turismo,43279.93,119317.55
+147,2025-03-07,Brasil,"Distribuidora Maya",Tecnología,46009.56,134619.80
+148,2024-03-08,Perú,"Textiles del Plata",Textiles,36819.03,40602.91
+149,2025-07-20,Perú,"Logística Panamericana",Farmacéutica,34629.95,39303.25
+150,2025-11-18,Guatemala,"Distribuidora Maya",Tecnología,43414.78,122963.51
+151,2024-09-21,Panamá,"Turismo Colonial S.A.",Consultoría,17971.34,35821.84
+152,2023-07-05,"República Dominicana","Logística Panamericana",Automotriz,39455.86,69812.84
+153,2023-08-25,Guatemala,"Comunicaciones Atlántico",Construcción,37256.37,94079.44
+154,2025-11-25,"República Dominicana","Aviación Andina",Consultoría,15578.41,23942.43
+155,2023-07-11,Argentina,"Aviación Andina",Automotriz,48482.15,120737.71
+156,2023-05-03,Perú,"Inmobiliaria Nueva Esperanza",Telecomunicaciones,7455.20,20490.98
+157,2025-10-24,Canadá,"Logística Panamericana",Inmobiliaria,37334.53,105920.20
+158,2024-08-24,Argentina,"Consultoría Global Andes",Agricultura,19935.00,52063.12
+159,2025-03-07,Argentina,"Consultoría Global Andes",Automotriz,42234.49,71365.75
+160,2025-06-11,"República Dominicana","Software Águila",Tecnología,14033.87,26072.31
+161,2023-04-29,Paraguay,"Consultoría Global Andes",Alimentos,10224.27,16944.79
+162,2023-11-16,"República Dominicana","Turismo Colonial S.A.",Aviación,12817.81,24056.77
+163,2024-01-16,Brasil,"Innovación Amazónica Ltda.",Logística,13646.26,38917.06
+164,2025-06-13,Bolivia,"Constructora Pacífico",Logística,46549.35,98091.61
+165,2023-03-20,"República Dominicana","Automotriz del Cono Sur",Energía,43224.82,99520.97
+166,2025-12-31,"República Dominicana","Retail Amazonas",Textiles,48373.53,111911.23
+167,2025-01-04,Venezuela,"Constructora Pacífico",Construcción,16465.98,40320.35
+168,2023-01-17,Cuba,"Retail Amazonas",Alimentos,42384.77,69605.33
+169,2025-09-26,Ecuador,"Tecnologías Andinas S.A.",Minería,44921.53,59538.06
+170,2025-06-01,Panamá,"Logística Panamericana",Agricultura,24777.13,70682.95
+171,2023-02-14,Perú,"Automotriz del Cono Sur",Aviación,19245.56,29121.62
+172,2024-07-04,Argentina,"Textiles del Plata",Logística,2209.22,4109.70
+173,2025-02-23,Honduras,"Servicios Financieros Río Grande",Alimentos,30184.58,66038.18
+174,2025-09-16,Perú,"Logística Panamericana",Consultoría,18892.89,33702.45
+175,2023-10-01,Paraguay,"Minería Patagónica",Finanzas,25721.04,62655.67
+176,2024-10-31,Argentina,"Retail Amazonas",Construcción,20192.27,59486.27
+177,2024-06-26,Uruguay,"Farmacéutica Caribeña",Logística,36713.42,53073.63
+178,2024-11-28,Honduras,"Consultoría Global Andes",Construcción,32416.72,48709.16
+179,2024-08-17,Panamá,"Constructora Pacífico",Energía,42376.03,52335.45
+180,2025-07-25,"República Dominicana","Turismo Colonial S.A.",Logística,8283.43,22288.21
+181,2025-07-19,Canadá,"Distribuidora Maya",Farmacéutica,12252.22,16187.58
+182,2025-04-18,Venezuela,"Servicios Financieros Río Grande",Consultoría,21826.98,32801.42
+183,2023-10-20,Argentina,"Textiles del Plata",Logística,29714.00,37050.05
+184,2024-11-05,Venezuela,"Software Águila",Construcción,43644.80,76323.04
+185,2023-05-04,Chile,"Textiles del Plata",Energía,1850.21,4784.83
+186,2023-01-04,México,"Energía Verde del Norte",Logística,35612.02,72741.66
+187,2024-03-31,Brasil,"Farmacéutica Caribeña",Farmacéutica,33724.71,50527.95
+188,2024-03-07,"Costa Rica","Farmacéutica Caribeña",Farmacéutica,5550.82,9612.01
+189,2023-03-31,Bolivia,"Turismo Colonial S.A.",Farmacéutica,24946.70,35200.09
+190,2025-10-22,Guatemala,"Constructora Pacífico",Turismo,33418.35,50566.17
+191,2023-09-23,Guatemala,"Inmobiliaria Nueva Esperanza",Aviación,44884.89,75841.75
+192,2024-03-12,"El Salvador","Alimentos Orgánicos Sierra",Comercio,22034.10,39044.43
+193,2023-07-04,"República Dominicana","Inmobiliaria Nueva Esperanza",Tecnología,45497.49,129056.58
+194,2023-06-08,Cuba,"Automotriz del Cono Sur",Textiles,37587.07,104689.96
+195,2023-08-19,Venezuela,"Turismo Colonial S.A.",Agricultura,22996.26,44381.12
+196,2025-04-23,Ecuador,"Minería Patagónica",Construcción,25404.88,57592.02
+197,2023-06-28,Cuba,"Farmacéutica Caribeña",Automotriz,42872.67,88496.76
+198,2024-02-23,Chile,"Constructora Pacífico",Finanzas,20663.69,40487.48
+199,2025-10-29,Canadá,"Innovación Amazónica Ltda.",Automotriz,25734.64,36072.11
+200,2023-04-09,Perú,"Aviación Andina",Inmobiliaria,2148.49,3626.06
+201,2024-02-03,Perú,"Automotriz del Cono Sur",Consultoría,16692.24,21272.35
+202,2024-06-19,Argentina,"Distribuidora Maya",Farmacéutica,15444.22,20748.42
+203,2023-09-29,Brasil,"Aviación Andina",Farmacéutica,8706.09,24803.45
+204,2024-07-18,"Estados Unidos","Comunicaciones Atlántico",Telecomunicaciones,29290.06,61469.43
+205,2023-10-05,Uruguay,"Logística Panamericana",Minería,6657.74,15336.80
+206,2024-03-04,Chile,"Constructora Pacífico",Telecomunicaciones,47370.81,137022.09
+207,2023-06-05,"El Salvador","Logística Panamericana",Inmobiliaria,1867.79,2934.22
+208,2024-03-23,Guatemala,"Retail Amazonas",Comercio,36041.29,65130.68
+209,2025-08-06,Argentina,"Turismo Colonial S.A.",Aviación,16796.81,29819.08
+210,2025-11-11,"República Dominicana","Farmacéutica Caribeña",Turismo,36169.94,42214.38
+211,2024-06-11,Panamá,"Inmobiliaria Nueva Esperanza",Automotriz,1363.07,1993.94
+212,2023-02-22,Venezuela,"Servicios Financieros Río Grande",Turismo,46787.91,122772.95
+213,2024-02-24,Cuba,"Innovación Amazónica Ltda.",Construcción,17009.78,21518.26
+214,2023-07-23,"República Dominicana","Alimentos Orgánicos Sierra",Textiles,36744.51,74315.58
+215,2024-11-21,Venezuela,"AgroExport del Caribe",Consultoría,40721.34,118198.65
+216,2024-05-30,Panamá,"Software Águila",Logística,46400.82,94627.28
+217,2025-01-01,Colombia,"Energía Verde del Norte",Energía,48806.42,102583.71
+218,2023-02-20,"Costa Rica","Minería Patagónica",Tecnología,48252.49,65830.96
+219,2025-06-25,México,"Comunicaciones Atlántico",Tecnología,8693.82,18233.79
+220,2024-11-18,Cuba,"Distribuidora Maya",Minería,29719.52,45321.19
+221,2024-07-03,Paraguay,"Alimentos Orgánicos Sierra",Agricultura,48688.49,54098.25
+222,2024-11-17,Brasil,"Textiles del Plata",Inmobiliaria,45301.14,109192.21
+223,2023-07-23,"Estados Unidos","AgroExport del Caribe",Aviación,28884.56,39506.59
+224,2023-02-11,Paraguay,"Innovación Amazónica Ltda.",Energía,37630.42,84681.23
+225,2025-11-29,Honduras,"Constructora Pacífico",Minería,11280.22,28938.87
+226,2024-11-30,Ecuador,"AgroExport del Caribe",Inmobiliaria,5789.48,14842.76
+227,2024-03-15,Cuba,"Constructora Pacífico",Turismo,30930.14,69120.53
+228,2023-04-28,Guatemala,"Energía Verde del Norte",Consultoría,29255.00,62580.63
+229,2023-11-10,Perú,"Turismo Colonial S.A.",Construcción,23179.03,41265.11
+230,2025-04-21,Chile,"Logística Panamericana",Comercio,34368.89,79558.33
+231,2023-06-09,Venezuela,"Minería Patagónica",Consultoría,9616.94,24813.92
+232,2023-10-27,Canadá,"Turismo Colonial S.A.",Telecomunicaciones,18461.94,22121.32
+233,2025-11-28,Guatemala,"Turismo Colonial S.A.",Aviación,20158.54,59911.14
+234,2023-05-18,"Costa Rica","Servicios Financieros Río Grande",Textiles,11823.29,33781.82
+235,2024-01-16,Ecuador,"Alimentos Orgánicos Sierra",Telecomunicaciones,49263.81,120018.34
+236,2025-10-06,Venezuela,"Innovación Amazónica Ltda.",Consultoría,25546.39,56611.39
+237,2023-06-06,Uruguay,"Aviación Andina",Automotriz,19504.51,34175.61
+238,2023-04-12,"Costa Rica","Aviación Andina",Comercio,39103.14,81453.61
+239,2024-04-17,Venezuela,"Turismo Colonial S.A.",Alimentos,19314.23,43793.15
+240,2024-11-04,Ecuador,"Constructora Pacífico",Logística,38379.95,58529.38
+241,2025-09-07,Panamá,"Consultoría Global Andes",Automotriz,13211.87,19726.60
+242,2024-11-27,"Estados Unidos","Tecnologías Andinas S.A.",Telecomunicaciones,32486.82,73368.96
+243,2025-10-04,Argentina,"Minería Patagónica",Inmobiliaria,40907.72,90728.58
+244,2024-09-07,Perú,"Innovación Amazónica Ltda.",Construcción,38996.95,100962.89
+245,2025-11-28,Argentina,"Constructora Pacífico",Tecnología,11525.28,31643.97
+246,2024-03-08,Guatemala,"Constructora Pacífico",Farmacéutica,37425.23,89216.05
+247,2024-06-08,"República Dominicana","Servicios Financieros Río Grande",Minería,41535.62,76732.31
+248,2023-02-22,"El Salvador","Automotriz del Cono Sur",Farmacéutica,13614.21,25992.00
+249,2024-04-13,Colombia,"Consultoría Global Andes",Logística,16876.71,23337.48
+250,2023-10-25,Bolivia,"Comunicaciones Atlántico",Finanzas,44159.90,64726.70
+251,2024-12-16,Canadá,"Textiles del Plata",Energía,8150.75,14124.53
+252,2024-09-21,Cuba,"Automotriz del Cono Sur",Energía,29772.31,80216.64
+253,2024-09-04,Bolivia,"AgroExport del Caribe",Construcción,13253.78,22637.92
+254,2023-12-24,Ecuador,"Turismo Colonial S.A.",Aviación,21153.32,23933.32
+255,2024-10-27,México,"Automotriz del Cono Sur",Consultoría,3963.10,9139.46
+256,2025-02-16,"República Dominicana","Tecnologías Andinas S.A.",Textiles,33640.63,60579.30
+257,2025-07-04,Uruguay,"Automotriz del Cono Sur",Finanzas,19935.68,27599.17
+258,2023-10-14,Guatemala,"AgroExport del Caribe",Aviación,46989.71,69452.37
+259,2025-01-16,Brasil,"Tecnologías Andinas S.A.",Energía,41436.76,64143.40
+260,2024-09-03,Uruguay,"Alimentos Orgánicos Sierra",Turismo,11672.36,27629.47
+261,2025-08-19,Argentina,"Alimentos Orgánicos Sierra",Logística,39720.48,67078.38
+262,2024-03-02,Ecuador,"Servicios Financieros Río Grande",Tecnología,13127.18,36971.71
+263,2023-08-26,Uruguay,"Textiles del Plata",Alimentos,35689.13,88456.87
+264,2025-05-01,Bolivia,"Software Águila",Tecnología,7247.24,19579.23
+265,2023-10-14,"República Dominicana","Servicios Financieros Río Grande",Agricultura,23042.25,62998.73
+266,2024-06-09,Colombia,"Aviación Andina",Finanzas,23187.12,48731.81
+267,2025-12-27,Venezuela,"Turismo Colonial S.A.",Alimentos,11421.68,17820.93
+268,2024-07-31,"Estados Unidos","Aviación Andina",Comercio,20872.09,39811.41
+269,2025-07-06,Chile,"Farmacéutica Caribeña",Aviación,10969.70,18121.72
+270,2024-11-07,México,"Servicios Financieros Río Grande",Comercio,11755.66,21156.32
+271,2025-07-09,Uruguay,"Distribuidora Maya",Tecnología,49960.00,99578.90
+272,2023-12-10,México,"Comunicaciones Atlántico",Construcción,25289.26,69505.86
+273,2025-09-28,Venezuela,"Consultoría Global Andes",Automotriz,19170.86,42676.42
+274,2025-08-08,Cuba,"Retail Amazonas",Agricultura,42618.16,73717.05
+275,2024-02-12,Ecuador,"Distribuidora Maya",Aviación,10042.33,22277.83
+276,2024-07-07,Chile,"Comunicaciones Atlántico",Tecnología,22206.98,43039.66
+277,2023-10-09,Honduras,"Turismo Colonial S.A.",Finanzas,5225.13,13397.06
+278,2024-12-06,Uruguay,"Constructora Pacífico",Aviación,5374.64,15304.40
+279,2023-10-18,"El Salvador","Innovación Amazónica Ltda.",Construcción,42059.62,55043.95
+280,2025-07-07,"República Dominicana","Software Águila",Construcción,48627.56,91279.03
+281,2025-05-30,Uruguay,"Servicios Financieros Río Grande",Minería,33229.35,96924.71
+282,2023-10-04,Panamá,"Farmacéutica Caribeña",Inmobiliaria,49905.11,67684.30
+283,2024-04-08,Venezuela,"Energía Verde del Norte",Comercio,20891.79,34573.96
+284,2024-11-10,Chile,"Software Águila",Energía,46317.74,107337.77
+285,2025-03-02,Guatemala,"Software Águila",Turismo,34598.72,50231.18
+286,2023-10-09,Perú,"Servicios Financieros Río Grande",Logística,22178.89,42342.29
+287,2024-10-23,"Costa Rica","Constructora Pacífico",Telecomunicaciones,45619.55,122864.68
+288,2025-08-10,"República Dominicana","Inmobiliaria Nueva Esperanza",Comercio,7768.61,9762.80
+289,2025-10-15,Ecuador,"Tecnologías Andinas S.A.",Textiles,40388.97,80585.31
+290,2023-05-11,Chile,"Textiles del Plata",Finanzas,30986.84,86046.61
+291,2024-09-25,Paraguay,"Consultoría Global Andes",Telecomunicaciones,16235.24,42816.60
+292,2024-10-24,Cuba,"Retail Amazonas",Construcción,48108.69,101969.01
+293,2025-07-08,Honduras,"Consultoría Global Andes",Finanzas,32889.46,90053.53
+294,2025-10-01,Venezuela,"Logística Panamericana",Agricultura,30549.86,36802.27
+295,2023-03-26,Canadá,"Farmacéutica Caribeña",Minería,43239.58,121053.53
+296,2025-04-09,Honduras,"Turismo Colonial S.A.",Telecomunicaciones,44849.78,115961.79
+297,2023-11-29,Chile,"Constructora Pacífico",Farmacéutica,6069.70,11029.75
+298,2024-01-10,Panamá,"Retail Amazonas",Telecomunicaciones,20539.49,40732.76
+299,2024-08-29,México,"Minería Patagónica",Energía,3869.68,9668.75
+300,2025-05-08,Canadá,"Consultoría Global Andes",Finanzas,1160.62,2843.88
+301,2025-03-10,Uruguay,"Software Águila",Logística,34793.43,92708.36
+302,2025-02-01,Honduras,"Innovación Amazónica Ltda.",Aviación,39629.90,66998.93
+303,2024-10-11,Bolivia,"Constructora Pacífico",Tecnología,46536.81,89702.35
+304,2024-02-22,Brasil,"Farmacéutica Caribeña",Consultoría,33377.09,39401.49
+305,2024-03-02,México,"Farmacéutica Caribeña",Logística,31605.26,37311.79
+306,2023-05-13,México,"Servicios Financieros Río Grande",Minería,15514.43,17514.70
+307,2024-07-03,"El Salvador","Automotriz del Cono Sur",Construcción,43810.24,106226.81
+308,2025-10-04,México,"Servicios Financieros Río Grande",Inmobiliaria,6353.56,12661.74
+309,2023-09-25,Panamá,"Servicios Financieros Río Grande",Turismo,34702.56,55855.66
+310,2023-02-02,"Estados Unidos","Turismo Colonial S.A.",Textiles,9765.18,27950.10
+311,2024-12-08,Uruguay,"Innovación Amazónica Ltda.",Comercio,5380.45,11457.99
+312,2024-01-06,Honduras,"Innovación Amazónica Ltda.",Tecnología,35663.39,56801.03
+313,2023-05-09,"República Dominicana","Innovación Amazónica Ltda.",Textiles,13484.10,36091.55
+314,2024-03-30,"Costa Rica","Comunicaciones Atlántico",Textiles,39342.47,74006.02
+315,2025-12-29,Cuba,"Comunicaciones Atlántico",Telecomunicaciones,17248.95,23410.65
+316,2024-02-20,Ecuador,"Farmacéutica Caribeña",Comercio,27732.76,48551.29
+317,2025-01-04,Uruguay,"Tecnologías Andinas S.A.",Logística,40692.82,83983.71
+318,2024-11-22,"República Dominicana","Distribuidora Maya",Farmacéutica,25407.52,74715.86
+319,2025-07-04,Panamá,"AgroExport del Caribe",Turismo,15027.97,31060.46
+320,2024-05-08,Ecuador,"Comunicaciones Atlántico",Inmobiliaria,19439.06,47333.08
+321,2023-05-03,Perú,"Alimentos Orgánicos Sierra",Energía,7503.11,19440.42
+322,2024-11-07,Brasil,"Alimentos Orgánicos Sierra",Farmacéutica,3138.99,7596.93
+323,2023-08-08,"Costa Rica","Retail Amazonas",Logística,26729.86,77028.52
+324,2024-11-11,Colombia,"Turismo Colonial S.A.",Energía,26276.04,39034.54
+325,2024-01-10,Chile,"AgroExport del Caribe",Automotriz,45006.34,125706.88
+326,2025-01-21,Cuba,"Retail Amazonas",Telecomunicaciones,7401.44,14265.05
+327,2024-10-25,"República Dominicana","Alimentos Orgánicos Sierra",Agricultura,39468.72,59034.10
+328,2024-04-24,Paraguay,"Innovación Amazónica Ltda.",Tecnología,4869.96,11290.16
+329,2025-02-06,Brasil,"Alimentos Orgánicos Sierra",Alimentos,45544.95,133170.01
+330,2024-07-20,Ecuador,"Constructora Pacífico",Energía,21693.69,31932.65
+331,2024-10-11,Uruguay,"Alimentos Orgánicos Sierra",Telecomunicaciones,22532.04,27685.33
+332,2024-12-07,Paraguay,"Servicios Financieros Río Grande",Logística,42159.37,114630.43
+333,2025-11-29,Paraguay,"Logística Panamericana",Alimentos,8387.75,19151.90
+334,2023-08-19,Bolivia,"Logística Panamericana",Comercio,5508.56,8401.89
+335,2023-02-13,"El Salvador","AgroExport del Caribe",Textiles,15040.10,26062.76
+336,2024-02-29,Canadá,"Innovación Amazónica Ltda.",Aviación,34431.42,87459.64
+337,2025-02-04,Canadá,"Logística Panamericana",Alimentos,14945.56,22842.85
+338,2025-02-21,Brasil,"Alimentos Orgánicos Sierra",Turismo,27586.58,61536.41
+339,2023-04-18,Honduras,"Constructora Pacífico",Tecnología,47797.01,96309.05
+340,2023-07-10,Ecuador,"Constructora Pacífico",Logística,47881.02,63561.89
+341,2024-01-08,México,"Textiles del Plata",Consultoría,49954.80,124825.30
+342,2023-06-02,Canadá,"Comunicaciones Atlántico",Inmobiliaria,44963.52,59708.69
+343,2024-06-02,Canadá,"Minería Patagónica",Consultoría,10528.53,14069.32
+344,2024-06-06,"El Salvador","Textiles del Plata",Consultoría,48284.06,125532.51
+345,2024-01-18,Cuba,"Turismo Colonial S.A.",Aviación,32054.95,56146.09
+346,2024-10-27,"Estados Unidos","Tecnologías Andinas S.A.",Farmacéutica,12841.84,37699.92
+347,2024-03-09,Panamá,"Tecnologías Andinas S.A.",Aviación,16550.65,19650.29
+348,2025-12-29,Venezuela,"Software Águila",Textiles,24637.39,33011.48
+349,2024-11-11,Bolivia,"Retail Amazonas",Inmobiliaria,30676.24,72208.74
+350,2024-01-08,México,"Minería Patagónica",Inmobiliaria,28695.50,53637.25
+351,2024-06-13,Ecuador,"Retail Amazonas",Alimentos,38775.14,64735.73
+352,2025-03-05,Canadá,"Software Águila",Minería,35119.29,47592.60
+353,2024-07-31,México,"Logística Panamericana",Construcción,39425.05,88574.00
+354,2024-10-15,Brasil,"Software Águila",Turismo,19550.44,34912.58
+355,2024-05-25,Cuba,"Farmacéutica Caribeña",Tecnología,11016.46,31380.84
+356,2025-01-20,Venezuela,"Innovación Amazónica Ltda.",Turismo,41727.35,77006.56
+357,2025-12-21,Paraguay,"Inmobiliaria Nueva Esperanza",Aviación,32523.52,50864.86
+358,2023-12-29,Paraguay,"Consultoría Global Andes",Agricultura,19448.19,53478.36
+359,2025-07-16,Perú,"Software Águila",Alimentos,10727.47,17699.09
+360,2024-11-08,Panamá,"Alimentos Orgánicos Sierra",Agricultura,44474.50,88127.65
+361,2023-07-26,"Costa Rica","Distribuidora Maya",Automotriz,40410.95,121057.29
+362,2024-01-11,Perú,"Consultoría Global Andes",Inmobiliaria,40855.43,104817.97
+363,2023-08-19,Panamá,"Automotriz del Cono Sur",Textiles,15513.85,35162.72
+364,2024-06-08,"El Salvador","Tecnologías Andinas S.A.",Tecnología,17304.02,36692.78
+365,2023-07-11,Argentina,"Inmobiliaria Nueva Esperanza",Logística,12428.94,15559.76
+366,2023-07-09,Chile,"Logística Panamericana",Construcción,27103.68,33068.03
+367,2024-01-24,Uruguay,"Aviación Andina",Consultoría,44944.78,110299.11
+368,2024-12-15,"Estados Unidos","Inmobiliaria Nueva Esperanza",Inmobiliaria,21344.24,31705.30
+369,2024-08-24,México,"Constructora Pacífico",Consultoría,37164.38,101139.96
+370,2025-08-14,Cuba,"Alimentos Orgánicos Sierra",Farmacéutica,19439.51,45373.52
+371,2024-09-25,Bolivia,"Comunicaciones Atlántico",Automotriz,21842.84,48698.66
+372,2025-11-27,Paraguay,"Turismo Colonial S.A.",Tecnología,41093.21,91646.79
+373,2025-10-26,"El Salvador","Servicios Financieros Río Grande",Minería,3252.39,4882.76
+374,2024-04-07,Bolivia,"Constructora Pacífico",Minería,9943.98,22194.11
+375,2023-10-19,Honduras,"Automotriz del Cono Sur",Construcción,11437.58,18178.29
+376,2024-02-07,Paraguay,"Logística Panamericana",Logística,41171.04,78282.72
+377,2023-09-17,"Estados Unidos","Turismo Colonial S.A.",Tecnología,7365.80,10083.49
+378,2023-10-30,Ecuador,"Tecnologías Andinas S.A.",Inmobiliaria,21866.28,48920.74
+379,2023-01-22,México,"Tecnologías Andinas S.A.",Turismo,4687.05,8396.04
+380,2024-06-05,Uruguay,"Retail Amazonas",Inmobiliaria,35749.60,82846.57
+381,2024-09-05,"República Dominicana","Alimentos Orgánicos Sierra",Farmacéutica,7150.45,18820.99
+382,2025-02-26,Uruguay,"Alimentos Orgánicos Sierra",Aviación,30443.94,48794.17
+383,2023-06-12,Colombia,"Textiles del Plata",Consultoría,19816.96,31859.75
+384,2023-05-28,Canadá,"Inmobiliaria Nueva Esperanza",Alimentos,47838.79,112567.74
+385,2024-09-24,México,"Alimentos Orgánicos Sierra",Comercio,39072.16,106863.06
+386,2025-01-15,Cuba,"Turismo Colonial S.A.",Textiles,7599.94,12082.14
+387,2025-02-12,Guatemala,"Comunicaciones Atlántico",Alimentos,47274.14,130755.68
+388,2024-10-09,Canadá,"Automotriz del Cono Sur",Alimentos,12335.13,19397.56
+389,2025-06-23,Colombia,"Alimentos Orgánicos Sierra",Turismo,10322.13,15330.03
+390,2024-06-20,Argentina,"Consultoría Global Andes",Construcción,5126.18,11200.04
+391,2025-11-03,Bolivia,"Constructora Pacífico",Tecnología,7346.88,10362.74
+392,2025-06-30,Uruguay,"Constructora Pacífico",Alimentos,42266.55,111785.76
+393,2023-04-06,Guatemala,"AgroExport del Caribe",Construcción,6193.10,7131.06
+394,2024-11-10,Brasil,"Tecnologías Andinas S.A.",Aviación,11667.43,19272.62
+395,2024-08-24,Guatemala,"Software Águila",Agricultura,9646.90,17405.69
+396,2025-06-06,Uruguay,"Turismo Colonial S.A.",Tecnología,40188.82,61952.63
+397,2023-04-24,Panamá,"Inmobiliaria Nueva Esperanza",Aviación,7312.03,10566.40
+398,2024-07-19,Chile,"Automotriz del Cono Sur",Logística,46506.72,116871.34
+399,2025-12-01,Ecuador,"Tecnologías Andinas S.A.",Energía,29739.46,74427.40
+400,2025-12-08,"República Dominicana","Distribuidora Maya",Consultoría,8120.73,23289.02
+401,2025-12-08,Panamá,"Inmobiliaria Nueva Esperanza",Textiles,32623.67,93684.00
+402,2024-10-20,"Costa Rica","Tecnologías Andinas S.A.",Comercio,47716.92,118441.42
+403,2025-03-08,Paraguay,"Minería Patagónica",Finanzas,20347.12,28732.19
+404,2024-08-21,Chile,"Innovación Amazónica Ltda.",Consultoría,16424.35,23614.82
+405,2025-09-25,Colombia,"Energía Verde del Norte",Aviación,17668.89,23327.03
+406,2023-05-20,Cuba,"Inmobiliaria Nueva Esperanza",Inmobiliaria,32806.88,56694.48
+407,2024-06-07,Ecuador,"Innovación Amazónica Ltda.",Consultoría,13316.38,15318.52
+408,2025-03-06,Honduras,"Energía Verde del Norte",Construcción,14049.71,15905.21
+409,2023-02-09,Honduras,"Constructora Pacífico",Tecnología,39131.73,59614.10
+410,2024-09-13,Bolivia,"Minería Patagónica",Minería,26439.14,63707.38
+411,2023-09-08,"El Salvador","Tecnologías Andinas S.A.",Finanzas,21795.07,31167.19
+412,2023-11-18,Canadá,"Consultoría Global Andes",Telecomunicaciones,44482.33,114542.09
+413,2025-01-26,Panamá,"Retail Amazonas",Farmacéutica,16242.58,20176.90
+414,2024-12-02,Uruguay,"Farmacéutica Caribeña",Turismo,22657.11,40795.49
+415,2025-05-12,Honduras,"Distribuidora Maya",Alimentos,49933.32,109472.79
+416,2023-12-20,Perú,"Tecnologías Andinas S.A.",Textiles,42104.67,73320.21
+417,2025-01-16,Cuba,"Tecnologías Andinas S.A.",Automotriz,33804.74,54900.72
+418,2023-01-06,Brasil,"Logística Panamericana",Aviación,11123.54,21735.51
+419,2023-03-25,"Costa Rica","Constructora Pacífico",Logística,15065.86,18449.53
+420,2023-01-09,Bolivia,"Distribuidora Maya",Telecomunicaciones,7135.95,19320.81
+421,2025-03-26,Panamá,"Turismo Colonial S.A.",Telecomunicaciones,42094.19,54390.43
+422,2025-06-26,Canadá,"Aviación Andina",Textiles,8584.80,9609.01
+423,2024-02-14,Panamá,"Retail Amazonas",Construcción,7408.13,9261.31
+424,2025-02-12,Guatemala,"Logística Panamericana",Comercio,47863.08,63431.56
+425,2025-08-05,Bolivia,"Farmacéutica Caribeña",Finanzas,31169.31,43645.54
+426,2024-07-08,Panamá,"Aviación Andina",Agricultura,37151.95,47590.29
+427,2024-07-03,Ecuador,"Energía Verde del Norte",Farmacéutica,36490.28,65477.38
+428,2024-01-28,Guatemala,"Innovación Amazónica Ltda.",Energía,37007.17,48837.81
+429,2023-02-07,Brasil,"Tecnologías Andinas S.A.",Telecomunicaciones,5013.30,5574.22
+430,2023-03-20,México,"Constructora Pacífico",Energía,43450.61,49458.56
+431,2024-03-26,"Costa Rica","Innovación Amazónica Ltda.",Tecnología,46054.03,138002.01
+432,2023-05-05,Chile,"Minería Patagónica",Telecomunicaciones,19000.16,54608.03
+433,2025-10-22,Perú,"Textiles del Plata",Aviación,32003.61,49841.01
+434,2023-08-06,Brasil,"Consultoría Global Andes",Comercio,3911.86,6771.38
+435,2025-02-10,Brasil,"Automotriz del Cono Sur",Telecomunicaciones,12065.36,15985.32
+436,2024-02-02,Colombia,"Software Águila",Aviación,2151.65,3761.23
+437,2025-12-30,México,"Software Águila",Finanzas,40266.96,100412.74
+438,2023-12-02,Perú,"AgroExport del Caribe",Aviación,18801.46,48282.81
+439,2024-12-29,Paraguay,"Innovación Amazónica Ltda.",Minería,31637.12,56810.44
+440,2023-09-08,Perú,"Textiles del Plata",Automotriz,38620.68,84134.01
+441,2025-11-01,México,"Inmobiliaria Nueva Esperanza",Farmacéutica,41012.75,94909.81
+442,2023-04-08,Ecuador,"Turismo Colonial S.A.",Energía,46883.77,57049.62
+443,2023-04-01,Canadá,"Software Águila",Consultoría,39001.81,112631.09
+444,2024-07-26,Venezuela,"Automotriz del Cono Sur",Turismo,38301.65,107522.79
+445,2025-08-22,Perú,"Distribuidora Maya",Aviación,5957.35,13448.25
+446,2025-01-12,Venezuela,"Aviación Andina",Alimentos,10506.62,21458.24
+447,2025-08-05,Argentina,"Automotriz del Cono Sur",Automotriz,1656.80,2195.48
+448,2024-04-27,Cuba,"Logística Panamericana",Farmacéutica,27270.33,52319.59
+449,2023-08-23,Panamá,"Automotriz del Cono Sur",Minería,21692.91,29896.50
+450,2023-03-16,Argentina,"Farmacéutica Caribeña",Logística,22068.94,35943.76
+451,2023-11-02,"Costa Rica","Alimentos Orgánicos Sierra",Telecomunicaciones,22358.79,47530.38
+452,2023-09-13,Chile,"Alimentos Orgánicos Sierra",Aviación,29423.40,45959.93
+453,2023-09-28,"El Salvador","Energía Verde del Norte",Textiles,19636.70,51377.90
+454,2025-10-03,Bolivia,"Textiles del Plata",Automotriz,23937.77,69604.45
+455,2023-11-18,Brasil,"Tecnologías Andinas S.A.",Minería,17088.27,44098.42
+456,2024-07-10,México,"Minería Patagónica",Automotriz,44896.84,109012.93
+457,2024-07-01,Guatemala,"Distribuidora Maya",Energía,36475.68,99910.37
+458,2024-11-07,Brasil,"Tecnologías Andinas S.A.",Farmacéutica,13035.99,23550.97
+459,2023-07-13,Guatemala,"Automotriz del Cono Sur",Finanzas,10876.04,26839.57
+460,2024-05-04,Chile,"Minería Patagónica",Comercio,19851.14,26209.63
+461,2023-04-24,Brasil,"Turismo Colonial S.A.",Minería,16883.89,23216.83
+462,2025-12-01,Perú,"Farmacéutica Caribeña",Finanzas,46123.94,130847.97
+463,2023-05-25,Chile,"Retail Amazonas",Telecomunicaciones,3991.69,5634.25
+464,2025-09-23,Chile,"Turismo Colonial S.A.",Alimentos,18894.96,46829.15
+465,2024-04-30,Cuba,"Software Águila",Agricultura,41444.68,84975.69
+466,2024-09-17,Ecuador,"Innovación Amazónica Ltda.",Telecomunicaciones,15157.75,36948.54
+467,2024-07-23,Perú,"Retail Amazonas",Consultoría,13219.37,31611.95
+468,2023-12-14,Brasil,"Constructora Pacífico",Turismo,38889.55,71059.60
+469,2024-08-12,Perú,"Logística Panamericana",Construcción,31847.81,44415.92
+470,2025-07-08,Panamá,"Constructora Pacífico",Textiles,41824.27,78343.92
+471,2025-06-21,México,"Aviación Andina",Construcción,33547.81,89798.60
+472,2024-03-25,Canadá,"Software Águila",Textiles,33430.33,94167.25
+473,2025-08-07,Argentina,"Servicios Financieros Río Grande",Consultoría,45014.13,131676.72
+474,2025-06-13,"República Dominicana","Retail Amazonas",Inmobiliaria,21048.01,36577.26
+475,2023-02-13,Venezuela,"Minería Patagónica",Finanzas,7725.30,17198.12
+476,2025-11-30,Venezuela,"Innovación Amazónica Ltda.",Consultoría,23176.96,54387.89
+477,2025-09-08,Paraguay,"Minería Patagónica",Tecnología,26015.16,32150.93
+478,2024-08-31,Perú,"Consultoría Global Andes",Inmobiliaria,20400.94,57858.63
+479,2025-09-27,"Costa Rica","Alimentos Orgánicos Sierra",Automotriz,16908.86,30439.87
+480,2023-09-03,Uruguay,"Turismo Colonial S.A.",Alimentos,5658.48,8835.88
+481,2025-12-11,Chile,"Distribuidora Maya",Telecomunicaciones,35995.34,72958.38
+482,2023-01-04,Paraguay,"Retail Amazonas",Agricultura,45589.54,128287.49
+483,2024-07-14,"República Dominicana","Distribuidora Maya",Minería,14439.97,38484.99
+484,2024-09-15,Chile,"Farmacéutica Caribeña",Comercio,31610.37,91871.85
+485,2023-08-18,Bolivia,"Aviación Andina",Agricultura,49377.05,110606.85
+486,2023-05-03,"Estados Unidos","Automotriz del Cono Sur",Automotriz,9898.11,25832.60
+487,2025-02-17,"Costa Rica","Automotriz del Cono Sur",Automotriz,43154.20,127075.24
+488,2025-07-11,Chile,"Retail Amazonas",Finanzas,33275.50,50081.45
+489,2024-03-11,Paraguay,"Logística Panamericana",Alimentos,47094.96,130059.54
+490,2025-06-12,Uruguay,"AgroExport del Caribe",Consultoría,42782.78,76022.60
+491,2023-04-09,"El Salvador","Aviación Andina",Agricultura,38675.81,71118.54
+492,2025-10-03,"El Salvador","Aviación Andina",Finanzas,37142.72,78187.82
+493,2025-12-23,"República Dominicana","Minería Patagónica",Agricultura,15653.96,35269.70
+494,2023-07-04,Panamá,"Tecnologías Andinas S.A.",Aviación,27567.97,42259.99
+495,2024-09-12,Uruguay,"Energía Verde del Norte",Consultoría,23235.61,40861.10
+496,2024-10-24,Brasil,"Constructora Pacífico",Comercio,21606.02,59698.34
+497,2025-05-08,Chile,"Logística Panamericana",Turismo,29887.70,56337.82
+498,2024-06-10,"República Dominicana","Software Águila",Turismo,23993.62,51816.63
+499,2024-11-18,Perú,"Logística Panamericana",Automotriz,13357.26,32776.39
+500,2025-09-12,Paraguay,"Innovación Amazónica Ltda.",Farmacéutica,38904.89,48393.69
