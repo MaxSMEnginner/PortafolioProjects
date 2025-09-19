@@ -1,0 +1,8 @@
+BACKEND:
+
+ENDPOINT /auth/newjwtwcmu
+
+
+FRONTEND:
+
+en profile.ts debemos adaptar el updateuser como en el users.ts para que funcione para el usuario de igualforma.

@@ -1,6 +1,6 @@
 package com.maxacm.lr.controller;
 
-import com.maxacm.lr.dto.UserUpdateDTOUSER;
+import com.maxacm.lr.dto.UserUpdateDTO;
 import com.maxacm.lr.entity.User;
 import com.maxacm.lr.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @PatchMapping("/user/{id}")
-    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody UserUpdateDTOUSER dto) {
+    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody UserUpdateDTO dto) {
         try{
             User updateuser= userService.updateUSER(id, dto);
             return ResponseEntity.ok(updateuser);

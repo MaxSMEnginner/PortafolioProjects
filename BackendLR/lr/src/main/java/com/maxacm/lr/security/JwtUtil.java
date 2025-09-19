@@ -76,6 +76,30 @@ public class JwtUtil {
                 .compact();
     }
 
+    public String Newjwt(String username, String role) {
+        return Jwts.builder()
+                .setSubject(username)
+                .claim("type","REFRESH")
+                .claim("roles", role)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7)) // 7 días
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+
+    public String NewRT(String username, String role) {
+
+        return Jwts.builder()
+                .setSubject(username)
+                .claim("type","REFRESH")
+                .claim("roles", role)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7)) // 7 días
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
+
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token);

@@ -11,6 +11,7 @@ export interface AuthResponse {
   accessToken: string;
   refreshToken: string;
 }
+
 @Injectable({
   providedIn: 'root'
 })
@@ -82,6 +83,8 @@ export class AuthService {
     }
   }
 
+
+
   isLoggedIn(): boolean {
     return !!this.getToken();
   }
@@ -97,6 +100,9 @@ export class AuthService {
       );
   }
 
+
+
+
     getUsername(): string | null {
     const token = this.getToken();
     if (!token) return null;
@@ -107,12 +113,52 @@ export class AuthService {
       const username: string = decodedToken.sub || '';
       
       if (username.length > 0) {
-        return username.charAt(0).toUpperCase() + username.slice(1).toLowerCase();
+        return username;
       }
       return null;
     } catch (error) {
       console.error("Error decodificando el token", error);
       return null;
+    }
+  }
+
+
+  
+  refreshToken2(username: string, role: string): Observable<AuthResponse> {
+
+    // Recuerda que la propiedad en el JSON de respuesta del backend es 'accessToken'
+    return this.http.post<AuthResponse>(`${this.API_URL}/auth/newjwtwcmu`, { username, role})
+      .pipe(
+        tap((tokens: AuthResponse) => {
+          this.saveTokens(tokens.accessToken, tokens.refreshToken);
+        })
+      );
+  }
+
+refreshSessionAfterUpdate(updatedUser: { id: number, username: string, role: string }, originalUserId: number): void {
+  const currentUsername = this.getUsername();
+  const currentRole = this.getUserRole();
+
+  // 👇 Validamos si el user actualizado es el mismo que está logueado
+  if (updatedUser.id === originalUserId) {
+    // 👇 Solo si cambió username o role
+    if (updatedUser.username !== currentUsername || updatedUser.role !== currentRole) {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+
+      // pedir nuevos tokens
+      this.refreshToken2(updatedUser.username, updatedUser.role).subscribe({
+        next: () => {
+          const role = updatedUser.role;
+          if (role === 'ROLE_ADMIN') {
+            this.router.navigate(['/admin/users']);
+          } else {
+            this.router.navigate(['/profile']);
+          }
+        },
+        error: () => this.logout()
+      });
+    }
     }
   }
 

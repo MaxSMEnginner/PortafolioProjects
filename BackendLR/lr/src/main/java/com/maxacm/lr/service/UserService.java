@@ -1,17 +1,12 @@
 package com.maxacm.lr.service;
 
 import com.maxacm.lr.dto.UserUpdateDTO;
-import com.maxacm.lr.dto.UserUpdateDTOUSER;
 import com.maxacm.lr.entity.User;
 import com.maxacm.lr.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import java.util.Optional;
 
 
 @Service
@@ -50,7 +45,7 @@ public class UserService {
     }
 
 
-    public User updateUSER(Long id, UserUpdateDTOUSER dto){
+    public User updateUSER(Long id, UserUpdateDTO dto){
         return userRepository.findById(id).map(user -> {
 
             dto.username().ifPresent(user::setUsername);

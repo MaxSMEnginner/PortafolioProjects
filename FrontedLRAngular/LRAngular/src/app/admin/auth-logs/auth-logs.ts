@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { AuthService } from '../../auth/auth.service';
 
 interface AuditLog {
   id: number;
@@ -28,10 +29,14 @@ export class AuthLogsComponent implements OnInit {
   selectedUser: string = '';
   p: number = 1;
   itemsPerPage: number = 10;
+  username = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+              private auth: AuthService
+  ) {}
 
   ngOnInit() {
+    this.username = this.auth.getUsername() || '';
     this.getAllLogs();
   }
 

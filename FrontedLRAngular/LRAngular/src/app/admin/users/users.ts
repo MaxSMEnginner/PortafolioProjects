@@ -5,6 +5,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { Observable, tap } from 'rxjs';
 
 interface User {
   id: number;
@@ -42,12 +43,16 @@ export class UsersComponent implements OnInit {
   loading = false;
   showModal = false;
   errorMessage = '';
+  currentUserId: number | null = null;
+  currentUserRole: string | null = null;
 
   constructor(private auth: AuthService, private http: HttpClient) {}
 
   ngOnInit(): void {
     this.username = this.auth.getUsername() || '';
+    
     this.loadUsers();
+    
   }
 
   loadUsers() {
@@ -57,6 +62,18 @@ export class UsersComponent implements OnInit {
         this.users = data;
         this.filteredUsers = data;
         this.loading = false;
+
+        const currentUser = data.find(user => user.username.toLowerCase() === this.username.toLowerCase());
+
+
+        if (currentUser) {
+          this.currentUserId = currentUser.id;
+          this.currentUserRole = currentUser.role;
+          /* console.log(`El ID del usuario actual (${this.username}) es: ${this.currentUserId}`); */
+          /* console.log(`El ROL del usuario actual (${this.username}) es: ${this.currentUserRole}`); */
+        } else {
+          /* console.warn(`No se encontró al usuario ${this.username} en la lista.`); */
+        }
       },
       error: (error: HttpErrorResponse) => {
         this.handleError('Error al cargar usuarios', error);
@@ -95,6 +112,10 @@ export class UsersComponent implements OnInit {
     this.showModal = true;
   }
 
+
+
+
+
   updateUser() {
     if (!this.selectedUser || !this.validateUpdate()) return;
 
@@ -106,21 +127,25 @@ export class UsersComponent implements OnInit {
 
     this.loading = true;
     this.http.patch<User>(`${this.apiUrl}/user/${this.selectedUser.id}`, updateData).subscribe({
-      next: (updatedUser) => {
-        const index = this.users.findIndex(u => u.id === updatedUser.id);
-        if (index !== -1) {
-          this.users[index] = updatedUser;
-          this.filteredUsers = [...this.users];
-        }
-        this.closeModal();
-        this.loading = false;
-        this.showSuccessMessage('Usuario actualizado con éxito');
-      },
-      error: (error: HttpErrorResponse) => {
-        this.handleError('Error al actualizar usuario', error);
-        this.loading = false;
+    next: (updatedUser) => {
+      // 👇 le pasamos el user actualizado y el id original
+      this.auth.refreshSessionAfterUpdate(updatedUser, this.currentUserId!);
+      /* console.log(updatedUser, this.currentUserId!); */
+      const index = this.users.findIndex(u => u.id === updatedUser.id);
+      if (index !== -1) {
+        this.users[index] = updatedUser;
+        this.filteredUsers = [...this.users];
       }
-    });
+      this.closeModal();
+      this.loading = false;
+      this.showSuccessMessage('Usuario actualizado con éxito');
+    },
+    error: (error: HttpErrorResponse) => {
+      this.handleError('Error al actualizar usuario', error);
+      this.loading = false;
+    }
+  });
+
   }
 
   deleteUser(id: number) {

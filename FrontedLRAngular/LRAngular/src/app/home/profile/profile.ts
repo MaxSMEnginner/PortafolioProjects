@@ -4,7 +4,7 @@ import { AuthService } from '../../auth/auth.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-
+import { Observable, tap } from 'rxjs';
 interface User {
   id: number;
   username: string;
@@ -35,6 +35,8 @@ export class ProfileComponent implements OnInit {
   showModal = false;
   updateDTO: UserUpdateDTOUSER = {};
   selectedUser: User | null = null;
+  currentUserid: number | null = null;
+  currentUserRole: string | null = null;
 
   constructor(
     private auth: AuthService,
@@ -54,6 +56,12 @@ export class ProfileComponent implements OnInit {
       next: (profile) => {
         this.userProfile = profile;
         this.loading = false;
+
+        this.currentUserid = profile.id;
+        this.currentUserRole = profile.role;
+        console.log('Current User ID:', this.currentUserid);
+        console.log('Current User Role:', this.currentUserRole);
+
       },
       error: (error: HttpErrorResponse) => {
         console.error('Error loading profile:', error);
@@ -77,6 +85,7 @@ export class ProfileComponent implements OnInit {
     this.loading = true;
     this.http.patch<User>(`${this.apiUrl}/users/user/${this.userProfile.id}`, this.updateDTO).subscribe({
       next: (updatedUser) => {
+        
         this.userProfile = updatedUser;
         if (this.updateDTO.username) {
           this.username = this.updateDTO.username;

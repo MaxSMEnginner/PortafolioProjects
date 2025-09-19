@@ -7,8 +7,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
@@ -17,13 +17,28 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + username));
+        // --- LOG DE DEPURACIÓN 1 ---
+        log.info("[DEBUG] Iniciando búsqueda para el usuario: '{}'", username);
 
-        return org.springframework.security.core.userdetails.User.builder()
-                .username(user.getUsername())
-                .password(user.getPassword())  // ya está encriptado con BCrypt
-                .roles(user.getRole().replace("ROLE_", "")) // Spring espera "USER", "ADMIN", no "ROLE_USER"
+        User userFromDb = userRepository.findByUsername(username)
+                .orElseThrow(() -> {
+                    // --- LOG DE DEPURACIÓN 2 ---
+                    log.error("[DEBUG] ¡ERROR! No se encontró al usuario '{}' en la base de datos.", username);
+                    return new UsernameNotFoundException("Usuario no encontrado: " + username);
+                });
+
+        // --- LOG DE DEPURACIÓN 3 ---
+        log.info("[DEBUG] Usuario encontrado en la BD: Username={}, Rol={}", userFromDb.getUsername(), userFromDb.getRole());
+
+        UserDetails userDetails = org.springframework.security.core.userdetails.User.builder()
+                .username(userFromDb.getUsername())
+                .password(userFromDb.getPassword())
+                .roles(userFromDb.getRole().replace("ROLE_", ""))
                 .build();
+
+        // --- LOG DE DEPURACIÓN 4 ---
+        log.info("[DEBUG] Creado objeto UserDetails: Habilitado={}, Bloqueado={}", userDetails.isEnabled(), !userDetails.isAccountNonLocked());
+
+        return userDetails;
     }
 }

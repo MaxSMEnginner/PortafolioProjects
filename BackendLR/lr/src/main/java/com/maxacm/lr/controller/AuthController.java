@@ -3,7 +3,9 @@ package com.maxacm.lr.controller;
 import com.maxacm.lr.dto.AuthResponse;
 import com.maxacm.lr.dto.LoginRequest;
 import com.maxacm.lr.dto.RefreshRequest;
+import com.maxacm.lr.dto.UpdatedUserFDTO;
 import com.maxacm.lr.security.JwtUtil;
+
 import com.maxacm.lr.service.AuditLogService;
 import com.maxacm.lr.service.RefreshTokenService;
 import com.maxacm.lr.service.TokenBlacklistService;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import com.maxacm.lr.security.CustomUserDetailsService;
 
 import java.time.LocalDateTime;
+
 
 @Slf4j
 @RestController
@@ -56,6 +59,24 @@ public class AuthController {
 
         return ResponseEntity.ok(new AuthResponse(accessToken, refreshToken));
     }
+
+    @PostMapping("/newjwtwcmu")
+    public ResponseEntity<AuthResponse> newtoken(@RequestBody UpdatedUserFDTO request,
+                                              HttpServletRequest http) {
+
+        log.info("🔑 New JWT because you change yourself username or role: {}", request.getUsername());
+
+        String accessToken = jwtUtil.Newjwt(request.getUsername(),request.getRole());
+        String refreshToken = jwtUtil.NewRT(request.getUsername(), request.getRole());
+        log.info("Access Token: {}, Refresh Token: {}", accessToken, refreshToken);
+
+        refreshTokenService.create(request.getUsername(), refreshToken,
+                LocalDateTime.now().plusDays(7));
+
+        auditLogService.log(request.getUsername(), "MODIFY", http.getRemoteAddr());
+        return ResponseEntity.ok(new AuthResponse(accessToken, refreshToken));
+    }
+
 
     @PostMapping("/refresh")
     public ResponseEntity<AuthResponse> refresh(@RequestBody RefreshRequest request,
