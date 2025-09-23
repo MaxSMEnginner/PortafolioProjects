@@ -35,8 +35,8 @@ export class ProfileComponent implements OnInit {
   showModal = false;
   updateDTO: UserUpdateDTOUSER = {};
   selectedUser: User | null = null;
-  currentUserid: number | null = null;
-  currentUserRole: string | null = null;
+  currentUserId: number | null = null;
+  currentUserRole= 'ROLE_USER';
 
   constructor(
     private auth: AuthService,
@@ -57,10 +57,10 @@ export class ProfileComponent implements OnInit {
         this.userProfile = profile;
         this.loading = false;
 
-        this.currentUserid = profile.id;
-        this.currentUserRole = profile.role;
-        console.log('Current User ID:', this.currentUserid);
-        console.log('Current User Role:', this.currentUserRole);
+        this.currentUserId = profile.id;
+/*         
+        console.log('Current User ID:', this.currentUserId);
+        console.log('Current User Role:', this.currentUserRole); */
 
       },
       error: (error: HttpErrorResponse) => {
@@ -85,6 +85,7 @@ export class ProfileComponent implements OnInit {
     this.loading = true;
     this.http.patch<User>(`${this.apiUrl}/users/user/${this.userProfile.id}`, this.updateDTO).subscribe({
       next: (updatedUser) => {
+        this.auth.refreshSessionAfterUpdate(updatedUser, this.currentUserId!);
         
         this.userProfile = updatedUser;
         if (this.updateDTO.username) {

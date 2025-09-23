@@ -7,6 +7,7 @@ import { Observable, tap } from 'rxjs';
 import { jwtDecode } from 'jwt-decode'; // 👈 Importa la librería
 
 
+
 export interface AuthResponse {
   accessToken: string;
   refreshToken: string;
@@ -15,6 +16,7 @@ export interface AuthResponse {
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
   private API_URL = 'http://localhost:8080';
 
@@ -50,6 +52,8 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
+ 
+
   saveTokens(access: string, refresh: string) {
     localStorage.setItem('accessToken', access);
     localStorage.setItem('refreshToken', refresh);
@@ -84,6 +88,23 @@ export class AuthService {
   }
 
 
+  getUserRole2(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+    try {
+      const decodedToken: any = jwtDecode(token);
+      // Spring Security añade el prefijo "ROLE_". Lo quitamos para simplificar.
+      // El nombre de la propiedad 'roles' debe coincidir con cómo lo generas en el backend.
+      // A menudo es 'roles' o 'authorities'. Revisa tu JwtUtil.
+      const roles: string = decodedToken.roles || null;
+
+      return roles.replace('ROLE_', '');
+    } catch (error) {
+      console.error("Error decodificando el token", error);
+      return null;
+    }
+  }
+
 
   isLoggedIn(): boolean {
     return !!this.getToken();
@@ -103,7 +124,7 @@ export class AuthService {
 
 
 
-    getUsername(): string | null {
+  getUsername(): string | null {
     const token = this.getToken();
     if (!token) return null;
     try {
@@ -130,7 +151,9 @@ export class AuthService {
     return this.http.post<AuthResponse>(`${this.API_URL}/auth/newjwtwcmu`, { username, role})
       .pipe(
         tap((tokens: AuthResponse) => {
+          /* console.log("Nuevo Username y role antes de guardar tokens de refreshtoken2:", this.getUsername(), this.getUserRole2()); */
           this.saveTokens(tokens.accessToken, tokens.refreshToken);
+          /* console.log("Nuevo Username y role despues de guardar tokens de refreshtoken2:", this.getUsername(), this.getUserRole2()); */
         })
       );
   }
@@ -148,12 +171,17 @@ refreshSessionAfterUpdate(updatedUser: { id: number, username: string, role: str
 
       // pedir nuevos tokens
       this.refreshToken2(updatedUser.username, updatedUser.role).subscribe({
+        
         next: () => {
+          
           const role = updatedUser.role;
           if (role === 'ROLE_ADMIN') {
             this.router.navigate(['/admin/users']);
-          } else {
+            window.location.reload();
+
+          } else if (role === 'ROLE_USER') {
             this.router.navigate(['/profile']);
+
           }
         },
         error: () => this.logout()

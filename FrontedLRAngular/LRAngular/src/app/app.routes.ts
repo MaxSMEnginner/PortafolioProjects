@@ -12,6 +12,8 @@ import { ProfileComponent as Profile} from './home/profile/profile'; // Renombra
 import { authGuard } from './auth/auth.guard';
 import { adminGuard } from './auth/admin.guard';
 
+
+
 export const routes: Routes = [
   // Rutas públicas
   { path: 'login', component: LoginComponent },

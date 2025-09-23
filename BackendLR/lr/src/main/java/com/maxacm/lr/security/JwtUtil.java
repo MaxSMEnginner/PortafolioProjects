@@ -79,7 +79,7 @@ public class JwtUtil {
     public String Newjwt(String username, String role) {
         return Jwts.builder()
                 .setSubject(username)
-                .claim("type","REFRESH")
+                .claim("type","ACCESS")
                 .claim("roles", role)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7)) // 7 días
@@ -89,7 +89,6 @@ public class JwtUtil {
 
 
     public String NewRT(String username, String role) {
-
         return Jwts.builder()
                 .setSubject(username)
                 .claim("type","REFRESH")

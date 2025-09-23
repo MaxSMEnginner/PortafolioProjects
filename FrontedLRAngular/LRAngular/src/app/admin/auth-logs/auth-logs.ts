@@ -12,6 +12,7 @@ interface AuditLog {
   action: string;
   timestamp: string;
   ip: string;
+  ip_address: string;
 }
 
 @Component({
