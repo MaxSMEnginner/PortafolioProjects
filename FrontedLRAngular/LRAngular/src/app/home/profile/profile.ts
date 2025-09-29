@@ -4,7 +4,6 @@ import { AuthService } from '../../auth/auth.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { Observable, tap } from 'rxjs';
 interface User {
   id: number;
   username: string;
@@ -37,6 +36,7 @@ export class ProfileComponent implements OnInit {
   selectedUser: User | null = null;
   currentUserId: number | null = null;
   currentUserRole= 'ROLE_USER';
+  users: User[] = [];
 
   constructor(
     private auth: AuthService,
@@ -46,6 +46,22 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.username = this.auth.getUsername() || '';
     this.loadUserProfile();
+    this.loadUsers();
+  }
+
+loadUsers() {
+    this.loading = true;
+    this.http.get<User[]>(`${this.apiUrl}/users/users`).subscribe({
+      next: (data) => {
+        this.users = data;
+        this.loading = false;
+
+      },
+      error: (error: HttpErrorResponse) => {
+        console.error('Error loading users:', error);
+        this.loading = false;
+      }
+    });
   }
 
   loadUserProfile() {
@@ -81,6 +97,16 @@ export class ProfileComponent implements OnInit {
 
   updateUser() {
     if (!this.userProfile || !this.validateUpdate()) return;
+/*     console.log('Usuarios: ', this.users);
+    console.log('Usuario', this.userProfile?.username)
+    console.log('ID Usuario', this.userProfile?.id) */
+    console.log('Usuarios: ', this.users);
+    if (this.users.some(u => u.username === this.updateDTO.username && u.id !== this.userProfile?.id)) {
+      alert('El username ya existe. Por favor, elige otro.'); 
+      this.loading = false;
+      return;
+    }
+
 
     this.loading = true;
     this.http.patch<User>(`${this.apiUrl}/users/user/${this.userProfile.id}`, this.updateDTO).subscribe({

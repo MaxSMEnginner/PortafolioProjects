@@ -127,10 +127,17 @@ export class UsersComponent implements OnInit {
       this.showModal = false;
       return;
     }
+    /* console.log('Usuarios: ', this.users); */
+    if (this.users.some(u => u.username === updateData.username && u.id !== this.selectedUser!.id)) {
+      alert('El username ya existe. Por favor, elige otro.'); 
+      return;
+    }
 
     this.loading = true;
     this.http.patch<User>(`${this.apiUrl}/user/${this.selectedUser.id}`, updateData).subscribe({
     next: (updatedUser) => {
+
+      
       /* console.log(updatedUser.username,updatedUser.role,this.auth.getUserRole(), this.currentUserId!); */
       // 👇 le pasamos el user actualizado y el id original
       this.auth.refreshSessionAfterUpdate(updatedUser, this.currentUserId!);
@@ -144,6 +151,8 @@ export class UsersComponent implements OnInit {
       this.closeModal();
       this.loading = false;
       this.showSuccessMessage('Usuario actualizado con éxito');
+      
+    
     },
     error: (error: HttpErrorResponse) => {
       this.handleError('Error al actualizar usuario', error);

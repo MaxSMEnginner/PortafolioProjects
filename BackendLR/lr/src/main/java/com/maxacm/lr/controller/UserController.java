@@ -10,6 +10,7 @@ import com.maxacm.lr.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.util.List;
 
 
 @RestController
@@ -55,6 +56,11 @@ public class UserController {
         }catch (RuntimeException e){
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/users")
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 
     //Es lo mismo a lo de arriba
