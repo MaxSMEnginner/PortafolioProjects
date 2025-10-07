@@ -66,8 +66,8 @@ public class AuthController {
 
         log.info("🔑 New JWT because you change yourself username or role: {}", request.getUsername());
 
-        String accessToken = jwtUtil.Newjwt(request.getUsername(),request.getRole());
-        String refreshToken = jwtUtil.NewRT(request.getUsername(), request.getRole());
+        String accessToken = jwtUtil.Newjwt(request.getUsername(),request.getRole().toString());
+        String refreshToken = jwtUtil.NewRT(request.getUsername(), request.getRole().toString());
         log.info("Access Token: {}, Refresh Token: {}", accessToken, refreshToken);
 
         refreshTokenService.create(request.getUsername(), refreshToken,

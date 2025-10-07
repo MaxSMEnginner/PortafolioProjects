@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
+import com.maxacm.lr.Enum.Roles;
 
 @Service
 @RequiredArgsConstructor
@@ -15,6 +15,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+
 
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -27,7 +28,7 @@ public class UserService {
         User user = User.builder()
                 .username(username)
                 .password(passwordEncoder.encode(password))
-                .role("ROLE_USER")
+                .role(Roles.ROLE_USER)
                 .build();
         return userRepository.save(user);
     }
@@ -39,7 +40,7 @@ public class UserService {
         User user = User.builder()
                 .username(username)
                 .password(passwordEncoder.encode(password))
-                .role("ROLE_ADMIN")
+                .role(Roles.ROLE_ADMIN)
                 .build();
         return userRepository.save(user);
     }

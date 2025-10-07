@@ -100,7 +100,7 @@ loadUsers() {
 /*     console.log('Usuarios: ', this.users);
     console.log('Usuario', this.userProfile?.username)
     console.log('ID Usuario', this.userProfile?.id) */
-    console.log('Usuarios: ', this.users);
+    
     if (this.users.some(u => u.username === this.updateDTO.username && u.id !== this.userProfile?.id)) {
       alert('El username ya existe. Por favor, elige otro.'); 
       this.loading = false;

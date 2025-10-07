@@ -8,6 +8,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
+import com.maxacm.lr.Enum.Roles;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -33,7 +35,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         UserDetails userDetails = org.springframework.security.core.userdetails.User.builder()
                 .username(userFromDb.getUsername())
                 .password(userFromDb.getPassword())
-                .roles(userFromDb.getRole().replace("ROLE_", ""))
+                .roles(userFromDb.getRole().toString().replace("ROLE_", ""))
                 .build();
 
         // --- LOG DE DEPURACIÓN 4 ---

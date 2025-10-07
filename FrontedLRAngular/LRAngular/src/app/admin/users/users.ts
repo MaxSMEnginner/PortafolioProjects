@@ -17,6 +17,15 @@ interface User {
   updatedAt?: string;
 }
 
+interface NewUser {
+  id: number;
+  username: string;
+  password?: string;
+  role?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
 interface UserUpdateDTO {
   username?: string;
   password?: string;
@@ -35,7 +44,7 @@ export class UsersComponent implements OnInit {
   username = '';
   users: User[] = [];
   filteredUsers: User[] = [];
-  newUser: User = { id: 0, username: '', password: '', role: 'USER' };
+  newUser: NewUser = { id: 0, username: '', password: '' };
   selectedUser: User | null = null;
   updateDTO: UserUpdateDTO = {};
   p: number = 1;
@@ -46,6 +55,8 @@ export class UsersComponent implements OnInit {
   errorMessage = '';
   currentUserId: number | null = null;
   currentUserRole: string | null = null;
+
+  Usernames: string[] = [];
 
   constructor(private auth: AuthService, private http: HttpClient, private router: Router) {}
 
@@ -61,6 +72,8 @@ export class UsersComponent implements OnInit {
     this.loading = true;
     this.http.get<User[]>(`${this.apiUrl}/users`).subscribe({
       next: (data) => {
+        this.Usernames= data.map(user => user.username);
+  
         this.users = data;
         this.filteredUsers = data;
         this.loading = false;
@@ -90,20 +103,29 @@ export class UsersComponent implements OnInit {
 
     const endpoint = isAdmin ? 'registeradmin' : 'register';
     this.loading = true;
-
-    this.http.post<User>(`${this.apiUrl}/${endpoint}`, this.newUser).subscribe({
+    if(!this.Usernames.includes(this.newUser.username)){
+      this.http.post<User>(`${this.apiUrl}/${endpoint}`, this.newUser).subscribe({
       next: (user) => {
         this.users.unshift(user);
         this.filteredUsers = [...this.users];
         this.resetNewUser();
         this.loading = false;
         this.showSuccessMessage(`Usuario ${isAdmin ? 'administrador' : ''} creado con éxito`);
+        this.loadUsers();
+
       },
       error: (error: HttpErrorResponse) => {
         this.handleError('Error al crear usuario', error);
         this.loading = false;
+        
       }
     });
+
+    }else{
+        alert('El username ya existe. Por favor, elige otro.');
+        this.loading = false;
+        return;
+    }
   }
 
   selectUser(user: User) {
@@ -152,6 +174,7 @@ export class UsersComponent implements OnInit {
       this.loading = false;
       this.showSuccessMessage('Usuario actualizado con éxito');
       
+      
     
     },
     error: (error: HttpErrorResponse) => {
@@ -195,7 +218,7 @@ export class UsersComponent implements OnInit {
     );
   }
 
-  private validateUser(user: User): boolean {
+  private validateUser(user: NewUser): boolean {
     if (!user.username || user.username.length < 3) {
       this.errorMessage = 'El username debe tener al menos 3 caracteres';
       return false;

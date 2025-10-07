@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
+import com.maxacm.lr.Enum.Roles;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -37,8 +37,8 @@ public class User {
     @Column(name="updated_at")
     private LocalDateTime updatedAt;
 
-
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Roles role;
 
     // Relación One-to-Many con Account
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
