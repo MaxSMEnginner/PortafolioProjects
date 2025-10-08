@@ -21,7 +21,10 @@ import org.springframework.web.bind.annotation.*;
 import com.maxacm.lr.security.CustomUserDetailsService;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
+
+//import com.maxacm.lr.service.LoginService;
 
 @Slf4j
 @RestController
@@ -35,6 +38,13 @@ public class AuthController {
     private final TokenBlacklistService tokenBlacklistService;
     private final AuditLogService auditLogService;
     private final RefreshTokenService refreshTokenService;
+//    private final LoginService loginService;
+
+
+//    @PostMapping("/login2")
+//    public ResponseEntity<ArrayList<String>> login2(String username, String password){
+//        return ResponseEntity.ok(loginService.login(username, password));
+//    }
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request,

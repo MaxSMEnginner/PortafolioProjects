@@ -149,8 +149,10 @@ export class UsersComponent implements OnInit {
       this.showModal = false;
       return;
     }
-    /* console.log('Usuarios: ', this.users); */
-    if (this.users.some(u => u.username === updateData.username && u.id !== this.selectedUser!.id)) {
+/*     console.log('Usuarios: ', this.users);
+    console.log('Nuevo username: ', updateData.username?.toLocaleLowerCase); */
+    if (this.users.some(u => u.username.toLocaleLowerCase() === updateData.username?.toLocaleLowerCase() && u.id !== this.selectedUser!.id)) {
+      
       alert('El username ya existe. Por favor, elige otro.'); 
       return;
     }
