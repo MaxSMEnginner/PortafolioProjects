@@ -1,5 +1,6 @@
 package com.maxacm.lr.controller;
 
+import com.maxacm.lr.dto.UserRegister;
 import com.maxacm.lr.dto.UserUpdateDTO;
 import com.maxacm.lr.entity.User;
 import com.maxacm.lr.service.UserService;
@@ -28,8 +29,8 @@ public class UserController {
 
     // ✅ Crear usuario (usando UserService para encriptar password)
     @PostMapping("/register")
-    public ResponseEntity<User> create(@RequestBody User user) {
-        User saved = userService.register(user.getUsername(), user.getPassword());
+    public ResponseEntity<User> create(@RequestBody UserRegister user) {
+        User saved = userService.register(user);
         return ResponseEntity.ok(saved);
     }
 

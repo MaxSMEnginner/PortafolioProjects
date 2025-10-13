@@ -1,12 +1,7 @@
 package com.maxacm.lr.entity;
-
-
-
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import com.maxacm.lr.Enum.TypeAccount;
 
 import java.math.BigDecimal;
 import java.util.Set;
@@ -29,7 +24,11 @@ public class Account {
 
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal saldoActual = BigDecimal.ZERO;
-    private String type;
+
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TypeAccount type;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id", nullable = false)

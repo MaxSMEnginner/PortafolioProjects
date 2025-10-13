@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import com.maxacm.lr.dto.UserRegister;
 
 import java.util.List;
 
@@ -63,14 +64,14 @@ public class AdminController {
 
     // ✅ Crear usuario ADMIN
     @PostMapping("/registeradmin")
-    public ResponseEntity<User> create(@RequestBody User user) {
-        User saved = userService.registeradmin(user.getUsername(), user.getPassword());
+    public ResponseEntity<User> create(@RequestBody UserRegister user) {
+        User saved = userService.registeradmin(user);
         return ResponseEntity.ok(saved);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> createuser(@RequestBody User user) {
-        User saved = userService.register(user.getUsername(), user.getPassword());
+    public ResponseEntity<User> createuser(@RequestBody UserRegister user) {
+        User saved = userService.register(user);
         return ResponseEntity.ok(saved);
     }
 
