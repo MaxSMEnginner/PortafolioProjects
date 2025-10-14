@@ -10,6 +10,6 @@ public class NewAccount {
     private String name;
     private BigDecimal saldoActual;
     private TypeAccount type;
-    private Long userId;
+
 
 }

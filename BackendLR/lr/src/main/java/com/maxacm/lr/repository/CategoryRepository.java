@@ -9,6 +9,7 @@ import java.util.List;
 
 
 public interface CategoryRepository extends JpaRepository<Category,Long>{
+    Boolean existsByNameAndUser(String Name, User user);
     List<Category> findByUser(User user);
     List<Category> findByName(String Name);
     List<Category> findByType(String type);
