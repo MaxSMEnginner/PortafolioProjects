@@ -38,6 +38,7 @@ public class User {
     private LocalDateTime updatedAt;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false, columnDefinition = "varchar(255)" )
     private Roles role;
 
     // Relación One-to-Many con Account

@@ -35,7 +35,7 @@ public class AccountService {
         //SI NO EXISTE SE CONSTRUYE LA CUENTA Y SE GUARDA EN LA BASE DE DATOS
         Account account = Account.builder()
                 .name(newAccount.getName())
-                .saldoActual(newAccount.getSaldoActual())
+                .currentBalance(newAccount.getCurrentBalance())
                 .type(newAccount.getType())
                 .user(user)
                 .build();

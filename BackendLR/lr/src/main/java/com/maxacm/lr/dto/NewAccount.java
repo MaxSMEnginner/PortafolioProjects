@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 @Data
 public class NewAccount {
     private String name;
-    private BigDecimal saldoActual;
+    private BigDecimal currentBalance;
     private TypeAccount type;
 
 

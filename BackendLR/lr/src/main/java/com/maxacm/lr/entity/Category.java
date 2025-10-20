@@ -12,7 +12,7 @@ import java.util.Set;
 
 @Entity
 @Data
-@Table(name = "categories")
+@Table(name = "categorys")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -27,7 +27,7 @@ public class Category {
 
     // Define si la categoría es para incomes o outcomes
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "varchar(255)" )
     private TypeTransaction type;
 
     // Si decides que las categorías son globales, puedes omitir la relación con User.

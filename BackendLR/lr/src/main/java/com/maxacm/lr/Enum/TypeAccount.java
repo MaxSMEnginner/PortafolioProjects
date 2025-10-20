@@ -7,4 +7,5 @@ public enum TypeAccount {
     CREDIT,
     BANK_FUND,
     WALLET
+
 }

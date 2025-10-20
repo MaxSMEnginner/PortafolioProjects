@@ -23,11 +23,11 @@ public class Account {
 
 
     @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal saldoActual = BigDecimal.ZERO;
+    private BigDecimal currentBalance = BigDecimal.ZERO;
 
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "varchar(255)" )
     private TypeAccount type;
 
     @ManyToOne(fetch = FetchType.LAZY)

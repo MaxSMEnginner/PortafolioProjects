@@ -32,6 +32,8 @@ public class CategoryService {
             throw new RuntimeException("The category already exists for this user");
         }
 
+
+
         Category category = Category.builder()
                 .name(newCategory.getName())
                 .type(newCategory.getType())

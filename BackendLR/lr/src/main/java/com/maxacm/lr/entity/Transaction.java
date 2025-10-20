@@ -4,15 +4,20 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import com.maxacm.lr.Enum.TypeTransaction;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import com.maxacm.lr.entity.Category;
+import org.hibernate.annotations.CreationTimestamp;
+
 
 @Entity
 @Data
 @Table(name = "transactions")
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Transaction {
 
     @Id
@@ -22,14 +27,25 @@ public class Transaction {
     @Column(nullable = false, precision = 15, scale = 2)
     private BigDecimal amount; // Monto del movimiento
 
-    @Column(nullable = false)
+
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
     private LocalDate date;
 
     private String description;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "varchar(255)" )
     private TypeTransaction type; // INCOME O OUTCOME (del Enum)
+
+
+    @PrePersist
+    @PreUpdate
+    public void SincronizeTypewithCategoryType(){
+        if(category != null){
+            this.type = category.getType();
+        }
+    }
 
     // --- Relaciones Many-to-One (Claves Foráneas) ---
 
