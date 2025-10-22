@@ -1,11 +1,13 @@
 package com.maxacm.lr.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
-import com.maxacm.lr.Enum.TypeTransaction;
+import com.maxacm.lr.Enum.TypeTransactions.TypeTransaction;
 import java.util.Set;
 
 
@@ -34,11 +36,13 @@ public class Category {
     // Si cada usuario tiene sus propias categorías (más flexible), úsala:
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     @JoinColumn(name = "user_id")
     private User user;
 
 
     // Relación One-to-Many con Transaction
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private Set<Transaction> transactions;
 }

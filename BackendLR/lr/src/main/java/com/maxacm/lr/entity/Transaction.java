@@ -1,14 +1,15 @@
 package com.maxacm.lr.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import com.maxacm.lr.Enum.TypeTransaction;
+import com.maxacm.lr.Enum.TypeTransactions.TypeTransaction;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import com.maxacm.lr.entity.Category;
+
 import org.hibernate.annotations.CreationTimestamp;
 
 
@@ -51,16 +52,19 @@ public class Transaction {
 
     // FK a Usuario: Quién hizo la transacción (Seguridad/Filtro)
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     // FK a Cuenta: Dónde se originó/terminó el dinero
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     @JoinColumn(name = "account_id", nullable = false)
     private Account account;
 
     // FK a Categoría: Por qué se movió el dinero
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 }

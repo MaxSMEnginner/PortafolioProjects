@@ -1,7 +1,9 @@
 package com.maxacm.lr.entity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
-import com.maxacm.lr.Enum.TypeAccount;
+import com.maxacm.lr.Enum.TypeAccounts.TypeAccount;
 
 import java.math.BigDecimal;
 import java.util.Set;
@@ -31,10 +33,12 @@ public class Account {
     private TypeAccount type;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     @JoinColumn(name="user_id", nullable = false)
     private User user;
 
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private Set<Transaction> transactions;
 
 

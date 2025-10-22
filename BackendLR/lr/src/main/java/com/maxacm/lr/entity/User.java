@@ -1,6 +1,7 @@
 package com.maxacm.lr.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,7 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import com.maxacm.lr.Enum.Roles;
+import com.maxacm.lr.Enum.TypeUsers.Roles;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -43,10 +44,12 @@ public class User {
 
     // Relación One-to-Many con Account
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private Set<Account> accounts;
 
     // Relación One-to-Many con Transaction
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private Set<Transaction> transactions;
 
 
