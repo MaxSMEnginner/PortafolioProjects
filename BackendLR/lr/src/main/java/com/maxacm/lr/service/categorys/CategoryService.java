@@ -1,5 +1,8 @@
 package com.maxacm.lr.service.categorys;
+import com.maxacm.lr.dto.accounts.UpdateAccount;
 import com.maxacm.lr.dto.categorys.NewCategory;
+import com.maxacm.lr.dto.categorys.UpdateCategory;
+import com.maxacm.lr.entity.Account;
 import com.maxacm.lr.entity.User;
 import com.maxacm.lr.entity.Category;
 import com.maxacm.lr.repository.users.UserRepository;
@@ -41,7 +44,16 @@ public class CategoryService {
                 .build();
         return categoryRepository.save(category);
 
+    }
 
+
+    public Category updateCategory(Long id, UpdateCategory dto){
+        return categoryRepository.findById(id).map(category -> {
+
+            dto.name().ifPresent(category::setName);
+            return categoryRepository.save(category);
+
+        }).orElseThrow(() -> new RuntimeException("Not Found Category"));
 
     }
 

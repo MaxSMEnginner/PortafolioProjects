@@ -1,5 +1,7 @@
 package com.maxacm.lr.service.transactions;
 
+import com.maxacm.lr.dto.accounts.UpdateAccount;
+import com.maxacm.lr.dto.transactions.UpdateTransaction;
 import com.maxacm.lr.repository.accounts.AccountRepository;
 import com.maxacm.lr.repository.categorys.CategoryRepository;
 import com.maxacm.lr.repository.transactions.TransactionRepository;
@@ -71,6 +73,17 @@ public class TransactionService {
         return transactionRepository.save(transaction);
 
 
+
+    }
+
+
+    public Transaction updateTransaction(Long id, UpdateTransaction dto){
+        return transactionRepository.findById(id).map(transaction -> {
+
+            dto.description().ifPresent(transaction::setDescription);
+            return transactionRepository.save(transaction);
+
+        }).orElseThrow(() -> new RuntimeException("Not Found Account"));
 
     }
 

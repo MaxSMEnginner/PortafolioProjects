@@ -1,5 +1,8 @@
 package com.maxacm.lr.service.accounts;
 
+import com.maxacm.lr.dto.accounts.AccountDTO;
+import com.maxacm.lr.dto.accounts.UpdateAccount;
+import com.maxacm.lr.dto.users.UserDTO;
 import com.maxacm.lr.entity.User;
 import com.maxacm.lr.repository.accounts.AccountRepository;
 import com.maxacm.lr.repository.users.UserRepository;
@@ -15,6 +18,18 @@ import com.maxacm.lr.dto.accounts.NewAccount;
 public class AccountService {
     private final UserRepository userRepository;
     private final AccountRepository accountRepository;
+
+
+    // ✅ Método helper para convertir User a UserDTO
+    public AccountDTO toDTO(Account account) {
+        return AccountDTO.builder()
+                .id(account.getId())
+                .name(account.getName())
+                .type(account.getType())
+                .user(account.getUser())
+                .currentBalance(account.getCurrentBalance())
+                .build();
+    }
 
 
     public Account newaccount(NewAccount newAccount, UserDetails userDetails){
@@ -42,6 +57,20 @@ public class AccountService {
                 .build();
         return accountRepository.save(account);
     }
+
+
+
+    public Account updateAccount(Long id, UpdateAccount dto){
+        return accountRepository.findById(id).map(account -> {
+
+            dto.name().ifPresent(account::setName);
+            dto.type().ifPresent(account::setType);
+            return accountRepository.save(account);
+
+        }).orElseThrow(() -> new RuntimeException("Not Found Account"));
+
+    }
+
 
 }
 

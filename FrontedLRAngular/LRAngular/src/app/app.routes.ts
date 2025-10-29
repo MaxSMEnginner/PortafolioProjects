@@ -11,6 +11,12 @@ import { BlacklistComponent as AdminBL } from './admin/blacklist/blacklist'; // 
 import { ProfileComponent as Profile} from './home/profile/profile'; // Renombramos para claridad
 import { authGuard } from './auth/auth.guard';
 import { adminGuard } from './auth/admin.guard';
+import { AccountComponent as Account } from './home/accounts/accounts';
+import { CategoryComponent as Category } from './home/categorys/categorys';
+import { TransactionComponent as Transaction } from './home/transactions/transactions';
+
+
+
 
 
 
@@ -27,10 +33,29 @@ export const routes: Routes = [
   },
 
   {
-    path: 'profile',
+    path: 'home/profile',
     component: Profile,
     canActivate: [authGuard]
   },
+
+  {
+    path: 'home/accounts',
+    component: Account,
+    canActivate: [authGuard]
+  },
+
+  {
+    path: 'home/categorys',
+    component: Category,
+    canActivate: [authGuard]
+  },
+
+  {
+    path: 'home/transactions',
+    component: Transaction,
+    canActivate: [authGuard]
+  },
+
 
   // Sección para administradores
   { 
