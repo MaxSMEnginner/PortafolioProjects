@@ -1,5 +1,5 @@
 package com.maxacm.lr.service.categorys;
-import com.maxacm.lr.dto.accounts.UpdateAccount;
+import com.maxacm.lr.dto.categorys.CategoryDTO;
 import com.maxacm.lr.dto.categorys.NewCategory;
 import com.maxacm.lr.dto.categorys.UpdateCategory;
 import com.maxacm.lr.entity.Account;
@@ -17,6 +17,16 @@ public class CategoryService {
 
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
+
+
+    public CategoryDTO toDTO(Category category){
+        return CategoryDTO.builder()
+                .id(category.getId())
+                .name(category.getName())
+                .type(category.getType())
+                .userId(category.getUser().getId())
+                .build();
+    }
 
     public Category newcategory(NewCategory newCategory, UserDetails userDetails){
         //JWT con la accede con Login

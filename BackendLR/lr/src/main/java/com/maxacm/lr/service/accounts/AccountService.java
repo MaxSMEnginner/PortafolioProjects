@@ -2,7 +2,7 @@ package com.maxacm.lr.service.accounts;
 
 import com.maxacm.lr.dto.accounts.AccountDTO;
 import com.maxacm.lr.dto.accounts.UpdateAccount;
-import com.maxacm.lr.dto.users.UserDTO;
+
 import com.maxacm.lr.entity.User;
 import com.maxacm.lr.repository.accounts.AccountRepository;
 import com.maxacm.lr.repository.users.UserRepository;
@@ -20,13 +20,13 @@ public class AccountService {
     private final AccountRepository accountRepository;
 
 
-    // ✅ Método helper para convertir User a UserDTO
+
     public AccountDTO toDTO(Account account) {
         return AccountDTO.builder()
                 .id(account.getId())
                 .name(account.getName())
                 .type(account.getType())
-                .user(account.getUser())
+                .userId(account.getUser().getId())
                 .currentBalance(account.getCurrentBalance())
                 .build();
     }

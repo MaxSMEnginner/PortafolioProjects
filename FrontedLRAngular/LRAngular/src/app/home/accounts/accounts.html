@@ -1,13 +1,15 @@
+
 <div class="container mt-4">
+
+  <!--Header Section-->
   <div class="row mb-4">
     <div class="col">
-      <h1 class="display-5 fw-bold">Panel de Usuario</h1>
-      <p class="lead">Username: {{ username.charAt(0).toUpperCase() + username.slice(1) }}</p>
+      <h1 class="display-5">Cuentas de Banco</h1>
+      <p class="lead">Admin: {{ username.charAt(0).toUpperCase() + username.slice(1) }}</p>
     </div>
   </div>
 
-
-
+  <!-- Navigation -->
   <nav class="nav nav-pills mb-4">
     <a class="nav-link" routerLink="/home">Dashboard</a>
     <a class="nav-link" routerLink="/home/profile">Mi perfil</a>
@@ -16,17 +18,208 @@
     <a class="nav-link" routerLink="/home/transactions">Movimimientos</a>
     <a class="nav-link" routerLink=".">Contacto</a>
     <a class="nav-link" routerLink=".">Ayuda</a>
-
   </nav>
 
-  <div class="card">
-    <div class="card-body">
-      <h2 class="h5 mb-3">Bienvenido al Panel de Usuario</h2>
-      <p>{{welcomeMessage}}</p>
-      <button class="btn btn-danger" (click)="logout()">Cerrar sesión</button>
-
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ errorMessage }}
+    <button type="button" class="btn-close" (click)="errorMessage = ''"></button>
   </div>
 
+  <!-- Create Account Form -->
+  <div class="card mb-4">
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+      <h3 class="h5 mb-0">Agregar Cuenta</h3>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="createAccount()" #createForm="ngForm">
+        <div class="row g-3">
+          <div class="col-md-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Name"
+              [(ngModel)]="newAccount.name"
+              name="name"
+              required
+            >
+          </div>
+          <div class="col-md-4">
+            <select class="form-select" [(ngModel)]="newAccount.type" name="type" required>
+              <option value="" disabled>Seleccionar tipo</option>
+              <option value="DEBIT">DEBIT</option>
+              <option value="CREDIT">CREDIT</option>
+              <option value="BANK_FUND">BANK_FUND</option>
+              <option value="WALLET">WALLET</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <input
+              type="number"
+              step="0.01"
+              class="form-control"
+              placeholder="Current Balance"
+              [(ngModel)]="newAccount.currentBalance"
+              name="currentBalance"
+              required
+            >
+          </div>
+
+          <div class="col-md-4">
+            <div class="d-flex gap-2">
+              <button
+                type="submit"
+                class="btn btn-primary flex-grow-1"
+                [disabled]="loading || !createForm.form.valid"
+              >
+                <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                Crear
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Search and Filter -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Buscar cuentas..."
+            [(ngModel)]="searchTerm"
+            (input)="searchAccounts()"
+            name="search"
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Accounts Table -->
+  <div class="card">
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+      <h3 class="h5 mb-0">Lista de Cuentas</h3>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Balance</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let acc of filteredAccounts | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+              <td>{{ acc.id }}</td>
+              <td>{{ acc.name }}</td>
+              <td>{{ acc.type }}</td>
+              <td>{{ acc.currentBalance | number:'1.2-2' }}</td>
+              <td>
+                <button class="btn btn-sm btn-primary me-2" (click)="selectAccount(acc)">
+                  <i class="bi bi-pencil"></i> Editar
+                </button>
+                <button class="btn btn-sm btn-danger" (click)="deleteAccount(acc.id)">
+                  <i class="bi bi-trash"></i> Eliminar
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <div class="d-flex justify-content-between align-items-center mt-3">
+          <div class="pagination-info">
+            Mostrando {{ (p - 1) * itemsPerPage + 1 }} -
+            {{ p * itemsPerPage > filteredAccounts.length ? filteredAccounts.length : p * itemsPerPage }}
+            de {{ filteredAccounts.length }} registros
+          </div>
+          <pagination-controls
+            (pageChange)="p = $event"
+            previousLabel="Anterior"
+            nextLabel="Siguiente">
+          </pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Account Modal -->
+  <div class="modal" [class.show]="showModal" tabindex="-1" [style.display]="showModal ? 'block' : 'none'">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Editar Cuenta: {{ selectedAccount?.name }}</h5>
+          <button type="button" class="btn-close" (click)="closeModal()"></button>
+        </div>
+        <div class="modal-body">
+          <form #updateForm="ngForm">
+            <div class="mb-3">
+              <label class="form-label">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="updateDTO.name"
+                name="name"
+                placeholder="Nuevo nombre"
+                required
+              >
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Type</label>
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="updateDTO.type"
+                name="type"
+                placeholder="Nuevo tipo"
+                required
+              >
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Current Balance</label>
+              <input
+                type="number"
+                step="0.01"
+                class="form-control"
+                [(ngModel)]="updateDTO.currentBalance"
+                name="currentBalance"
+                placeholder="Nuevo balance"
+              >
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">
+            Cancelar
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="updateAccount()"
+            [disabled]="loading"
+          >
+            <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+            Guardar Cambios
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-backdrop fade show"></div>
+  </div>
+
+  <!-- Loading Overlay -->
+  <div *ngIf="loading" class="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center" style="background: rgba(0,0,0,0.5); z-index: 9999;">
+    <div class="spinner-border text-light" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+  </div>
 </div>
-
-

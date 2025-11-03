@@ -6,6 +6,7 @@ import com.maxacm.lr.dto.users.UserDTO;
 import com.maxacm.lr.entity.Account;
 import com.maxacm.lr.entity.User;
 import com.maxacm.lr.repository.accounts.AccountRepository;
+import com.maxacm.lr.repository.users.UserRepository;
 import com.maxacm.lr.service.accounts.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 public class AccountController {
     private final AccountService accountService;
     private final AccountRepository accountRepository;
+    private final UserRepository userRepository;
 
     @PostMapping("/create")
     public ResponseEntity<String> create(@RequestBody NewAccount account,
@@ -53,29 +55,28 @@ public class AccountController {
 
 
 
-
     @GetMapping("/accounts")
-    public List<AccountDTO> getAllAccounts() {
-        return accountRepository.findAll().stream()
-                .map(account -> AccountDTO.builder()
-                        .id(account.getId())
-                        .name(account.getName())
-                        .type(account.getType())
-                        .user(account.getUser())
-                        .currentBalance(account.getCurrentBalance())
-                        .build())
+    public List<AccountDTO> getAllAccounts(@AuthenticationPrincipal UserDetails userDetails) {
+        String username = userDetails.getUsername();
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        return accountRepository.findByUser(user).stream()
+                .map(accountService::toDTO)  // ✅ Usa el método toDTO actualizado
                 .collect(Collectors.toList());
     }
 
-
     @GetMapping("/{id}")
-    public ResponseEntity<AccountDTO> findById(@PathVariable Long id) {
+    public ResponseEntity<AccountDTO> findById(@PathVariable Long id,
+                                               @AuthenticationPrincipal UserDetails userDetails) {
+        String username = userDetails.getUsername();
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
         return accountRepository.findById(id)
+                .filter(account -> account.getUser().getId().equals(user.getId()))
                 .map(accountService::toDTO)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
-
-
-
 }

@@ -1,6 +1,7 @@
 package com.maxacm.lr.service.transactions;
 
 import com.maxacm.lr.dto.accounts.UpdateAccount;
+import com.maxacm.lr.dto.transactions.TransactionDTO;
 import com.maxacm.lr.dto.transactions.UpdateTransaction;
 import com.maxacm.lr.repository.accounts.AccountRepository;
 import com.maxacm.lr.repository.categorys.CategoryRepository;
@@ -26,6 +27,21 @@ public class TransactionService {
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
     private final AccountRepository accountRepository;
+
+
+
+    public TransactionDTO toDTO(Transaction transaction){
+        return TransactionDTO.builder()
+                .id(transaction.getId())
+                .amount(transaction.getAmount())
+                .type(transaction.getType())
+                .description(transaction.getDescription())
+                .date(transaction.getDate())
+                .userId(transaction.getUser().getId())
+                .accountId(transaction.getAccount().getId())
+                .categoryId(transaction.getCategory().getId())
+                .build();
+    }
 
     public Transaction newtransaction(NewTransaction newTransaction, UserDetails userDetails){
 

@@ -29,53 +29,88 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
-        // 👉 Saltar validación en login y refresh
-            String path = request.getServletPath();
-            if (path.startsWith("/auth/login") || path.startsWith("/auth/refresh")) {
-                filterChain.doFilter(request, response);
-                return;
-            }
+        String path = request.getServletPath();
+        System.out.println("\n🔍 === REQUEST DEBUG ===");
+        System.out.println("Method: " + request.getMethod());
+        System.out.println("Path: " + path);
+
+        // Saltar validación en login y refresh
+        if (path.startsWith("/auth/login") || path.startsWith("/auth/refresh")) {
+            System.out.println("✅ Public endpoint, skipping auth");
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         final String authHeader = request.getHeader("Authorization");
+        System.out.println("Authorization Header: " + (authHeader != null ? "Present" : "Missing"));
+
         String username = null;
         String jwt = null;
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             jwt = authHeader.substring(7);
+            System.out.println("Token extracted (first 20 chars): " + jwt.substring(0, Math.min(20, jwt.length())) + "...");
 
             try {
                 Claims claims = jwtUtil.extractAllClaims(jwt);
-
                 String type = claims.get("type", String.class);
+                System.out.println("Token type: " + type);
+
                 if (!"ACCESS".equals(type)) {
-                    throw new JwtException("Invalid token type: only ACCESS tokens allowed here");
+                    System.out.println("❌ Invalid token type");
+                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                    response.getWriter().write("Invalid token type: only ACCESS tokens allowed here");
+                    return;
                 }
 
                 username = claims.getSubject();
+                System.out.println("Username from token: " + username);
+                System.out.println("Roles in token: " + claims.get("roles"));
 
             } catch (JwtException e) {
+                System.out.println("❌ JWT Exception: " + e.getMessage());
                 response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                 response.getWriter().write("Invalid or expired token");
                 return;
             }
+        } else {
+            System.out.println("⚠️ No Bearer token found");
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            System.out.println("🔐 Loading user details for: " + username);
 
-            if (jwtUtil.validateToken(jwt)) {
-                UsernamePasswordAuthenticationToken authToken =
-                        new UsernamePasswordAuthenticationToken(
-                                userDetails,
-                                null,
-                                userDetails.getAuthorities()
-                        );
-                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authToken);
+            try {
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                System.out.println("User loaded successfully");
+                System.out.println("User authorities: " + userDetails.getAuthorities());
+
+                if (jwtUtil.validateToken(jwt)) {
+                    System.out.println("✅ Token is valid");
+
+                    UsernamePasswordAuthenticationToken authToken =
+                            new UsernamePasswordAuthenticationToken(
+                                    userDetails,
+                                    null,
+                                    userDetails.getAuthorities()
+                            );
+                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+
+                    System.out.println("✅ Authentication set in SecurityContext");
+                    System.out.println("Authorities in context: " + SecurityContextHolder.getContext().getAuthentication().getAuthorities());
+                } else {
+                    System.out.println("❌ Token validation failed");
+                }
+            } catch (Exception e) {
+                System.out.println("❌ Error loading user: " + e.getMessage());
+                e.printStackTrace();
             }
+        } else {
+            System.out.println("⚠️ Username is null or user already authenticated");
         }
 
+        System.out.println("=== END REQUEST DEBUG ===\n");
         filterChain.doFilter(request, response);
     }
-
 }
