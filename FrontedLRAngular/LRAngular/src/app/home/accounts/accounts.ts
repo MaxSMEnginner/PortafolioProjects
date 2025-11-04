@@ -138,11 +138,8 @@ export class AccountComponent implements OnInit {
       },
       error: (err: HttpErrorResponse) => {
 
-        if (err.status === 403) {
-          this.handleError('No se puede eliminar cuenta ya que tiene movimiento ligados', err);
-          this.loading = false;
- 
-        }else if (err.status === 404) {
+       
+        if (err.status === 404) {
           this.handleError('Cuenta no encontrada', err);
           this.loading = false;
         }else{

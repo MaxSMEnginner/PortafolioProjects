@@ -1,5 +1,4 @@
-// src/app/home/home.component.ts
-
+// ...existing code...
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../auth/auth.service';
@@ -13,20 +12,28 @@ import { RouterLink } from '@angular/router';
   templateUrl: './home.html',
   styleUrls: ['./home.css']
 })
-export class HomeComponent implements OnInit { // 👈 Implementa OnInit
-  
- 
-  /* menganita = App.menganita; */
-  welcomeMessage = 'Cargando...'; // Mensaje por defecto
-  username = ''; // Variable para almacenar el nombre de usuario
-
+export class HomeComponent implements OnInit {
+  welcomeMessage = 'Cargando...';
+  username = '';
+  isAdmin = false; 
+  role = 'ROLE_USERS';
   constructor(private auth: AuthService, private http: HttpClient) {}
 
-  // ngOnInit se ejecuta cuando el componente se inicializa
   ngOnInit(): void {
-    this.username = this.auth.getUsername() || '';  
-    
-    // El interceptor se encargará de añadir el token
+
+    this.username = this.auth.getUsername() || '';
+    this.role = this.auth.getUserRole() || 'ROLE_USER';
+    //console.log('User role:', this.role);
+
+    // Determina si es admin de forma defensiva según lo que exponga AuthService
+    this.isAdmin = (() => {
+      if ("ADMIN" === this.role) {
+        return true;
+      }
+      return false;
+    })();
+    //console.log('Is Admin:', this.isAdmin);
+
     this.http.get('http://localhost:8080/users/home', { responseType: 'text' })
       .subscribe({
         next: (message) => this.welcomeMessage = message.replace('🚀',''),
@@ -39,6 +46,10 @@ export class HomeComponent implements OnInit { // 👈 Implementa OnInit
 
   logout() {
     this.auth.logout();
+  }
+
+  gotoadmin(){
+    window.location.href = '/admin/dashboard';
   }
 
 }

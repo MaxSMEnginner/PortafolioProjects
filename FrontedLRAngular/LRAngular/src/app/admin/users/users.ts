@@ -188,6 +188,12 @@ export class UsersComponent implements OnInit {
   }
 
   deleteUser(id: number) {
+
+    if (id === this.currentUserId) {
+      alert('No puedes eliminar tu propia cuenta mientras estás logueado.');
+      return;
+    }
+    
     if (!confirm('¿Estás seguro de eliminar este usuario?')) return;
 
     this.loading = true;

@@ -42,5 +42,9 @@ export class DashboardComponent implements OnInit { // 👈 Implementa OnInit
     this.auth.logout();
   }
 
+  home(){
+    window.location.href = '/home';
+  }
+
 
 }

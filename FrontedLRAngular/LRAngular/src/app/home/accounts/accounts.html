@@ -5,7 +5,7 @@
   <div class="row mb-4">
     <div class="col">
       <h1 class="display-5">Cuentas de Banco</h1>
-      <p class="lead">Admin: {{ username.charAt(0).toUpperCase() + username.slice(1) }}</p>
+      <p class="lead">Username: {{ username.charAt(0).toUpperCase() + username.slice(1) }}</p>
     </div>
   </div>
 
@@ -175,14 +175,15 @@
             </div>
             <div class="mb-3">
               <label class="form-label">Type</label>
-              <input
-                type="text"
-                class="form-control"
-                [(ngModel)]="updateDTO.type"
-                name="type"
-                placeholder="Nuevo tipo"
-                required
-              >
+
+            <select class="form-select" [(ngModel)]="updateDTO.type" name="type" required>
+              <option value="" disabled>Seleccionar tipo</option>
+              <option value="DEBIT">DEBIT</option>
+              <option value="CREDIT">CREDIT</option>
+              <option value="BANK_FUND">BANK_FUND</option>
+              <option value="WALLET">WALLET</option>
+            </select>
+              
             </div>
             <div class="mb-3">
               <label class="form-label">Current Balance</label>

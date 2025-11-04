@@ -1,12 +1,10 @@
 <div class="container mt-4">
   <div class="row mb-4">
     <div class="col">
-      <h1 class="display-5 fw-bold">Panel de Usuario</h1>
-      <p class="lead">Username: {{ username.charAt(0).toUpperCase() + username.slice(1) }}</p>
+      <h1 class="display-5">Movimientos</h1>
+      <p class="lead">Usuario: {{ username ? (username.charAt(0).toUpperCase() + username.slice(1)) : '' }}</p>
     </div>
   </div>
-
-
 
   <nav class="nav nav-pills mb-4">
     <a class="nav-link" routerLink="/home">Dashboard</a>
@@ -16,17 +14,164 @@
     <a class="nav-link active" routerLink="/home/transactions">Movimimientos</a>
     <a class="nav-link" routerLink=".">Contacto</a>
     <a class="nav-link" routerLink=".">Ayuda</a>
-
   </nav>
 
-  <div class="card">
-    <div class="card-body">
-      <h2 class="h5 mb-3">Bienvenido al Panel de Usuario</h2>
-      <p>{{welcomeMessage}}</p>
-      <button class="btn btn-danger" (click)="logout()">Cerrar sesión</button>
-
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+    <button class="btn-close" (click)="errorMessage = ''"></button>
   </div>
 
+  <div class="card mb-4">
+    <div class="card-header bg-dark text-white">
+      <h5 class="mb-0">Agregar Movimiento</h5>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="createTransaction()" #txForm="ngForm">
+        <div class="row g-3">
+          <div class="col-md-2">
+            <input type="number" step="0.01" class="form-control" placeholder="Monto"
+                   [(ngModel)]="newTransaction.amount" name="amount" required>
+          </div>
+
+          <div class="col-md-4">
+            <input type="text" class="form-control" placeholder="Descripción"
+                   [(ngModel)]="newTransaction.description" name="description" required>
+          </div>
+
+          <div class="col-md-2">
+            <select class="form-select" [(ngModel)]="newTransaction.accountName" name="accountName" required>
+              <option value="" disabled selected>Seleccionar cuenta</option>
+              <ng-container *ngIf="accounts?.length; else noAccounts">
+                <option *ngFor="let a of accountNames" [value]="a">{{ a }}</option>
+              </ng-container>
+              <ng-template #noAccounts>
+                <option value="" disabled>Not found Accounts</option>
+              </ng-template>
+            </select>
+          </div>
+
+          <div class="col-md-2">
+           <select class="form-select" [(ngModel)]="newTransaction.accountName" name="accountName" required>
+              <option value="" disabled selected>Seleccionar cuenta</option>
+              <ng-container *ngIf="accounts?.length; else noAccounts">
+                <option *ngFor="let a of accountTypes" [value]="a">{{ a }}</option>
+              </ng-container>
+              <ng-template #noAccounts>
+                <option value="" disabled>Not found Accounts</option>
+              </ng-template>
+            </select>
+          </div>
+
+          <div class="col-md-2">
+            <select class="form-select" [(ngModel)]="newTransaction.categoryName" name="categoryName" required>
+              <option value="" disabled selected>Seleccionar categoría</option>
+              <ng-container *ngIf="categories?.length; else noCats">
+                <option *ngFor="let c of categories" [value]="c.name">{{ c.name }}</option>
+              </ng-container>
+              <ng-template #noCats>
+                <option value="" disabled>Not found categorys</option>
+              </ng-template>
+            </select>
+          </div>
+
+          <div class="col-12 mt-2">
+            <button type="submit" class="btn btn-primary" [disabled]="loading || !txForm.form.valid">Crear</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="card mb-4">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-8">
+          <input type="text" class="form-control" placeholder="Buscar movimientos..."
+                 [(ngModel)]="searchTerm" (input)="searchTransactions()" name="search">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header bg-dark text-white">
+      <h5 class="mb-0">Lista de Movimientos</h5>
+    </div>
+    <div class="card-body">
+      <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+      <div class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Monto</th>
+              <th>Descripción</th>
+              <th>Fecha</th>
+              <th>Cuenta</th>
+              <th>Tipo</th>
+              <th>Categoría</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let t of filteredTransactions | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+              <td>{{ t.id }}</td>
+              <td>{{ t.amount | number:'1.2-2' }}</td>
+              <td>{{ t.description }}</td>
+              <td>{{ t.date | date:'short' }}</td>
+              <td>{{ accountName(t.accountId) }}</td>
+              <td>{{ t.type }}</td>
+              <td>{{ categoryName(t.categoryId) }}</td>
+              <td>
+                <button class="btn btn-sm btn-primary me-1" (click)="selectTransaction(t)">Editar</button>
+                <button class="btn btn-sm btn-danger" (click)="deleteTransaction(t.id)">Eliminar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="d-flex justify-content-between align-items-center mt-3">
+          <div>
+            Mostrando {{ filteredTransactions.length ? ((p - 1) * itemsPerPage + 1) : 0 }} -
+            {{ p * itemsPerPage > filteredTransactions.length ? filteredTransactions.length : p * itemsPerPage }}
+            de {{ filteredTransactions.length }} registros
+          </div>
+          <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Modal -->
+  <div class="modal" [class.show]="showModal" tabindex="-1" [style.display]="showModal ? 'block' : 'none'">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Editar Movimiento: {{ selectedTransaction?.id }}</h5>
+          <button type="button" class="btn-close" (click)="closeModal()"></button>
+        </div>
+        <div class="modal-body">
+          <form #updateForm="ngForm">
+       
+            <div class="mb-3">
+              <label class="form-label">Descripción</label>
+              <input type="text" class="form-control" [(ngModel)]="updateDTO.description" name="description">
+            </div>
+  
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
+          <button class="btn btn-primary" (click)="updateTransaction()" [disabled]="loading">Guardar</button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-backdrop fade show"></div>
+  </div>
+
+  <div *ngIf="loading" class="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center" style="background: rgba(0,0,0,0.5); z-index: 9999;">
+    <div class="spinner-border text-light" role="status"><span class="visually-hidden">Cargando...</span></div>
+  </div>
 </div>
-
-

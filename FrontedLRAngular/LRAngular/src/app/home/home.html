@@ -19,6 +19,12 @@
 
   </nav>
 
+
+  <div class="d-flex align-items-center">
+    <!-- Vista Admin visible solo para ROLE_ADMIN -->
+    <button *ngIf="isAdmin" class="btn btn-outline-primary ms-2" (click)="gotoadmin()">Vista Admin</button>
+  </div>
+
   <div class="card">
     <div class="card-body">
       <h2 class="h5 mb-3">Bienvenido al Panel de Usuario</h2>
