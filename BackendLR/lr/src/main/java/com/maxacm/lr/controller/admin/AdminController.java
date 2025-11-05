@@ -4,12 +4,15 @@ import com.maxacm.lr.dto.auditlog.AuditLogDTO;
 import com.maxacm.lr.entity.AuditLog;
 import com.maxacm.lr.dto.blacklisttoken.BlacklistedTokenDTO;
 import com.maxacm.lr.entity.User;
+import com.maxacm.lr.exception.users.UserAlreadyExistsException;
+import com.maxacm.lr.exception.users.UserNotFoundException;
 import com.maxacm.lr.repository.users.UserRepository;
 import com.maxacm.lr.service.auths.AuditLogService;
 import com.maxacm.lr.service.users.UserService;
 import com.maxacm.lr.service.auths.TokenBlacklistService;
 import com.maxacm.lr.dto.users.UserUpdateDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -102,14 +105,20 @@ public class AdminController {
 
     // ✅ Actualizar usuario parcialmente
     @PatchMapping("/user/{id}")
-    public ResponseEntity<UserDTO> update(@PathVariable Long id, @RequestBody UserUpdateDTO dto) {
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody UserUpdateDTO dto) {
         try{
             User updateuser= userService.updateUSERadmin(id, dto);
             return ResponseEntity.ok(userService.toDTO(updateuser));
-        }catch(RuntimeException e){
-            return ResponseEntity.notFound().build();
+        }catch (UserAlreadyExistsException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(e.getMessage());
+        }catch(UserNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(e.getMessage());
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Unexpected error: "+e.getMessage());
         }
-
     }
 
     // ✅ Eliminar usuario

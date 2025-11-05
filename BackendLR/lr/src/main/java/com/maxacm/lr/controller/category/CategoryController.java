@@ -5,10 +5,13 @@ import com.maxacm.lr.dto.categorys.UpdateCategory;
 import com.maxacm.lr.dto.categorys.NewCategory;
 import com.maxacm.lr.entity.Category;
 import com.maxacm.lr.entity.User;
+import com.maxacm.lr.exception.categorys.CategoryAlreadyExistsException;
+import com.maxacm.lr.exception.categorys.CategoryNotFoundException;
 import com.maxacm.lr.repository.categorys.CategoryRepository;
 import com.maxacm.lr.repository.users.UserRepository;
 import com.maxacm.lr.service.categorys.CategoryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -44,12 +47,19 @@ private final UserRepository userRepository;
     }
 
     @PatchMapping("/update/{id}")
-    public ResponseEntity<CategoryDTO> update(@PathVariable Long id, @RequestBody UpdateCategory dto) {
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody UpdateCategory dto) {
         try{
             Category updatecategory= categoryService.updateCategory(id, dto);
             return ResponseEntity.ok(categoryService.toDTO(updatecategory));
-        }catch(RuntimeException e){
-            return ResponseEntity.notFound().build();
+        }catch(CategoryAlreadyExistsException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(e.getMessage());
+        }catch(CategoryNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(e.getMessage());
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Unexpected error: "+ e.getMessage());
         }
 
     }

@@ -4,6 +4,9 @@ import com.maxacm.lr.dto.accounts.AccountDTO;
 import com.maxacm.lr.dto.accounts.UpdateAccount;
 
 import com.maxacm.lr.entity.User;
+import com.maxacm.lr.exception.accounts.AccountAlreadyExistsException;
+import com.maxacm.lr.exception.accounts.AccountNotFoundException;
+import com.maxacm.lr.exception.users.UserNotFoundException;
 import com.maxacm.lr.repository.accounts.AccountRepository;
 import com.maxacm.lr.repository.users.UserRepository;
 import com.maxacm.lr.entity.Account;
@@ -12,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import com.maxacm.lr.dto.accounts.NewAccount;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -37,7 +42,7 @@ public class AccountService {
         String username = userDetails.getUsername();
         //Encontramos al usuario correspondiente
         User user= userRepository.findByUsername(username)
-                .orElseThrow(()  -> new RuntimeException("User not found"));
+                .orElseThrow(()  -> new UserNotFoundException("User not found"));
         //CREAMOS UNA VARIABLE PARA VALIDAR EXISTENCIA DE CUENTA
         boolean exist= accountRepository.existsByNameAndTypeAndUser(
                 newAccount.getName(),
@@ -46,7 +51,7 @@ public class AccountService {
         );
         //VALIDAR SI EXISTE LA CUENTA
         if (exist){
-            throw new RuntimeException("The account already exists for this user");
+            throw new AccountAlreadyExistsException("already exists for this user");
         }
         //SI NO EXISTE SE CONSTRUYE LA CUENTA Y SE GUARDA EN LA BASE DE DATOS
         Account account = Account.builder()
@@ -61,13 +66,21 @@ public class AccountService {
 
 
     public Account updateAccount(Long id, UpdateAccount dto){
+        dto.name().ifPresent(name->{
+            List<Account> listaccounts = accountRepository.findByName(name);
+            if (!listaccounts.isEmpty()){
+                throw new AccountAlreadyExistsException("already has been created");
+            }
+        });
+
+
         return accountRepository.findById(id).map(account -> {
 
             dto.name().ifPresent(account::setName);
             dto.type().ifPresent(account::setType);
             return accountRepository.save(account);
 
-        }).orElseThrow(() -> new RuntimeException("Not Found Account"));
+        }).orElseThrow(() -> new AccountNotFoundException("Not Found Account"));
 
     }
 

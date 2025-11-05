@@ -18,6 +18,7 @@ import com.maxacm.lr.dto.transactions.NewTransaction;
 import com.maxacm.lr.Enum.TypeTransactions.TypeTransaction;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 @Service
@@ -63,7 +64,7 @@ public class TransactionService {
 
         Transaction transaction= Transaction.builder().
                 amount(newTransaction.getAmount()).
-                date(LocalDate.now()).
+                date(LocalDateTime.now()).
                 description(newTransaction.getDescription()).
                 account(account).
                 category(category).

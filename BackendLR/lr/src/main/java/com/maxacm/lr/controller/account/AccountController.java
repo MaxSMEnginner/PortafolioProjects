@@ -5,10 +5,14 @@ import com.maxacm.lr.dto.accounts.UpdateAccount;
 import com.maxacm.lr.dto.users.UserDTO;
 import com.maxacm.lr.entity.Account;
 import com.maxacm.lr.entity.User;
+import com.maxacm.lr.exception.accounts.AccountAlreadyExistsException;
+import com.maxacm.lr.exception.accounts.AccountNotFoundException;
+import com.maxacm.lr.exception.users.UserNotFoundException;
 import com.maxacm.lr.repository.accounts.AccountRepository;
 import com.maxacm.lr.repository.users.UserRepository;
 import com.maxacm.lr.service.accounts.AccountService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,10 +31,21 @@ public class AccountController {
     private final UserRepository userRepository;
 
     @PostMapping("/create")
-    public ResponseEntity<String> create(@RequestBody NewAccount account,
+    public ResponseEntity<?> create(@RequestBody NewAccount account,
                                          @AuthenticationPrincipal UserDetails userDetails) {
-        accountService.newaccount(account, userDetails);
-        return ResponseEntity.ok("Account created successfully");
+        try{
+            accountService.newaccount(account, userDetails);
+            return ResponseEntity.ok("Account created successfully");
+        }catch(AccountAlreadyExistsException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(e.getMessage());
+        }catch(UserNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(e.getMessage());
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Unexpected error: "+ e.getMessage());
+        }
     }
 
     @DeleteMapping("/delete/{id}")
@@ -43,12 +58,16 @@ public class AccountController {
     }
 
     @PatchMapping("/update/{id}")
-    public ResponseEntity<AccountDTO> update(@PathVariable Long id, @RequestBody UpdateAccount dto) {
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody UpdateAccount dto) {
         try{
             Account updateaccount= accountService.updateAccount(id, dto);
             return ResponseEntity.ok(accountService.toDTO(updateaccount));
-        }catch(RuntimeException e){
-            return ResponseEntity.notFound().build();
+        }catch(AccountAlreadyExistsException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }catch(AccountNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unexpected error: "+e.getMessage());
         }
 
     }

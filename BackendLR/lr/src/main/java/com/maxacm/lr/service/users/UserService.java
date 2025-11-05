@@ -3,6 +3,8 @@ package com.maxacm.lr.service.users;
 import com.maxacm.lr.dto.users.UserDTO;
 import com.maxacm.lr.dto.users.UserUpdateDTO;
 import com.maxacm.lr.entity.User;
+import com.maxacm.lr.exception.users.UserAlreadyExistsException;
+import com.maxacm.lr.exception.users.UserNotFoundException;
 import com.maxacm.lr.repository.users.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.maxacm.lr.Enum.TypeUsers.Roles;
 import com.maxacm.lr.dto.users.UserRegister;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -61,18 +65,33 @@ public class UserService {
 
 
     public User updateUSER(Long id, UserUpdateDTO dto){
+
+        dto.username().ifPresent(username->{
+            userRepository.findByUsername(username).ifPresent(existing ->{
+                throw new UserAlreadyExistsException("already has been created");
+            });
+
+        });
+
         return userRepository.findById(id).map(user -> {
 
             dto.username().ifPresent(user::setUsername);
             dto.password().ifPresent(p -> user.setPassword(passwordEncoder().encode(p)));
             return userRepository.save(user);
 
-        }).orElseThrow(() -> new RuntimeException("Not Found User"));
+        }).orElseThrow(() -> new UserNotFoundException("Not Found User"));
 
     }
 
 
     public User updateUSERadmin(Long id, UserUpdateDTO dto){
+
+        dto.username().ifPresent(username->{
+            userRepository.findByUsername(username).ifPresent(existing ->{
+                throw new UserAlreadyExistsException("already has been created");
+            });
+
+        });
 
         return userRepository.findById(id).map(user -> {
 
@@ -81,7 +100,7 @@ public class UserService {
             dto.role().ifPresent(user::setRole);
             return userRepository.save(user);
 
-        }).orElseThrow(() -> new RuntimeException("Not Found AdminUser"));
+        }).orElseThrow(() -> new UserNotFoundException("Not Found User"));
 
     }
 

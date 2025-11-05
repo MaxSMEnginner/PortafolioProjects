@@ -5,11 +5,15 @@ import com.maxacm.lr.dto.categorys.UpdateCategory;
 import com.maxacm.lr.entity.Account;
 import com.maxacm.lr.entity.User;
 import com.maxacm.lr.entity.Category;
+import com.maxacm.lr.exception.categorys.CategoryAlreadyExistsException;
+import com.maxacm.lr.exception.categorys.CategoryNotFoundException;
 import com.maxacm.lr.repository.users.UserRepository;
 import com.maxacm.lr.repository.categorys.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -58,12 +62,19 @@ public class CategoryService {
 
 
     public Category updateCategory(Long id, UpdateCategory dto){
+        dto.name().ifPresent(name->{
+            List<Category> listaacategorias = categoryRepository.findByName(name);
+            if(!listaacategorias.isEmpty()){
+                throw new CategoryAlreadyExistsException("already has been created");
+            }
+        });
+
         return categoryRepository.findById(id).map(category -> {
 
             dto.name().ifPresent(category::setName);
             return categoryRepository.save(category);
 
-        }).orElseThrow(() -> new RuntimeException("Not Found Category"));
+        }).orElseThrow(() -> new CategoryNotFoundException("Not Found Category"));
 
     }
 

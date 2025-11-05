@@ -51,7 +51,7 @@
           </div>
 
           <div class="col-md-2">
-           <select class="form-select" [(ngModel)]="newTransaction.accountName" name="accountName" required>
+           <select class="form-select" [(ngModel)]="newTransaction.accountType" name="accountName" required>
               <option value="" disabled selected>Seleccionar cuenta</option>
               <ng-container *ngIf="accounts?.length; else noAccounts">
                 <option *ngFor="let a of accountTypes" [value]="a">{{ a }}</option>

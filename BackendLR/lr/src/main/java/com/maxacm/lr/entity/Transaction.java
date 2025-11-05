@@ -9,6 +9,7 @@ import lombok.Builder;
 import com.maxacm.lr.Enum.TypeTransactions.TypeTransaction;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -31,7 +32,7 @@ public class Transaction {
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
-    private LocalDate date;
+    private LocalDateTime date;
 
     private String description;
 

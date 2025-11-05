@@ -1,0 +1,19 @@
+200 OK – ¡Todo funciona como debería! Este código significa que el servidor encontró la página y respondió con éxito. Es lo que quieres ver la mayor parte del tiempo.
+
+301 Movido permanentemente : esto significa que una página se ha movido permanentemente a una nueva ubicación. Por ejemplo, si una URL ha cambiado, este código envía a los usuarios (y a los motores de búsqueda) a la nueva dirección.
+
+302 Found (Redirección temporal) – A diferencia de una 301, esta redirección es temporal. Se usa comúnmente durante las promociones cuando los sitios necesitan dirigir a los visitantes a una página específica temporalmente.
+
+400 Solicitud incorrecta : el servidor no pudo entender la solicitud debido a una sintaxis incorrecta, generalmente debido a un error tipográfico o una URL incorrecta. Es un suave empujón para comprobar y corregir la solicitud.
+
+401 No autorizado : este código significa que un usuario debe iniciar sesión o autenticarse para acceder a la página. A menudo aparece en páginas de inicio de sesión o secciones restringidas de un sitio web.
+
+403 Prohibido – Un 403 dice que el servidor entendió la solicitud pero no la cumplirá, generalmente debido a la falta de permisos.
+
+404 Not Found – Este es famoso. 404 significa que el servidor no pudo encontrar la página solicitada. Esto puede suceder si una URL es incorrecta o si la página se ha movido o eliminado.
+
+500 Error interno del servidor 500 : un error 500 indica que ha ocurrido algo inesperado en el servidor. Esto puede deberse a varias razones, como mucho tráfico o problemas de código.
+
+502 Puerta de enlace incorrecta : esto sucede cuando un servidor, que actúa como puerta de enlace o proxy, recibe una respuesta defectuosa de un servidor ascendente. A menudo indica un problema con el servidor principal.
+
+503 Servicio no disponible : este código muestra que el servidor no puede manejar temporalmente la solicitud. Es posible que esté fuera de servicio por mantenimiento o que experimente un alto tráfico, pero debería volver pronto.
