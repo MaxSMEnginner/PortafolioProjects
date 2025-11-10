@@ -5,6 +5,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { HttpErrorHandlerService } from '../../services/http-error-handler.service';
 
 interface Transaction {
   id: number;
@@ -76,7 +77,7 @@ export class TransactionComponent implements OnInit {
   accountMap: Record<string, string> = {};
   categoryMap: Record<string, string> = {};
 
-  constructor(private auth: AuthService, private http: HttpClient) {}
+  constructor(private auth: AuthService, private http: HttpClient, private errorHandler: HttpErrorHandlerService) {}
 
   ngOnInit(): void {
     this.username = this.auth.getUsername() || '';
@@ -102,8 +103,9 @@ export class TransactionComponent implements OnInit {
           this.accountMap[a.name] = a.name;
         });
       },
-      error: err => {
-        console.warn('[Transactions] loadAccounts error:', err);
+      error: (err: HttpErrorResponse) => {
+        // console.warn('[Transactions] loadAccounts error:', err);
+        this.errorHandler.handle(err);
         this.accounts = [];
         this.accountMap = {};
       }
@@ -121,8 +123,9 @@ export class TransactionComponent implements OnInit {
           this.categoryMap[c.name] = c.name;
         });
       },
-      error: err => {
-        console.warn('[Transactions] loadCategories error:', err);
+      error: (err: HttpErrorResponse) => {
+        // console.warn('[Transactions] loadCategories error:', err);
+        this.errorHandler.handle(err);
         this.categories = [];
         this.categoryMap = {};
       }
@@ -139,7 +142,8 @@ export class TransactionComponent implements OnInit {
         this.loading = false;
       },
       error: (err: HttpErrorResponse) => {
-        this.handleError('Error al cargar transacciones', err);
+        // this.handleError('Error al cargar transacciones', err);
+        this.errorHandler.handle(err);
         this.loading = false;
       }
     });
@@ -156,7 +160,8 @@ export class TransactionComponent implements OnInit {
         this.loadTransactions();
       },
       error: (err: HttpErrorResponse) => {
-        this.handleError('Error al crear transacción', err);
+        alert('Datos Incorrectos o Fondos Insuficientes');
+        // this.errorHandler.handle(err);
         this.loading = false;
       }
     });
@@ -200,39 +205,12 @@ export class TransactionComponent implements OnInit {
         this.showSuccessMessage('Transacción actualizada con éxito');
       },
       error: (err: HttpErrorResponse) => {
-        this.handleError('Error al actualizar transacción', err);
+        // this.handleError('Error al actualizar transacción', err);
+        this.errorHandler.handle(err);
         this.loading = false;
       }
     });
   }
-
-  deleteTransaction(id: number): void {
-    if (!confirm('¿Estás seguro de eliminar esta transacción?')) return;
-    this.loading = true;
-    this.http.delete(`${this.apiUrl}/delete/${id}`, { responseType: 'text' as 'json' }).subscribe({
-      next: () => {
-        this.transactions = this.transactions.filter(t => t.id !== id);
-        this.filteredTransactions = [...this.transactions];
-        this.loading = false;
-        this.showSuccessMessage('Transacción eliminada con éxito');
-      },
-      error: (err: HttpErrorResponse) => {
-        if (err.status === 403) {
-          this.errorMessage = 'No se puede eliminar: la transacción está protegida.';
-        } else if (err.status === 404) {
-          this.errorMessage = 'Transacción no encontrada';
-        } else if (err.error && typeof err.error === 'string') {
-          this.errorMessage = err.error;
-        } else {
-          this.errorMessage = 'Error al eliminar transacción';
-        }
-        console.error('Error al eliminar transacción', err);
-        this.loading = false;
-        setTimeout(() => this.errorMessage = '', 6000);
-      }
-    });
-  }
-
 
   searchTransactions(): void {
     if (!this.searchTerm.trim()) {
@@ -289,11 +267,7 @@ export class TransactionComponent implements OnInit {
     this.errorMessage = '';
   }
 
-  private handleError(message: string, error: HttpErrorResponse): void {
-    console.error(message, error);
-    this.errorMessage = (error?.error && (error.error as any).message) || message;
-    setTimeout(() => this.errorMessage = '', 5000);
-  }
+
 
   private showSuccessMessage(message: string): void {
     alert(message);

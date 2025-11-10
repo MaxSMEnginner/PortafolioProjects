@@ -29,11 +29,21 @@ public class CategoryController {
 private final UserRepository userRepository;
 
     @PostMapping("/create")
-    public ResponseEntity<String> create(@RequestBody NewCategory newCategory,
+    public ResponseEntity<?> create(@RequestBody NewCategory newCategory,
                                         @AuthenticationPrincipal UserDetails userDetails){
-        categoryService.newcategory(newCategory, userDetails);
-        return ResponseEntity.ok("Category created successfully");
-
+        try{
+            categoryService.newcategory(newCategory, userDetails);
+            return ResponseEntity.ok("Category created successfully");
+        }catch(CategoryAlreadyExistsException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(e.getMessage());
+        }catch(CategoryNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(e.getMessage());
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Unexpected error: "+ e.getMessage());
+        }
     }
 
 

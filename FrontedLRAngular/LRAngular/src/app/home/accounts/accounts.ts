@@ -5,6 +5,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { HttpErrorHandlerService } from '../../services/http-error-handler.service';
 
 interface Account {
   id: number;
@@ -49,7 +50,7 @@ export class AccountComponent implements OnInit {
   showModal = false;
   errorMessage = '';
 
-  constructor(private auth: AuthService, private http: HttpClient) {}
+  constructor(private auth: AuthService, private http: HttpClient, private errorHandler: HttpErrorHandlerService) {}
 
   ngOnInit(): void {
     this.username = this.auth.getUsername() || '';
@@ -64,8 +65,8 @@ export class AccountComponent implements OnInit {
         this.filteredAccounts = [...data];
         this.loading = false;
       },
-      error: (err: HttpErrorResponse) => {
-        this.handleError('Error al cargar cuentas', err);
+      error: (error : HttpErrorResponse) => {
+        this.errorHandler.handle(error);
         this.loading = false;
       }
     });
@@ -82,8 +83,8 @@ export class AccountComponent implements OnInit {
          this.showSuccessMessage('Cuenta creada con éxito');
          this.loadAccounts();
        },
-       error: (err: HttpErrorResponse) => {
-         this.handleError('Error al crear cuenta', err);
+       error: (error: HttpErrorResponse) => {
+         this.errorHandler.handle(error); 
          this.loading = false;
        }
      });
@@ -119,8 +120,8 @@ export class AccountComponent implements OnInit {
         this.loading = false;
         this.showSuccessMessage('Cuenta actualizada con éxito');
       },
-      error: (err: HttpErrorResponse) => {
-        this.handleError('Error al actualizar cuenta', err);
+      error: (error: HttpErrorResponse) => {
+        this.errorHandler.handle(error);
         this.loading = false;
       }
     });
@@ -136,18 +137,10 @@ export class AccountComponent implements OnInit {
         this.loading = false;
         this.showSuccessMessage('Cuenta eliminada con éxito');
       },
-      error: (err: HttpErrorResponse) => {
+      error: () => {
+        this.loading = false;
 
-       
-        if (err.status === 404) {
-          this.handleError('Cuenta no encontrada', err);
-          this.loading = false;
-        }else{
-          this.handleError('Error al eliminar cuenta', err);
-          this.loading = false;
-
-        }
-
+      
 
       }
     });
@@ -200,11 +193,7 @@ export class AccountComponent implements OnInit {
     this.errorMessage = '';
   }
 
-  private handleError(message: string, error: HttpErrorResponse) {
-    console.error(message, error);
-    this.errorMessage = error.error?.message || message;
-    setTimeout(() => this.errorMessage = '', 5000);
-  }
+
 
   private showSuccessMessage(message: string) {
     this.errorMessage = '';

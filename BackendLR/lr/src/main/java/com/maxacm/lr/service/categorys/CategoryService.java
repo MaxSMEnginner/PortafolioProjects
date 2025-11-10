@@ -46,7 +46,7 @@ public class CategoryService {
 
 
         if (exist){
-            throw new RuntimeException("The category already exists for this user");
+            throw new CategoryAlreadyExistsException("The category already exists for this user");
         }
 
 

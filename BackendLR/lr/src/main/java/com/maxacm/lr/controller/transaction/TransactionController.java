@@ -8,6 +8,7 @@ import com.maxacm.lr.repository.transactions.TransactionRepository;
 import com.maxacm.lr.repository.users.UserRepository;
 import com.maxacm.lr.service.transactions.TransactionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,10 +27,15 @@ public class TransactionController {
     private final UserRepository userRepository;
 
     @PostMapping("/create")
-    public ResponseEntity<String> create(@RequestBody NewTransaction transaction,
+    public ResponseEntity<?> create(@RequestBody NewTransaction transaction,
                                          @AuthenticationPrincipal UserDetails userDetails) {
-        transactionService.newtransaction(transaction, userDetails);
-        return ResponseEntity.ok("Transaction created successfully");
+        try{
+            transactionService.newtransaction(transaction, userDetails);
+            return ResponseEntity.ok("Transaction created successfully");
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("Error Conflict: "+e.getMessage());
+        }
     }
 
 //    @DeleteMapping("/delete/{id}")

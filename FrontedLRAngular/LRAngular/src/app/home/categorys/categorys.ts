@@ -5,6 +5,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { HttpErrorHandlerService } from '../../services/http-error-handler.service';
 
 interface Category {
   id: number;
@@ -46,7 +47,7 @@ export class CategoryComponent implements OnInit {
   showModal = false;
   errorMessage = '';
 
-  constructor(private auth: AuthService, private http: HttpClient) {}
+  constructor(private auth: AuthService, private http: HttpClient, private errorHandler: HttpErrorHandlerService) {}
 
   ngOnInit(): void {
     this.username = this.auth.getUsername() || '';
@@ -62,7 +63,7 @@ export class CategoryComponent implements OnInit {
         this.loading = false;
       },
       error: (err: HttpErrorResponse) => {
-        this.handleError('Error al cargar categorías', err);
+        this.errorHandler.handle(err);
         this.loading = false;
       }
     });
@@ -79,7 +80,7 @@ export class CategoryComponent implements OnInit {
         this.loadCategories();
       },
       error: (err: HttpErrorResponse) => {
-        this.handleError('Error al crear categoría', err);
+        this.errorHandler.handle(err);
         this.loading = false;
       }
     });
@@ -114,7 +115,7 @@ export class CategoryComponent implements OnInit {
         this.showSuccessMessage('Categoría actualizada con éxito');
       },
       error: (err: HttpErrorResponse) => {
-        this.handleError('Error al actualizar categoría', err);
+        this.errorHandler.handle(err);
         this.loading = false;
       }
     });
@@ -130,17 +131,17 @@ export class CategoryComponent implements OnInit {
         this.loading = false;
         this.showSuccessMessage('Categoría eliminada con éxito');
       },
-      error: (err: HttpErrorResponse) => {
-        if (err.status === 403) {
-          this.errorMessage = 'No se puede eliminar: la categoría está ligada a otros registros.';
-        } else if (err.status === 404) {
-          this.errorMessage = 'Categoría no encontrada';
-        } else if (err.error && typeof err.error === 'string') {
-          this.errorMessage = err.error;
-        } else {
-          this.errorMessage = 'Error al eliminar categoría';
-        }
-        console.error('Error al eliminar categoría', err);
+      error: () => {
+        // if (err.status === 403) {
+        //   this.errorMessage = 'No se puede eliminar: la categoría está ligada a otros registros.';
+        // } else if (err.status === 404) {
+        //   this.errorMessage = 'Categoría no encontrada';
+        // } else if (err.error && typeof err.error === 'string') {
+        //   this.errorMessage = err.error;
+        // } else {
+        //   this.errorMessage = 'Error al eliminar categoría';
+        // }
+        // console.error('Error al eliminar categoría', err);
         this.loading = false;
         setTimeout(() => this.errorMessage = '', 6000);
       }
@@ -185,11 +186,6 @@ export class CategoryComponent implements OnInit {
     this.errorMessage = '';
   }
 
-  private handleError(message: string, error: HttpErrorResponse) {
-    console.error(message, error);
-    this.errorMessage = (error?.error && (error.error as any).message) || message;
-    setTimeout(() => this.errorMessage = '', 5000);
-  }
 
   private showSuccessMessage(message: string) {
     // Opcional: reemplazar por UI toast si tienes

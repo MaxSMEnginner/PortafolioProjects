@@ -97,9 +97,9 @@ loadUsers() {
 
   updateUser() {
     if (!this.userProfile || !this.validateUpdate()) return;
-    //console.log('Usuarios: ', this.users);
-    //console.log('Usuario', this.userProfile?.username);
-    //console.log('ID Usuario', this.userProfile?.id);
+    // console.log('Usuarios: ', this.users);
+    // console.log('Usuario', this.userProfile?.username);
+    // console.log('ID Usuario', this.userProfile?.id);
     
     if (this.users.some(u => u.username.toLocaleLowerCase() === this.updateDTO.username?.toLocaleLowerCase() && u.id !== this.userProfile?.id)) {
       alert('El username ya existe. Por favor, elige otro.'); 
@@ -111,6 +111,7 @@ loadUsers() {
     this.loading = true;
     this.http.patch<User>(`${this.apiUrl}/users/user/${this.userProfile.id}`, this.updateDTO).subscribe({
       next: (updatedUser) => {
+        // console.log(updatedUser.username,updatedUser.role, this.currentUserId!); 
         this.auth.refreshSessionAfterUpdate(updatedUser, this.currentUserId!);
         
         this.userProfile = updatedUser;

@@ -149,8 +149,8 @@ export class UsersComponent implements OnInit {
       this.showModal = false;
       return;
     }
-/*     console.log('Usuarios: ', this.users);
-    console.log('Nuevo username: ', updateData.username?.toLocaleLowerCase); */
+    // console.log('Usuarios: ', this.users);
+    // console.log('Nuevo username: ', updateData.username); 
     if (this.users.some(u => u.username.toLocaleLowerCase() === updateData.username?.toLocaleLowerCase() && u.id !== this.selectedUser!.id)) {
       
       alert('El username ya existe. Por favor, elige otro.'); 
@@ -162,10 +162,17 @@ export class UsersComponent implements OnInit {
     next: (updatedUser) => {
 
       
-      /* console.log(updatedUser.username,updatedUser.role,this.auth.getUserRole(), this.currentUserId!); */
+      // console.log(updatedUser.username,updatedUser.role,this.auth.getUserRole2(), this.currentUserId!); 
       // 👇 le pasamos el user actualizado y el id original
       this.auth.refreshSessionAfterUpdate(updatedUser, this.currentUserId!);
-      /* console.log(updatedUser.username,updatedUser.role,this.auth.getUserRole(), this.currentUserId!); */
+      // let acuser = this.auth.getUsername();
+      // let acrole = this.auth.getUserRole2();
+      // let role = "ROLE_"+acrole;
+      // console.log(acuser, acrole, role);
+      // console.log('AccesTokenAFTERupdate: ', this.auth.getToken());
+
+
+      //console.log(updatedUser.username,updatedUser.role,this.auth.getUserRole2(), this.currentUserId!); 
       const index = this.users.findIndex(u => u.id === updatedUser.id);
       if (index !== -1) {
         this.users[index] = updatedUser;

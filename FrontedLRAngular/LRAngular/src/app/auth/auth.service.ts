@@ -153,10 +153,16 @@ export class AuthService {
     return this.http.post<AuthResponse>(`${this.API_URL}/auth/newjwtwcmu`, { username, role})
       .pipe(
         tap((tokens: AuthResponse) => {
-          /* console.log("Nuevo Username y role antes de guardar tokens de refreshtoken2:", this.getUsername(), this.getUserRole2()); */
+          //siempre dara null
+          // console.log("Nuevo Username y role antes de guardar tokens de refreshtoken2:", this.getUsername(), this.getUserRole2());
+          // console.log("Antiguo accestoken: ", this.getToken());
           this.saveTokens(tokens.accessToken, tokens.refreshToken);
-          /* console.log("Nuevo Username y role despues de guardar tokens de refreshtoken2:", this.getUsername(), this.getUserRole2()); */
+          // console.log("Nuevo Username y role despues de guardar tokens de refreshtoken2:", this.getUsername(), this.getUserRole2());         
+          // console.log("Nuevo accessToken: ",this.getToken());
+        
         })
+          
+
       );
   }
 
@@ -178,11 +184,18 @@ refreshSessionAfterUpdate(updatedUser: { id: number, username: string, role: str
           
           const role = updatedUser.role;
           if (role === 'ROLE_ADMIN') {
+
+
+          //  console.log("SE ACTUALIZO EL /ADMIN/USERS")
             this.router.navigate(['/admin/users']);
-            window.location.reload();
+          //  window.location.reload();
 
           } else if (role === 'ROLE_USER') {
-            this.router.navigate(['/profile']);
+
+            // console.log("SE ACTUALIZO EL /PROFILE")
+            this.router.navigate(['/home/profile']);
+            //  window.location.reload();
+            
 
           }
         },
