@@ -7,6 +7,9 @@ import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { HttpErrorHandlerService } from '../../services/http-error-handler.service';
 
+import * as ExcelJS from 'exceljs';
+import { saveAs } from 'file-saver';
+
 interface Transaction {
   id: number;
   amount: number;
@@ -75,6 +78,7 @@ export class TransactionComponent implements OnInit {
   accountTypes: string[]=[];
   categories: Category[] = [];
   accountMap: Record<string, string> = {};
+  accountTypeMap: Record<string, string> = {};
   categoryMap: Record<string, string> = {};
 
   constructor(private auth: AuthService, private http: HttpClient, private errorHandler: HttpErrorHandlerService) {}
@@ -102,12 +106,19 @@ export class TransactionComponent implements OnInit {
           this.accountMap[String(a.id)] = a.name;
           this.accountMap[a.name] = a.name;
         });
+        this.accountTypeMap={};
+        (this.accounts || []).forEach(a=>{
+          this.accountTypeMap[String(a.id)]=a.type;
+          this.accountTypeMap[a.type]=a.type;
+        });
       },
       error: (err: HttpErrorResponse) => {
         // console.warn('[Transactions] loadAccounts error:', err);
         this.errorHandler.handle(err);
         this.accounts = [];
         this.accountMap = {};
+        this.accountTypeMap={};
+
       }
     });
   }
@@ -233,6 +244,11 @@ export class TransactionComponent implements OnInit {
     return this.accountMap[key] || key;
   }
 
+  accountType(idOrName: string | number): string {
+    const key = String(idOrName);
+    return this.accountTypeMap[key] || key;
+  }
+
   categoryName(idOrName: string | number): string {
     const key = String(idOrName);
     return this.categoryMap[key] || key;
@@ -279,4 +295,120 @@ export class TransactionComponent implements OnInit {
     this.updateDTO = {};
     this.errorMessage = '';
   }
+
+  downloadExcelReport(): void {
+    if (!this.filteredTransactions || this.filteredTransactions.length === 0) {
+      this.errorMessage = 'No tienes movimientos para realizar informe';
+      setTimeout(() => (this.errorMessage = ''), 4000);
+      return;
+    }
+
+    const username = this.auth.getUsername() || 'N/A';
+    const today = new Date().toLocaleDateString();
+
+    const workbook = new ExcelJS.Workbook();
+    const sheet = workbook.addWorksheet('Movimientos');
+
+    // Title (merge A1:C1)
+    sheet.mergeCells('A1:C1');
+    const titleCell = sheet.getCell('A1');
+    titleCell.value = 'MAXSOFT-SISTEMA DE GESTION ADMINISTRATIVO PERSONAL V1.0';
+    titleCell.alignment = { vertical: 'middle', horizontal: 'center' };
+    titleCell.font = { name: 'Calibri', size: 12, bold: true };
+    titleCell.fill = { type: 'pattern', pattern:'solid', fgColor:{ argb:'FFFFC000' } }; // orange/yellow
+    titleCell.border = {
+      top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' }
+    };
+
+
+    // Info row (A2:C2)
+    sheet.mergeCells('A2:C2');
+    const infoCell = sheet.getCell('A2');
+    infoCell.value = `Informe generado por: ${username}    Fecha: ${today}`;
+    infoCell.alignment = { vertical: 'middle', horizontal: 'center' };
+    infoCell.font = { name: 'Calibri', size: 10, italic: true };
+    infoCell.fill = { type: 'pattern', pattern:'solid', fgColor:{ argb:'FFFFE699' } }; // light orange
+    infoCell.border = {
+      top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' }
+    };
+
+    sheet.addRow([]);
+    const header = sheet.addRow(['BankName', 'Type', 'Category', 'Amount', 'Date', 'Description']);
+    // Aplica borde únicamente a A1, B1 y C1
+    ['A4', 'B4', 'C4'].forEach(cell => {
+      sheet.getCell(cell).border = {
+        top: { style: 'thin' },
+        left: { style: 'thin' },
+        bottom: { style: 'thin' },
+        right: { style: 'thin' }
+      };
+    });
+
+    // Style header
+    header.font = { bold: true, color: { argb: 'FF000000' } };
+    header.alignment = { vertical: 'middle', horizontal: 'center' };
+    header.eachCell((cell) => {
+      cell.fill = { type: 'pattern', pattern:'solid', fgColor:{ argb:'FFD9EAF7' } }; // light blue
+      cell.border = {
+        top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' }
+      };
+    });
+
+    // Add data rows (start after headers)
+    this.filteredTransactions.forEach((mov, index) => {
+      const amount = mov.amount !== undefined && mov.amount !== null ? Number(mov.amount) : 0;
+      const row = sheet.addRow([this.accountMap[mov.accountId] ?? '', mov.type ?? '',this.categoryMap[mov.categoryId] ?? '', amount, mov.date ?? '', mov.description ?? '']);
+      // format balance as number with 2 decimals
+      const amountCell = row.getCell(4);
+      amountCell.numFmt = '#,##0.00';
+      //FORMATO DE FECHA CON CASO DE NULL O UNDEFINED
+      const dateCell = row.getCell(5);
+      if (mov.date) {
+        dateCell.value = new Date(mov.date);
+        dateCell.numFmt = 'yyyy-mm-dd hh:mm:ss';
+      } else {
+        dateCell.value = ''; // o null
+      }
+      // alternate fill for better readability
+      if (index % 2 === 1) {
+        row.eachCell((cell) => {
+          cell.fill = { type: 'pattern', pattern:'solid', fgColor:{ argb:'FFF3F3F3' } }; // light gray
+        });
+      }
+      row.eachCell((cell) => {
+        cell.border = {
+          top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' }
+        };
+      });
+    });
+
+    // Adjust column widths
+    //'BankName', 'Type', 'Category', 'Amount', 'Date', 'Description'
+    sheet.columns = [
+      { key: 'bankname', width: 30 },
+      { key: 'type', width: 18 },
+      { key: 'category', width: 15 },
+      { key: 'amount', width: 12 },
+      { key: 'date', width: 30 },
+      { key: 'description', width: 40 }
+    ];
+
+    // freeze header row
+    sheet.views = [{ state: 'frozen', ySplit: 3 }];
+
+    // Generate XLSX and download
+    workbook.xlsx.writeBuffer().then((buffer) => {
+      const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      const filename = `transactions_${username}_report_${new Date().toISOString().slice(0, 10)}.xlsx`;
+      saveAs(blob, filename);
+    }).catch((err) => {
+      console.error(err);
+      this.errorMessage = 'Error generando el reporte';
+      setTimeout(() => (this.errorMessage = ''), 4000);
+    });
+  }
+
+
+
+
 }

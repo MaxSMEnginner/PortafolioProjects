@@ -7,6 +7,10 @@ import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { HttpErrorHandlerService } from '../../services/http-error-handler.service';
 
+//exceldocimports
+import * as ExcelJS from 'exceljs';
+import { saveAs } from 'file-saver';
+
 interface Account {
   id: number;
   name: string;
@@ -206,4 +210,108 @@ export class AccountComponent implements OnInit {
     this.updateDTO = {};
     this.errorMessage = '';
   }
+
+
+  downloadExcelReport(): void {
+    if (!this.filteredAccounts || this.filteredAccounts.length === 0) {
+      this.errorMessage = 'No tienes cuentas para realizar informe';
+      setTimeout(() => (this.errorMessage = ''), 4000);
+      return;
+    }
+
+    const username = this.auth.getUsername() || 'N/A';
+    const today = new Date().toLocaleDateString();
+
+    const workbook = new ExcelJS.Workbook();
+    const sheet = workbook.addWorksheet('Cuentas');
+
+    // Title (merge A1:C1)
+    sheet.mergeCells('A1:C1');
+    const titleCell = sheet.getCell('A1');
+    titleCell.value = 'MAXSOFT-SISTEMA DE GESTION ADMINISTRATIVO PERSONAL V1.0';
+    titleCell.alignment = { vertical: 'middle', horizontal: 'center' };
+    titleCell.font = { name: 'Calibri', size: 12, bold: true };
+    titleCell.fill = { type: 'pattern', pattern:'solid', fgColor:{ argb:'FFFFC000' } }; // orange/yellow
+    titleCell.border = {
+      top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' }
+    };
+
+
+    // Info row (A2:C2)
+    sheet.mergeCells('A2:C2');
+    const infoCell = sheet.getCell('A2');
+    infoCell.value = `Informe generado por: ${username}    Fecha: ${today}`;
+    infoCell.alignment = { vertical: 'middle', horizontal: 'center' };
+    infoCell.font = { name: 'Calibri', size: 10, italic: true };
+    infoCell.fill = { type: 'pattern', pattern:'solid', fgColor:{ argb:'FFFFE699' } }; // light orange
+    infoCell.border = {
+      top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' }
+    };
+
+    sheet.addRow([]);
+    const header = sheet.addRow(['Name', 'Type', 'Balance']);
+    // Aplica borde únicamente a A1, B1 y C1
+    ['A4', 'B4', 'C4'].forEach(cell => {
+      sheet.getCell(cell).border = {
+        top: { style: 'thin' },
+        left: { style: 'thin' },
+        bottom: { style: 'thin' },
+        right: { style: 'thin' }
+      };
+    });
+
+    // Style header
+    header.font = { bold: true, color: { argb: 'FF000000' } };
+    header.alignment = { vertical: 'middle', horizontal: 'center' };
+    header.eachCell((cell) => {
+      cell.fill = { type: 'pattern', pattern:'solid', fgColor:{ argb:'FFD9EAF7' } }; // light blue
+      cell.border = {
+        top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' }
+      };
+    });
+
+    // Add data rows (start after headers)
+    this.filteredAccounts.forEach((acc, index) => {
+      const balanceNum = acc.currentBalance !== undefined && acc.currentBalance !== null ? Number(acc.currentBalance) : 0;
+      const row = sheet.addRow([acc.name ?? '', acc.type ?? '', balanceNum]);
+      // format balance as number with 2 decimals
+      const balanceCell = row.getCell(3);
+      balanceCell.numFmt = '#,##0.00';
+      // alternate fill for better readability
+      if (index % 2 === 1) {
+        row.eachCell((cell) => {
+          cell.fill = { type: 'pattern', pattern:'solid', fgColor:{ argb:'FFF3F3F3' } }; // light gray
+        });
+      }
+      row.eachCell((cell) => {
+        cell.border = {
+          top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' }
+        };
+      });
+    });
+
+    // Adjust column widths
+    sheet.columns = [
+      { key: 'name', width: 30 },
+      { key: 'type', width: 18 },
+      { key: 'balance', width: 15 }
+    ];
+
+    // freeze header row
+    sheet.views = [{ state: 'frozen', ySplit: 3 }];
+
+    // Generate XLSX and download
+    workbook.xlsx.writeBuffer().then((buffer) => {
+      const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      const filename = `accounts_${username}_report_${new Date().toISOString().slice(0, 10)}.xlsx`;
+      saveAs(blob, filename);
+    }).catch((err) => {
+      console.error(err);
+      this.errorMessage = 'Error generando el reporte';
+      setTimeout(() => (this.errorMessage = ''), 4000);
+    });
+  }
+
+
+
 }
