@@ -156,9 +156,9 @@ export class CategoryComponent implements OnInit {
     const term = this.searchTerm.toLowerCase();
     this.filteredCategories = this.categories.filter(c =>
       (c.name || '').toLowerCase().includes(term) ||
-      (c.type || '').toLowerCase().includes(term) ||
-      c.id.toString().includes(term)
+      (c.type || '').toLowerCase().includes(term) 
     );
+    this.p = 1;               // opcional: volver a la primera página tras filtrar
   }
 
   private validateNewCategory(cat: NewCategory): boolean {
@@ -197,5 +197,8 @@ export class CategoryComponent implements OnInit {
     this.selectedCategory = null;
     this.updateDTO = {};
     this.errorMessage = '';
+  }
+  logout() {
+    this.auth.logout();
   }
 }

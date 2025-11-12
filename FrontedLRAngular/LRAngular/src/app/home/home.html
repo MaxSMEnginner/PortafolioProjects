@@ -16,23 +16,161 @@
     <a class="nav-link" routerLink="/home/transactions">Movimimientos</a>
     <a class="nav-link" routerLink=".">Contacto</a>
     <a class="nav-link" routerLink=".">Ayuda</a>
+    <button class="btn btn-danger" (click)="logout()">Cerrar sesión</button>
 
   </nav>
-
 
   <div class="d-flex align-items-center">
     <!-- Vista Admin visible solo para ROLE_ADMIN -->
     <button *ngIf="isAdmin" class="btn btn-outline-primary ms-2" (click)="gotoadmin()">Vista Admin</button>
   </div>
+<!--KPIS-->
+  <div class="row mb-4">
+    <div class="col-6 col-md-4 col-lg-2 mb-3">
+      <div class="card text-white bg-primary h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <small class="text-uppercase">Transacciones</small>
+              <h4 class="mb-0">{{ totalTransactions}}</h4>
+            </div>
+            <div class="fs-2">📊</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-2 mb-3">
+      <div class="card text-dark bg-light h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <small class="text-uppercase">Ingresos</small>
+              <h4 class="mb-0 text-success">{{ totalIncome | number:'1.2-2' }}</h4>
+            </div>
+            <div class="fs-2">⬆️</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-2 mb-3">
+      <div class="card text-white bg-danger h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <small class="text-uppercase">Gastos</small>
+              <h4 class="mb-0">{{ totalExpense | number:'1.2-2' }}</h4>
+            </div>
+            <div class="fs-2">⬇️</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-2 mb-3">
+      <div class="card text-white bg-secondary h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <small class="text-uppercase">Ingreso AVG</small>
+              <h4 class="mb-0">{{ avgAmount | number:'1.2-2' }}</h4>
+            </div>
+            <div class="fs-2">🔁</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-2 mb-3">
+      <div class="card text-white bg-info h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <small class="text-uppercase">Cuentas</small>
+              <h4 class="mb-0">{{ totalAccounts }}</h4>
+            </div>
+            <div class="fs-2">🏦</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-2 mb-3">
+      <div class="card text-white bg-success h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <small class="text-uppercase">Categorías</small>
+              <h4 class="mb-0">{{ totalCategories }}</h4>
+            </div>
+            <div class="fs-2">🏷️</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--END KPIS-->
+
+  <div class="card mb-4">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-8">
+          <input type="text" class="form-control" placeholder="Buscar movimientos..."
+                 [(ngModel)]="searchTerm" (input)="searchTransactions()" name="search">
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <div class="card">
+      <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center gap-2">
+        <h3 class="h5 mb-0">Movimientos</h3>
+      </div>
+      </div>
     <div class="card-body">
-      <h2 class="h5 mb-3">Bienvenido al Panel de Usuario</h2>
-      <p>{{welcomeMessage}}</p>
-      <button class="btn btn-danger" (click)="logout()">Cerrar sesión</button>
 
+      <div class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>Cuenta</th>
+              <th>Tipo de cuenta</th>
+              <th>Fecha</th>
+              <th>Descripcion</th>
+              <th>Monto</th>
+              <th>Tipo</th>
+              <th>Categoría</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let t of filteredTransactions | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+              <td>{{ accountName(t.accountId) }}</td>
+              <td>{{ accountType(t.accountId) }}</td>
+              <td>{{ t.date | date:'short' }}</td>
+              <td>{{ t.description }}</td>
+              <td>{{ t.amount | number:'1.2-2' }}</td>
+              <td>{{ t.type }}</td>
+              <td>{{ categoryName(t.categoryId) }}</td>
+            </tr>
+          </tbody>
+        </table>
 
+        <div class="d-flex justify-content-between align-items-center mt-3">
+          <div>
+            Mostrando {{ filteredTransactions.length ? ((p - 1) * itemsPerPage + 1) : 0 }} -
+            {{ p * itemsPerPage > filteredTransactions.length ? filteredTransactions.length : p * itemsPerPage }}
+            de {{ filteredTransactions.length }} registros
+          </div>
+          <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+        </div>
+      </div>
+    </div>
   </div>
+
+
 
 
 </div>

@@ -221,6 +221,7 @@ export class UsersComponent implements OnInit {
   searchUsers() {
     if (!this.searchTerm.trim()) {
       this.filteredUsers = [...this.users];
+      this.p=1;// volver a la primera página
       return;
     }
 
@@ -231,6 +232,7 @@ export class UsersComponent implements OnInit {
       user.id.toString().includes(searchTerm)
       
     );
+    this.p=1;
   }
 
   private validateUser(user: NewUser): boolean {
@@ -291,5 +293,9 @@ export class UsersComponent implements OnInit {
     this.selectedUser = null;
     this.updateDTO = {};
     this.errorMessage = '';
+  }
+
+  logout() {
+    this.auth.logout();
   }
 }

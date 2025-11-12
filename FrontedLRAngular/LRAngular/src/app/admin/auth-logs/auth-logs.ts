@@ -38,46 +38,51 @@ export class AuthLogsComponent implements OnInit {
 
   ngOnInit() {
     this.username = this.auth.getUsername() || '';
-    this.getAllLogs();
+    this.loadLogs();
   }
 
-  getAllLogs() {
-    this.http.get<AuditLog[]>('http://localhost:8080/admin/audit-log').subscribe({
+  loadLogs() {
+    this.http.get<any>('http://localhost:8080/admin/audit-log').subscribe({
       next: (data) => {
-        this.logs = data;
-        this.filteredLogs = data;
+        const list: any[] = Array.isArray(data) ? data : (data?.data || data?.logs || data?.auditLogs || []);
+        // Normalizar cada log para asegurar que las propiedades existen
+        this.logs = (list || []).map(l => ({
+          id: l?.id ?? 0,
+          username: l?.username ?? '',
+          action: l?.action ?? '',
+          timestamp: l?.timestamp ?? '',
+          ip: l?.ip ?? '',
+          ip_address: l?.ip_address ?? 'localhost'
+        }));
+        this.filteredLogs = [...this.logs];
+        this.p = 1;
       },
       error: (error) => console.error('Error fetching logs:', error)
     });
   }
 
-  filterByUser(username: string) {
-    if (!username) {
-      this.getAllLogs();
+    searchLogs() {
+    if (!this.searchTerm.trim()) {
+      this.filteredLogs = [...this.logs];
+      this.p=1;// volver a la primera página
       return;
     }
-    this.http.get<AuditLog[]>(`http://localhost:8080/admin/audit-log/user/${username}`).subscribe({
-      next: (data) => {
-        this.logs = data;
-        this.filteredLogs = data;
-      },
-      error: (error) => console.error('Error filtering by user:', error)
-    });
-  }
 
-  filterByAction(action: string) {
-    if (!action) {
-      this.getAllLogs();
-      return;
-    }
-    this.http.get<AuditLog[]>(`http://localhost:8080/admin/audit-log/action/${action}`).subscribe({
-      next: (data) => {
-        this.logs = data;
-        this.filteredLogs = data;
-      },
-      error: (error) => console.error('Error filtering by action:', error)
-    });
+    const searchTerm = this.searchTerm.toLowerCase();
+    this.filteredLogs = this.logs.filter(log =>
+      log.username.toLowerCase().includes(searchTerm) ||
+      log.action.toLowerCase().includes(searchTerm) ||
+      log.id.toString().includes(searchTerm)||
+      log.ip.toLowerCase().includes(searchTerm)||
+      log.ip_address.toLowerCase().includes(searchTerm)||
+      log.timestamp.toLowerCase().includes(searchTerm)
+      
+    );
+    this.p=1;
   }
 
 
+  logout() {
+    this.auth.logout();
+  }
 }

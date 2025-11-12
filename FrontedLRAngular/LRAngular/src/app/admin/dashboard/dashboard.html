@@ -13,6 +13,7 @@
     <a class="nav-link" routerLink="/admin/users">Gestión de Usuarios</a>
     <a class="nav-link" routerLink="/admin/auth-logs">Logs de Autenticación</a>
     <a class="nav-link" routerLink="/admin/blacklist">Blacklist de JWT</a>
+    <button class="btn btn-danger" (click)="logout()">Cerrar sesión</button>
 
   </nav>
   <div class="row">
@@ -24,7 +25,6 @@
     <div class="card-body">
       <h2 class="h5 mb-3">Bienvenido al Panel de Administración</h2>
       <p>Desde aquí puedes gestionar usuarios, revisar logs de autenticación y administrar la blacklist de JWT.</p>
-      <button class="btn btn-danger" (click)="logout()">Cerrar sesión</button>
 
   </div>
 

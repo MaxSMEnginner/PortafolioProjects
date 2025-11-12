@@ -13,6 +13,7 @@
     <a class="nav-link" routerLink="/admin/users">Gestión de Usuarios</a>
     <a class="nav-link" routerLink="/admin/auth-logs">Logs de Autenticación</a>
     <a class="nav-link active" routerLink="/admin/blacklist">Blacklist de JWT</a>
+    <button class="btn btn-danger" (click)="logout()">Cerrar sesión</button>
   </nav>
 
   <!-- Table Card -->
@@ -25,6 +26,7 @@
           class="form-control" 
           placeholder="Busca por token..." 
           [(ngModel)]="searchTerm"
+          (ngModelChange)="p = 1"
         >
       </div>
     </div>
@@ -41,6 +43,7 @@
               </tr>
             </thead>
             <tbody>
+              
               <tr *ngFor="let item of filteredData | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
                 <td>{{ item.id }}</td>
                 <td>

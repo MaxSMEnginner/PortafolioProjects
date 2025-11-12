@@ -155,4 +155,8 @@ loadUsers() {
     this.updateDTO = {};
     this.error = '';
   }
+
+    logout() {
+    this.auth.logout();
+  }
 }

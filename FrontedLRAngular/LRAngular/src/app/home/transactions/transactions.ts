@@ -231,12 +231,14 @@ export class TransactionComponent implements OnInit {
     const term = this.searchTerm.toLowerCase();
     this.filteredTransactions = this.transactions.filter(t =>
       (t.description || '').toLowerCase().includes(term) ||
-      (String(t.accountId) || '').toLowerCase().includes(term) ||
-      (String(t.categoryId) || '').toLowerCase().includes(term) ||
+      (String(this.accountMap[t.accountId]) || '').toLowerCase().includes(term) ||
+      (String(this.accountTypeMap[t.accountId]) || '').toLowerCase().includes(term) ||
+      (String(this.categoryMap[t.categoryId]) || '').toLowerCase().includes(term) ||
       (t.type || '').toLowerCase().includes(term) ||
-      t.id.toString().includes(term) ||
+      (t.date || '').toLowerCase().includes(term) ||
       t.amount.toString().includes(term)
     );
+    this.p = 1;               // opcional: volver a la primera página tras filtrar
   }
 
   accountName(idOrName: string | number): string {
@@ -408,7 +410,9 @@ export class TransactionComponent implements OnInit {
     });
   }
 
-
+  logout() {
+    this.auth.logout();
+  }
 
 
 }

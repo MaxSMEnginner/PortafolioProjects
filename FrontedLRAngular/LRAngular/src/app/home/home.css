@@ -2,3 +2,42 @@
 .card{
   color:white;
 }
+
+
+.kpi-card {
+  background: #0000006f;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.984);
+  padding: 20px;
+  width: 280px;
+  text-align: center;
+  transition: 0.3s ease;
+  margin: 20px;
+}
+
+.kpi-card:hover {
+  transform: translateY(-3px);
+}
+
+.kpi-value {
+  font-size: 2em;
+  font-weight: bold;
+  color: #c6cad0;
+  margin-bottom: 10px;
+}
+
+.kpi-details p {
+  margin: 0;
+  font-size: 0.9em;
+  color: #f6f6f6;
+}
+
+.kpi-status {
+  margin-top: 12px;
+  font-weight: 600;
+  font-size: 1em;
+}
+
+.trend-up { color: green; }
+.trend-down { color: red; }
+.trend-neutral { color: orange; }

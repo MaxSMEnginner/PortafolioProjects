@@ -14,6 +14,7 @@
     <a class="nav-link active" routerLink="/home/transactions">Movimimientos</a>
     <a class="nav-link" routerLink=".">Contacto</a>
     <a class="nav-link" routerLink=".">Ayuda</a>
+    <button class="btn btn-danger" (click)="logout()">Cerrar sesión</button>
   </nav>
 
   <div *ngIf="errorMessage" class="alert alert-danger">

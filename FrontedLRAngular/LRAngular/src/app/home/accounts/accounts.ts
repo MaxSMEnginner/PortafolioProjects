@@ -159,9 +159,9 @@ export class AccountComponent implements OnInit {
     this.filteredAccounts = this.accounts.filter(a =>
       a.name.toLowerCase().includes(term) ||
       a.type.toLowerCase().includes(term) ||
-      a.id.toString().includes(term) ||
       a.currentBalance.toString().includes(term)
     );
+    this.p = 1;  
   }
 
   private validateNewAccount(acc: NewAccount): boolean {
@@ -310,6 +310,9 @@ export class AccountComponent implements OnInit {
       this.errorMessage = 'Error generando el reporte';
       setTimeout(() => (this.errorMessage = ''), 4000);
     });
+  }
+  logout() {
+    this.auth.logout();
   }
 
 

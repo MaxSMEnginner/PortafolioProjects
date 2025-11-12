@@ -49,17 +49,23 @@ export class BlacklistComponent implements OnInit {
 
     // Filtrar datos
   get filteredData() {
+    
     return this.blacklistData ? this.blacklistData.filter(item =>
       item.token.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
       item.id.toString().includes(this.searchTerm) ||
       item.createdAt.toLowerCase().includes(this.searchTerm.toLowerCase())
     ) : [];
+                 
+
   }
 
   // Ver token completo
   showFullToken(token: string) {
     alert("JWT: "+token);
     
+  }
+  logout() {
+    this.auth.logout();
   }
 
 }
